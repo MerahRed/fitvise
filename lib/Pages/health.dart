@@ -11,7 +11,41 @@ class Healthpage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.black87,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Calories Needed",
+                        style: TextStyle(
+                          color: Colors.greenAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        )),
+                    Text(
+                        (kcal[kcalIndex][0] +
+                                kcal[kcalIndex][1] +
+                                kcal[kcalIndex][2] +
+                                kcal[kcalIndex][3])
+                            .toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50,
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black87,
@@ -29,12 +63,14 @@ class Healthpage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    Divider(
+                      color: Colors.white10,
+                    ),
                     itemCard(
                       cardIcon: 'lib/assets/croissant.png',
                       title: 'Breakfast',
                       description: kcal[kcalIndex][0].toString() + ' kcal',
-                      cardColor: Colors.yellow[900],
+                      cardColor: Colors.yellow[800],
                       exerciseImage: 'lib/assets/breakfastPic.jpeg',
                       details:
                           'Breakfast is the first meal of the day. It is important to have a balanced meal that includes protein, fiber, and healthy fats.',

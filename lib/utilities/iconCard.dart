@@ -43,9 +43,10 @@ class itemCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ExercisePage(
-                        // exerciseName: title,
-                        // exerciseImage: exerciseImage,
-                        // exerciseDescription: details,
+                          exerciseName: title,
+                          exerciseImage: exerciseImage,
+                          exerciseDescription: details,
+                          isExercise: cardColor == Colors.blue ? true : false,
                         )));
           },
           trailing: Icon(Icons.arrow_forward_ios_rounded),

@@ -10,8 +10,30 @@ class Fitpage extends StatelessWidget {
     return Scaffold(
       body: ListView(
         children: [
+          /*Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.black87,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.accessibility_rounded,
+                        color: Colors.greenAccent, size: 200),
+                    Divider(
+                      color: Colors.white10,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),*/
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
