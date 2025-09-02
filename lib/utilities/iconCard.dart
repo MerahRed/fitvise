@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'exercisePage.dart';
+import '../Pages/flexibles/infoPage.dart';
 
 class itemCard extends StatelessWidget {
   final String cardIcon;
@@ -42,11 +42,11 @@ class itemCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ExercisePage(
+                    builder: (context) => InfoPage(
                           exerciseName: title,
                           exerciseImage: exerciseImage,
                           exerciseDescription: details,
-                          isExercise: cardColor == Colors.blue ? true : false,
+                          isDiet: cardColor == Colors.blue ? false : true,
                         )));
           },
           trailing: Icon(Icons.arrow_forward_ios_rounded),

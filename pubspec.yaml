@@ -13,6 +13,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.1.0
+  supabase_flutter: ^2.9.1
+  flutter_timer_countdown: ^1.0.7
 
 
 dev_dependencies:

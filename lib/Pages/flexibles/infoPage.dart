@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 
-class ExercisePage extends StatefulWidget {
+class InfoPage extends StatefulWidget {
   final String exerciseName;
   final String exerciseImage;
   final String exerciseDescription;
-  final bool isExercise;
-  const ExercisePage({
+  final bool isDiet;
+  const InfoPage({
     super.key,
     required this.exerciseName,
     required this.exerciseImage,
     required this.exerciseDescription,
-    required this.isExercise,
+    required this.isDiet,
   });
 
   @override
-  State<ExercisePage> createState() => _ExercisePageState();
+  State<InfoPage> createState() => _InfoPageState();
 }
 
-class _ExercisePageState extends State<ExercisePage> {
+class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +49,8 @@ class _ExercisePageState extends State<ExercisePage> {
                   fontSize: 20,
                 )),
             SizedBox(height: 20),
-            widget.isExercise == true
-                ? SizedBox()
-                : Container(
+            widget.isDiet == true // check if it's diet page
+                ? Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.black87,
@@ -117,7 +116,8 @@ class _ExercisePageState extends State<ExercisePage> {
                         ),
                       ],
                     ),
-                  ),
+                  )
+                : Container(),
             SizedBox(height: 20),
           ],
         ),
@@ -125,3 +125,24 @@ class _ExercisePageState extends State<ExercisePage> {
     );
   }
 }
+
+
+/*
+          MaterialButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => InfoPage(
+                          exerciseName: "s",
+                          exerciseImage: 'lib/assets/walking.jpeg',
+                          exerciseDescription: 'exerciseDescription',
+                          isDiet: false,
+                        )),
+              );
+            },
+            color: Colors.green,
+            child: Text('Edit'),
+          ),
+
+*/

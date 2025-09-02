@@ -1,10 +1,13 @@
 library;
 
+import 'package:FitVise/auth/auth_service.dart';
+
 int pageIndex = 0;
 int? currentheight = 0;
 int? currentweight = 0;
 int targetKg = 0;
 
+String currentEmail = AuthService().getCurrentUserEmail().toString();
 String username = "user";
 String user_status = "Normal";
 

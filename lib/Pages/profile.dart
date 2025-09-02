@@ -1,4 +1,5 @@
 import 'package:FitVise/Global.dart';
+import 'package:FitVise/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'bmi.dart';
 
@@ -24,6 +25,12 @@ class _ProfilepageState extends State<Profilepage> {
     });
   }
 
+  final authService = AuthService();
+  //log out
+  void logout() async {
+    await authService.signOut();
+  }
+
   final _controller = TextEditingController();
 
   @override
@@ -45,7 +52,7 @@ class _ProfilepageState extends State<Profilepage> {
               child: Column(
                 children: [
                   Text(
-                    username,
+                    currentEmail,
                     style: TextStyle(
                         color: Colors.greenAccent,
                         fontWeight: FontWeight.bold,
@@ -184,6 +191,12 @@ class _ProfilepageState extends State<Profilepage> {
                     title: Text('Settings'),
                     trailing: Icon(Icons.arrow_forward_ios_rounded),
                     onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text('Log Out'),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    onTap: () => logout(),
                   ),
                   ListTile(
                     title: Text('Developed by MerahRed'),
