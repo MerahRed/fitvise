@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:FitVise/Global.dart';
-import 'difficulty.dart';
 
 class ExercisePage extends StatefulWidget {
   final String exerciseName;
@@ -51,35 +49,8 @@ class _ExercisePageState extends State<ExercisePage> {
                   fontSize: 20,
                 )),
             SizedBox(height: 20),
-            Divider(),
             widget.isExercise == true
-                ? Column(
-                    children: [
-                      Text("Exercise Difficuty",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      Difficuty(difficultyLevel: 2),
-                      SizedBox(height: 100),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(
-                              context); // Navigate back to the previous screen
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.greenAccent,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 50,
-                            vertical: 15,
-                          ),
-                          textStyle: TextStyle(fontSize: 20),
-                        ),
-                        child: Icon(Icons.check_rounded,
-                            size: 40, color: Colors.white),
-                      ),
-                    ],
-                  )
+                ? SizedBox()
                 : Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(

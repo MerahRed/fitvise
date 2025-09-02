@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:FitVise/Global.dart';
 import 'package:flutter/material.dart';
 import 'bmi.dart';
@@ -44,25 +42,21 @@ class _ProfilepageState extends State<Profilepage> {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.black12, Colors.black],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
-                  borderRadius: BorderRadius.circular(20)),
-              height: 600,
               child: Column(
                 children: [
-                  Text(
-                    'Hello!',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
                   Text(
                     username,
                     style: TextStyle(
                         color: Colors.greenAccent,
                         fontWeight: FontWeight.bold,
                         fontSize: 30),
+                  ),
+                  Text(
+                    status,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
                   ),
                   IconButton(
                       onPressed: () {
@@ -106,20 +100,6 @@ class _ProfilepageState extends State<Profilepage> {
                       )),
                   SizedBox(
                     height: 50,
-                  ),
-                  Text(
-                    '-STATUS-',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    user_status,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
                   ),
                   SizedBox(height: 50),
                   Row(
@@ -171,28 +151,47 @@ class _ProfilepageState extends State<Profilepage> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Divider(),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  MaterialButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Bmipage()),
-                      );
-                      updatePage(); // Trigger UI refresh after returning
-                    },
-                    child: Text('Edit'),
-                    color: Colors.green,
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Bmipage()),
+                        );
+                        updatePage(); // Trigger UI refresh after returning
+                      },
+                      child: Text('Edit'),
+                      color: Colors.green,
+                    ),
                   )
                 ],
               ),
             ),
           ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.contact_mail),
+                    title: Text('Contact Us'),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text('Settings'),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    title: Text('Developed by MerahRed'),
+                    subtitle: Text('Version 1.0.0'),
+                    trailing: Icon(Icons.info_outline),
+                  ),
+                ],
+              )),
         ],
       ),
     );

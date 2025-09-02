@@ -105,6 +105,60 @@ class Healthpage extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black87,
+                        gradient: LinearGradient(
+                            colors: [
+                              Colors.blue.shade700,
+                              Colors.lightBlueAccent.shade200
+                            ],
+                            begin: Alignment.center,
+                            end: Alignment.bottomRight)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.apple, size: 50),
+                          Text('Food Pyramid'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black87,
+                        gradient: LinearGradient(
+                            colors: [Colors.teal, Colors.tealAccent.shade400],
+                            begin: Alignment.center,
+                            end: Alignment.bottomRight)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.search, size: 50),
+                          Text('Disease Finder'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

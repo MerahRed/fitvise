@@ -53,7 +53,10 @@ class _MainAppState extends State<MainApp> {
           currentIndex: pageIndex,
           items: [
             //home
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home',),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
 
             //fit
             BottomNavigationBarItem(
