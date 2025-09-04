@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:FitVise/Pages/SEGAK/segakPage.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
 import 'package:intl/intl.dart';
 import 'flexibles/infoPage.dart';
-import 'flexibles/activityPage.dart';
+import 'SEGAK/pushupPage.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({super.key});
@@ -133,7 +134,7 @@ class _HomepageState extends State<Homepage> {
                 setState(() {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Activitypage()),
+                    MaterialPageRoute(builder: (context) => Segakpage()),
                   );
                 });
               },
@@ -141,8 +142,8 @@ class _HomepageState extends State<Homepage> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(colors: [
-                      Colors.blue.shade400,
-                      const Color.fromARGB(255, 34, 111, 245)
+                      Colors.white54,
+                      Colors.white12
                     ], begin: Alignment.center, end: Alignment.bottomRight)),
                 child: Padding(
                   padding: EdgeInsets.all(15),
@@ -153,7 +154,7 @@ class _HomepageState extends State<Homepage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.today,
+                            Icons.data_saver_off_rounded,
                             size: 40,
                           ),
                           SizedBox(

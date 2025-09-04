@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
-import 'package:FitVise/Global.dart';
 
-class Activitypage extends StatefulWidget {
+class pushupPage extends StatefulWidget {
   // final String exerciseName;
   // final String exerciseImage;
   // final String exerciseDescription;
@@ -16,11 +15,10 @@ class Activitypage extends StatefulWidget {
   // });
 
   @override
-  State<Activitypage> createState() => _InfoPageState();
+  State<pushupPage> createState() => _pushupPageState();
 }
 
-class _InfoPageState extends State<Activitypage> {
-  bool ended = false;
+class _pushupPageState extends State<pushupPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class _InfoPageState extends State<Activitypage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "SEGAK",
+          "Push Up",
           style: TextStyle(fontWeight: FontWeight.bold),
         ), // Display exercise name
         centerTitle: true,
@@ -45,7 +43,7 @@ class _InfoPageState extends State<Activitypage> {
                 ),
                 Text(
                   "Push Up",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,

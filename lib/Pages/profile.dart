@@ -66,42 +66,7 @@ class _ProfilepageState extends State<Profilepage> {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  actions: [
-                                    SizedBox(height: 30),
-                                    TextField(
-                                      controller: _controller,
-                                      decoration: InputDecoration(
-                                        hintText: 'Enter your name...',
-                                        border: OutlineInputBorder(),
-                                      ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      message,
-                                    ),
-                                    SizedBox(height: 10),
-                                    MaterialButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          Navigator.of(context).pop();
-                                          if (_controller.text.length < 14) {
-                                            username = _controller.text;
-                                            message = '';
-                                          } else {
-                                            message =
-                                                '*username cant be more than 13 characters';
-                                          }
-                                        });
-                                      },
-                                      child: Text('done'),
-                                    ),
-                                  ],
-                                ));
-                      },
+                      onPressed: () {},
                       icon: Icon(
                         Icons.edit,
                       )),
@@ -196,7 +161,49 @@ class _ProfilepageState extends State<Profilepage> {
                     leading: Icon(Icons.logout),
                     title: Text('Log Out'),
                     trailing: Icon(Icons.arrow_forward_ios_rounded),
-                    onTap: () => logout(),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                actions: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Are you sure?",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        SizedBox(height: 30),
+                                        Row(
+                                          children: [
+                                            MaterialButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  Navigator.of(context).pop();
+                                                });
+                                              },
+                                              child: Text('Cancel'),
+                                            ),
+                                            SizedBox(width: 10),
+                                            MaterialButton(
+                                              textColor: Colors.red,
+                                              onPressed: () {
+                                                setState(() {
+                                                  logout();
+                                                  Navigator.of(context).pop();
+                                                });
+                                              },
+                                              child: Text('Log Out'),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ));
+                    },
                   ),
                   ListTile(
                     title: Text('Developed by MerahRed'),
