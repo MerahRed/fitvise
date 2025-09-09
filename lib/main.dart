@@ -1,18 +1,20 @@
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/auth/loginPage.dart';
+import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'Global.dart';
-import 'Pages/fitness.dart';
-import 'Pages/health.dart';
-import 'Pages/home.dart';
-import 'Pages/profile.dart';
 
 void main() async {
   await Supabase.initialize(
     url: 'https://jvhwabzhfplqpwuxapbl.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2aHdhYnpoZnBscXB3dXhhcGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyODAwNjcsImV4cCI6MjA3MTg1NjA2N30.LCN0oRZeBa_Xo6Z1RXyGfQwTsePlpAXQKBApX-ZxfQU',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2aHdhYnpoZnBscXB3dXhhcGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyODAwNjcsImV4cCI6MjA3MTg1NjA2N30.LCN0oRZeBa_Xo6Z1RXyGfQwTsePlpAXQKBApX-ZxfQU',
   );
+
+  if (Supabase.instance.client.auth.currentUser != null) {
+    await loadUserInfo();
+  }
+
   runApp(const MainApp());
 }
 
@@ -24,8 +26,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final List _page = [Homepage(), Fitpage(), Healthpage(), Profilepage()];
-
   double height = 0;
   double target = 1;
 
@@ -36,8 +36,27 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    await loadUserInfo();
+    setState(() {
+      loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -50,7 +69,7 @@ class _MainAppState extends State<MainApp> {
       ),
       home: Scaffold(
         //set current page
-        body: AuthGate(),//_page[pageIndex],
+        body: AuthGate(), //_page[pageIndex],
 
         bottomNavigationBar: BottomNavigationBar(
           onTap: (page) {

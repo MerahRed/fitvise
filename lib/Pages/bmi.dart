@@ -1,3 +1,5 @@
+import 'package:FitVise/main.dart';
+import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 
@@ -68,6 +70,13 @@ class _BmipageState extends State<Bmipage> {
         currentweight = int.tryParse(weight0);
         currentheight = int.tryParse(height0);
         user_status = status;
+        saveUserInfo(); // save result to supabase
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainApp(),
+          ),
+        );
       },
     );
   }

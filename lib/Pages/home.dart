@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:FitVise/Pages/SEGAK/segakPage.dart';
+import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
@@ -16,6 +17,28 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   //var
   String dateFormat = DateFormat('dd-MM-yyyy hh:mm').format(date);
+
+  void updatePage(int page) {
+    setState(() {
+      pageIndex = page;
+      //set the variable to current page index
+    });
+  }
+
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    await loadUserInfo();
+    setState(() {
+      loading = false;
+    });
+  }
 
   // 0- underweight, 1- normal, 2- overweight, 3- obesity
 
@@ -123,8 +146,6 @@ class _HomepageState extends State<Homepage> {
                   )),
             ),
           ),
-
-
 
           //                    EXCERCISE
           Padding(

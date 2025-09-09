@@ -1,3 +1,4 @@
+import 'package:FitVise/Global.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -22,6 +23,8 @@ class AuthService {
   Future<AuthResponse> signUpWithEmailPassword(
       String email, String password) async {
     try {
+      currentEmail = email;
+      username = email;
       return await _supabase.auth.signUp(
         email: email,
         password: password,
@@ -35,6 +38,13 @@ class AuthService {
 
   Future<void> signOut() async {
     await _supabase.auth.signOut();
+    currentEmail = "";
+    username = "user";
+    currentheight = 0;
+    currentweight = 0;
+    user_status = "Normal";
+    pageIndex = 3;
+    targetKg = 0;
   }
 
   String? getCurrentUserEmail() {

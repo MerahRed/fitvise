@@ -65,7 +65,7 @@ class _pushupPageState extends State<pushupPage> {
                                         "How many push up have you done?",
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      SizedBox(height: 50),
+                                      SizedBox(height: 20),
                                       TextField(
                                         controller: _controller,
                                         keyboardType: TextInputType.number,
@@ -73,7 +73,7 @@ class _pushupPageState extends State<pushupPage> {
                                             labelText: "Enter number",
                                             border: OutlineInputBorder()),
                                       ),
-                                      SizedBox(height: 50),
+                                      SizedBox(height: 20),
                                       ElevatedButton(
                                         onPressed: () {
                                           setState(() {

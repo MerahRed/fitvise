@@ -1,5 +1,6 @@
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/auth/auth_service.dart';
+import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'bmi.dart';
 
@@ -31,7 +32,21 @@ class _ProfilepageState extends State<Profilepage> {
     await authService.signOut();
   }
 
-  final _controller = TextEditingController();
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    await loadUserInfo();
+    setState(() {
+      loading = false;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,97 +63,95 @@ class _ProfilepageState extends State<Profilepage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Container(
-              child: Column(
-                children: [
-                  Text(
-                    currentEmail,
-                    style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  ),
-                  Text(
-                    status,
-                    style: TextStyle(
+            child: Column(
+              children: [
+                Text(
+                  currentEmail,
+                  style: TextStyle(
+                      color: Colors.greenAccent,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey,
-                    ),
+                      fontSize: 30),
+                ),
+                Text(
+                  status,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.edit,
-                      )),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              colors: [Colors.black, Colors.black12],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.height_rounded,
-                              size: 60,
-                            ),
-                            Text('Height:'),
-                            Text(currentheight.toString() + 'm')
-                          ],
-                        ),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.edit,
+                    )),
+                SizedBox(
+                  height: 50,
+                ),
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                            colors: [Colors.black, Colors.black12],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
                       ),
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              colors: [Colors.black, Colors.black12],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.accessibility,
-                              size: 60,
-                            ),
-                            Text('Weight:'),
-                            Text(currentweight.toString() + 'Kg')
-                          ],
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.height_rounded,
+                            size: 60,
+                          ),
+                          Text('Height:'),
+                          Text('${currentheight}m')
+                        ],
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Bmipage()),
-                        );
-                        updatePage(); // Trigger UI refresh after returning
-                      },
-                      child: Text('Edit'),
-                      color: Colors.green,
                     ),
-                  )
-                ],
-              ),
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                            colors: [Colors.black, Colors.black12],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.accessibility,
+                            size: 60,
+                          ),
+                          Text('Weight:'),
+                          Text(currentweight.toString() + 'Kg')
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: MaterialButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Bmipage()),
+                      );
+                      updatePage(); // Trigger UI refresh after returning
+                    },
+                    child: Text('Edit'),
+                    color: Colors.green,
+                  ),
+                )
+              ],
             ),
           ),
           Padding(

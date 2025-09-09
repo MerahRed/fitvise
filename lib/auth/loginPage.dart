@@ -1,6 +1,10 @@
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:FitVise/auth/registerPage.dart';
+import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
+import 'package:FitVise/Pages/bmi.dart';
+import 'package:FitVise/Pages/home.dart';
+import 'package:FitVise/Global.dart';
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -24,6 +28,7 @@ class _LoginpageState extends State<Loginpage> {
 
     try {
       await authService.signInWithEmailPassword(email, password);
+      await loadUserInfo();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
