@@ -1,37 +1,21 @@
+import 'package:FitVise/Pages/SEGAK/segakPage.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/utilities/iconCard.dart';
 
-class Fitpage extends StatelessWidget {
+class Fitpage extends StatefulWidget {
   const Fitpage({super.key});
 
+  @override
+  State<Fitpage> createState() => _FitpageState();
+}
+
+class _FitpageState extends State<Fitpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
-          /*Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black87,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.accessibility_rounded,
-                        color: Colors.greenAccent, size: 200),
-                    Divider(
-                      color: Colors.white10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),*/
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
@@ -80,6 +64,60 @@ class Fitpage extends StatelessWidget {
                       details: exercise[exerciseIndex][2][3],
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+
+          //                    SEGAK
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Segakpage()),
+                  );
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                        colors: [Colors.green.shade900, Colors.green.shade300],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight)),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.data_saver_off_rounded,
+                            size: 40,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Measure your Health"),
+                          Text(
+                            "SEGAK",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 30),
+                          ),
+                        ],
+                      ),
+                      Image.asset(
+                        'lib/assets/Segak.png',
+                        scale: 5,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

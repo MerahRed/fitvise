@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:FitVise/Global.dart';
 
-class pushupPage extends StatefulWidget {
-  // final String exerciseName;
-  // final String exerciseImage;
-  // final String exerciseDescription;
-  // final bool isDiet;
-  // const InfoPage({
-  //   super.key,
-  //   required this.exerciseName,
-  //   required this.exerciseImage,
-  //   required this.exerciseDescription,
-  //   required this.isDiet,
-  // });
+class SitupPage extends StatefulWidget {
+  const SitupPage({super.key});
 
   @override
-  State<pushupPage> createState() => _pushupPageState();
+  State<SitupPage> createState() => _SitupPageState();
 }
 
-class _pushupPageState extends State<pushupPage> {
+class _SitupPageState extends State<SitupPage> {
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +18,7 @@ class _pushupPageState extends State<pushupPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Push Up",
+          "Sit Up",
           style: TextStyle(fontWeight: FontWeight.bold),
         ), // Display exercise name
         centerTitle: true,
@@ -36,20 +28,21 @@ class _pushupPageState extends State<pushupPage> {
           padding: const EdgeInsets.all(20),
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "lib/assets/bear.gif",
+                  "lib/assets/SIT_UP.gif",
                   scale: 3,
                 ),
                 Text(
-                  "Push Up",
+                  "Sit Up",
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,
                   endTime: DateTime.now().add(
                     Duration(
-                      seconds: 60,
+                      seconds: 5,
                     ),
                   ),
                   timeTextStyle: TextStyle(
@@ -64,11 +57,29 @@ class _pushupPageState extends State<pushupPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(20),
                                   child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
-                                      Text("How many push up have you done?"),
-                                      TextField(),
+                                      Text(
+                                        "How many sit up have you done?",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      SizedBox(height: 50),
+                                      TextField(
+                                        controller: _controller,
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                            labelText: "Enter number",
+                                            border: OutlineInputBorder()),
+                                      ),
+                                      SizedBox(height: 50),
                                       ElevatedButton(
-                                        onPressed: () => Navigator.pop(context),
+                                        onPressed: () {
+                                          setState(() {
+                                            segak["Sit up"] = _controller.text;
+                                            Navigator.pop(context);
+                                          });
+                                        },
                                         child: Text("Confirm"),
                                       )
                                     ],
@@ -78,30 +89,11 @@ class _pushupPageState extends State<pushupPage> {
                             ));
                   },
                 ),
+                SizedBox(height: 50),
+                Text(segak.toString()),
               ],
             ),
           )),
     );
   }
 }
-
-
-/*
-          MaterialButton(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => InfoPage(
-                          exerciseName: "s",
-                          exerciseImage: 'lib/assets/walking.jpeg',
-                          exerciseDescription: 'exerciseDescription',
-                          isDiet: false,
-                        )),
-              );
-            },
-            color: Colors.green,
-            child: Text('Edit'),
-          ),
-
-*/

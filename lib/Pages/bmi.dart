@@ -121,6 +121,7 @@ class _BmipageState extends State<Bmipage> {
                   padding: const EdgeInsets.only(left: 100, right: 100),
                   child: TextField(
                     controller: _heightController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: '(Cm)',
@@ -142,6 +143,7 @@ class _BmipageState extends State<Bmipage> {
                   padding: const EdgeInsets.only(left: 100, right: 100),
                   child: TextField(
                     controller: _weightController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: '(Kg)',

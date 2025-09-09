@@ -1,4 +1,4 @@
-import 'package:FitVise/Pages/SEGAK/pushupPage.dart';
+import 'package:FitVise/Pages/SEGAK/pushup.dart';
 import 'package:flutter/material.dart';
 
 class Segakpage extends StatelessWidget {
@@ -20,6 +20,7 @@ class Segakpage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     "lib/assets/bear.gif",
@@ -29,26 +30,36 @@ class Segakpage extends StatelessWidget {
                     "Start measuring your body health",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 50),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => pushupPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => pushupPage()));
                     },
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue[300]),
+                          color: Colors.green[300]),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Continue', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                            Text(
+                              'Continue',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 50),
                 ],
               ),
             )));

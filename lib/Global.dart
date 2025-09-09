@@ -13,6 +13,37 @@ String user_status = "Normal";
 
 final date = DateTime.now();
 
+/*
+🟢 Duduk Melunjur (Tanpa Kotak)
+
+Cara:
+
+1.Pelajar duduk di lantai, kaki lurus, rapat & tapak kaki tegak.
+
+2.Tangan lurus ke depan, cuba capai hujung jari kaki.
+
+3.Catat tahap capaiannya.
+
+Skala markah cadangan:
+
+5 markah: Jari tangan melepasi jari kaki (sampai ke tapak kaki atau lebih).
+
+4 markah: Jari tangan tepat sampai hujung jari kaki.
+
+3 markah: Jari tangan kurang sedikit (sekitar buku lali).
+
+2 markah: Jari tangan hanya sampai ke pertengahan betis.
+
+1 markah: Jari tangan hanya sampai sekitar lutut.
+*/
+
+Map segak = {
+  "Push up": 0,
+  "Sit up": 0, // ringkuk tubi separa
+  "Step test": 0, // naik turun bangku
+  "Sit and Reach": 0, // jangakuan melunjur : the value is based on mark
+};
+
 List exercise = [
   [
     [

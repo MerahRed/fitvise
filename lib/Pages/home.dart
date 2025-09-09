@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
 import 'package:intl/intl.dart';
-import 'flexibles/infoPage.dart';
-import 'SEGAK/pushupPage.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({super.key});
@@ -126,59 +124,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
 
-          //                    SEGAK
-          Padding(
-            padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Segakpage()),
-                  );
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(colors: [
-                      Colors.white54,
-                      Colors.white12
-                    ], begin: Alignment.center, end: Alignment.bottomRight)),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.data_saver_off_rounded,
-                            size: 40,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Measure your Health"),
-                          Text(
-                            "SEGAK",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 30),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        'lib/assets/Segak.png',
-                        scale: 5,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+
 
           //                    EXCERCISE
           Padding(
