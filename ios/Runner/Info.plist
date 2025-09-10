@@ -45,6 +45,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This app uses speech to guide exercises</string>
+
 </dict>
 </plist>
 <key>NSAppTransportSecurity</key>

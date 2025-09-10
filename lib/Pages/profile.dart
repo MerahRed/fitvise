@@ -47,7 +47,6 @@ class _ProfilepageState extends State<Profilepage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +65,17 @@ class _ProfilepageState extends State<Profilepage> {
             child: Column(
               children: [
                 Text(
-                  currentEmail,
+                  currentUsername,
                   style: TextStyle(
                       color: Colors.greenAccent,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
+                ),
+                Text(
+                  currentEmail,
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
                 ),
                 Text(
                   status,
@@ -79,11 +84,6 @@ class _ProfilepageState extends State<Profilepage> {
                     color: Colors.grey,
                   ),
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.edit,
-                    )),
                 SizedBox(
                   height: 50,
                 ),
@@ -147,8 +147,8 @@ class _ProfilepageState extends State<Profilepage> {
                       );
                       updatePage(); // Trigger UI refresh after returning
                     },
-                    child: Text('Edit'),
                     color: Colors.green,
+                    child: Text('Edit'),
                   ),
                 )
               ],
@@ -161,12 +161,6 @@ class _ProfilepageState extends State<Profilepage> {
                   ListTile(
                     leading: Icon(Icons.contact_mail),
                     title: Text('Contact Us'),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
                     trailing: Icon(Icons.arrow_forward_ios_rounded),
                     onTap: () {},
                   ),

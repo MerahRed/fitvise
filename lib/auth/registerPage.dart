@@ -13,12 +13,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final authService = AuthService();
 
   //text controllers
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPaswordController = TextEditingController();
 
   //Sign Up
   void signUp() async {
+    final username = _usernameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     final confirmPassword = _confirmPaswordController.text.trim();
@@ -31,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      await authService.signUpWithEmailPassword(email, password);
+      await authService.signUpWithEmailPassword(email, password, username);
       Navigator.pop(context); // back to login
     } catch (e) {
       if (mounted) {
@@ -72,6 +74,10 @@ class _RegisterPageState extends State<RegisterPage> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
             ),
             SizedBox(height: 30),
+            TextField(
+              decoration: InputDecoration(labelText: "Username"),
+              controller: _usernameController,
+            ),
             TextField(
               decoration: InputDecoration(labelText: "Email"),
               controller: _emailController,

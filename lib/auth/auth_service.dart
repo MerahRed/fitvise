@@ -21,10 +21,10 @@ class AuthService {
 
   // Sign up
   Future<AuthResponse> signUpWithEmailPassword(
-      String email, String password) async {
+      String email, String password, String username) async {
     try {
       currentEmail = email;
-      username = email;
+      currentUsername = username;
       return await _supabase.auth.signUp(
         email: email,
         password: password,
@@ -39,7 +39,7 @@ class AuthService {
   Future<void> signOut() async {
     await _supabase.auth.signOut();
     currentEmail = "";
-    username = "user";
+    currentUsername = "user";
     currentheight = 0;
     currentweight = 0;
     user_status = "Normal";

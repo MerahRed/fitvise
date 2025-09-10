@@ -36,7 +36,7 @@ class Segakpage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => pushupPage()));
+                              builder: (context) => PushupPage()));
                     },
                     child: Container(
                       decoration: BoxDecoration(

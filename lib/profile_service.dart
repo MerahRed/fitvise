@@ -10,7 +10,7 @@ Future<void> saveUserInfo() async {
   await supabase.from('profiles').upsert({
     'id': user.id,
     'email': currentEmail,
-    'username': currentEmail, //username
+    'username': currentUsername, //username
     'height': currentheight,
     'weight': currentweight,
     'status': user_status,
@@ -26,7 +26,7 @@ Future<void> loadUserInfo() async {
 
   if (response != null) {
     currentEmail = response['email'] ?? "";
-    username = response['username'] ?? "user";
+    currentUsername = response['username'] ?? "user";
     currentheight = response['height'];
     currentweight = response['weight'];
     user_status = response['status'] ?? "Normal";

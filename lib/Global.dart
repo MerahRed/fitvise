@@ -8,7 +8,7 @@ int? currentweight = 0;
 int targetKg = 0;
 
 String currentEmail = AuthService().getCurrentUserEmail().toString();
-String username = "user";
+String currentUsername = "user";
 String user_status = "Normal";
 
 final date = DateTime.now();
