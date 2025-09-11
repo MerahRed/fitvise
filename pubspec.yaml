@@ -16,6 +16,7 @@ dependencies:
   supabase_flutter: ^2.9.1
   flutter_timer_countdown: ^1.0.7
   flutter_tts: ^4.2.3
+  audioplayers: ^6.5.1
 
 
 dev_dependencies:
@@ -34,6 +35,8 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
   assets:
-    - lib/assets/
+    - lib/assets/        # keep this for your GIFs
+    - assets/sounds/     # add this for audio
+
 
 

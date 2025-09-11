@@ -1,4 +1,6 @@
 import 'package:FitVise/Pages/SEGAK/situp.dart';
+import 'package:FitVise/main.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';
@@ -25,12 +27,20 @@ class _PushupPageState extends State<PushupPage> {
     _startVoiceCountdown();
   }
 
+  @override
+  void dispose() {
+    flutterTts.stop();
+    _controller.dispose();
+    super.dispose();
+  }
+
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
   }
 
   Future<void> _startVoiceCountdown() async {
+    if (!mounted) return; // Check if the widget is still mounted (running)
     setState(() {
       _countdownText = "Get ready for push up...";
     });
@@ -39,6 +49,7 @@ class _PushupPageState extends State<PushupPage> {
 
     // Countdown 3 → 2 → 1
     for (int i = 3; i > 0; i--) {
+      if (!mounted) return;
       setState(() {
         _countdownText = i.toString();
       });
@@ -47,6 +58,7 @@ class _PushupPageState extends State<PushupPage> {
     }
 
     // Start!
+    if (!mounted) return;
     setState(() {
       _countdownText = "Start!";
     });
@@ -67,6 +79,16 @@ class _PushupPageState extends State<PushupPage> {
           "Push Up",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainApp())); // should be pushupPage()
+          },
+        ),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -85,7 +107,7 @@ class _PushupPageState extends State<PushupPage> {
 
               const SizedBox(height: 30),
 
-              // 👇 Show countdown text until exercise starts
+              // Show countdown
               if (!_exerciseStarted)
                 Text(
                   _countdownText,
@@ -96,12 +118,14 @@ class _PushupPageState extends State<PushupPage> {
                   ),
                 ),
 
-              // 👇 After countdown, show 60-sec timer
+              // After countdown
               if (_exerciseStarted)
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,
                   endTime: DateTime.now().add(
-                    const Duration(seconds: 60),
+                    const Duration(seconds: 3),
+
+                    /// EDIT DURATION HERE ///
                   ),
                   timeTextStyle: const TextStyle(
                     fontSize: 50,
@@ -109,6 +133,7 @@ class _PushupPageState extends State<PushupPage> {
                     color: Colors.black,
                   ),
                   onEnd: () {
+                    flutterTts.speak("How many push up have you done?");
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -140,7 +165,8 @@ class _PushupPageState extends State<PushupPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => SitupPage(),
+                                          builder: (context) =>
+                                              SitupPage(), // Navigate to SitupPage
                                         ),
                                       );
                                     });

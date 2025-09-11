@@ -1,5 +1,7 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
 import 'package:FitVise/Pages/SEGAK/situp.dart';
+import 'package:FitVise/Pages/SEGAK/step_test.dart';
+import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';
@@ -26,12 +28,20 @@ class _SitupPageState extends State<SitupPage> {
     _startVoiceCountdown();
   }
 
+  @override
+  void dispose() {
+    flutterTts.stop();
+    _controller.dispose();
+    super.dispose();
+  }
+
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
   }
 
   Future<void> _startVoiceCountdown() async {
+    if (!mounted) return;
     setState(() {
       _countdownText = "Get ready for sit up...";
     });
@@ -40,6 +50,7 @@ class _SitupPageState extends State<SitupPage> {
 
     // Countdown 3 → 2 → 1
     for (int i = 3; i > 0; i--) {
+      if (!mounted) return;
       setState(() {
         _countdownText = i.toString();
       });
@@ -48,12 +59,14 @@ class _SitupPageState extends State<SitupPage> {
     }
 
     // Start!
+    if (!mounted) return;
     setState(() {
       _countdownText = "Start!";
     });
     await flutterTts.speak("Start!");
 
     // Show the timer
+    if (!mounted) return;
     setState(() {
       _exerciseStarted = true;
     });
@@ -68,6 +81,16 @@ class _SitupPageState extends State<SitupPage> {
           "Sit Up",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MainApp())); // should be pushupPage()
+          },
+        ),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -77,7 +100,7 @@ class _SitupPageState extends State<SitupPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("lib/assets/bear.gif", scale: 3),
+              Image.asset("lib/assets/SIT_UP.gif", scale: 3),
               const SizedBox(height: 10),
               const Text(
                 "Sit Up",
@@ -102,7 +125,9 @@ class _SitupPageState extends State<SitupPage> {
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,
                   endTime: DateTime.now().add(
-                    const Duration(seconds: 60),
+                    const Duration(seconds: 3),
+
+                    /// EDIT DURATION HERE ///
                   ),
                   timeTextStyle: const TextStyle(
                     fontSize: 50,
@@ -110,6 +135,7 @@ class _SitupPageState extends State<SitupPage> {
                     color: Colors.black,
                   ),
                   onEnd: () {
+                    flutterTts.speak("How many sit up have you done?");
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -141,7 +167,8 @@ class _SitupPageState extends State<SitupPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => PushupPage(),
+                                          builder: (context) =>
+                                              steptestPage(), // Navigate to steptestPage
                                         ),
                                       );
                                     });
@@ -158,6 +185,7 @@ class _SitupPageState extends State<SitupPage> {
                 ),
 
               const SizedBox(height: 50),
+              Text(segak.toString())
             ],
           ),
         ),

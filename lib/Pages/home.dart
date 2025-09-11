@@ -8,7 +8,7 @@ import 'package:FitVise/main.dart';
 import 'package:intl/intl.dart';
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -31,6 +31,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     loadData();
+    calculateTarget();
   }
 
   Future<void> loadData() async {
@@ -38,6 +39,31 @@ class _HomepageState extends State<Homepage> {
     setState(() {
       loading = false;
     });
+  }
+
+  Future<void> calculateTarget() async {
+    final result = currentweight! / currentheight!;
+    double bmiTarget = 0;
+
+    if (currentheight != null && currentweight != null) {
+      if (currentheight != null &&
+          currentweight != null &&
+          currentheight! > 0 &&
+          currentweight! > 0) {
+        double heightInMeters = currentheight! / 100;
+        double heightSquared = heightInMeters * heightInMeters;
+        double result = currentweight! / heightSquared;
+
+        if (result < 18.5) {
+          bmiTarget = 18.6;
+        }
+        if (result > 25) {
+          bmiTarget = 24.9;
+        }
+        double target = heightSquared * bmiTarget;
+        targetKg = target.round();
+      }
+    }
   }
 
   // 0- underweight, 1- normal, 2- overweight, 3- obesity
