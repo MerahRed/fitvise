@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
+import 'package:FitVise/Pages/SEGAK/sitandreach.dart';
 import 'package:FitVise/Pages/SEGAK/situp.dart';
 import 'package:FitVise/Pages/SEGAK/step_test.dart';
 import 'package:FitVise/main.dart';
@@ -38,6 +39,11 @@ class _SitupPageState extends State<SitupPage> {
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
+    flutterTts.setIosAudioCategory(
+      IosTextToSpeechAudioCategory.ambient,
+      [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
+    );
+    flutterTts.setVolume(15);
   }
 
   Future<void> _startVoiceCountdown() async {
@@ -74,119 +80,126 @@ class _SitupPageState extends State<SitupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Sit Up",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-                context,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text(
+            "Sit Up",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (context) => MainApp())); // should be pushupPage()
-          },
+                  builder: (context) => MainApp(),
+                ),
+                (_) => false,
+              );
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.black87,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.black87,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("lib/assets/SIT_UP.gif", scale: 3),
-              const SizedBox(height: 10),
-              const Text(
-                "Sit Up",
-                style: TextStyle(color: Colors.black, fontSize: 30),
-              ),
-
-              const SizedBox(height: 30),
-
-              // 👇 Show countdown text until exercise starts
-              if (!_exerciseStarted)
-                Text(
-                  _countdownText,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("lib/assets/SIT_UP.gif", scale: 3),
+                const SizedBox(height: 10),
+                const Text(
+                  "Sit Up",
+                  style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
 
-              // 👇 After countdown, show 60-sec timer
-              if (_exerciseStarted)
-                TimerCountdown(
-                  format: CountDownTimerFormat.secondsOnly,
-                  endTime: DateTime.now().add(
-                    const Duration(seconds: 3),
+                const SizedBox(height: 30),
 
-                    /// EDIT DURATION HERE ///
+                // 👇 Show countdown text until exercise starts
+                if (!_exerciseStarted)
+                  Text(
+                    _countdownText,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                  timeTextStyle: const TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  onEnd: () {
-                    flutterTts.speak("How many sit up have you done?");
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        actions: [
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Text(
-                                  "How many sit up have you done?",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                const SizedBox(height: 20),
-                                TextField(
-                                  controller: _controller,
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    labelText: "Enter number",
-                                    border: OutlineInputBorder(),
+
+                // 👇 After countdown, show 60-sec timer
+                if (_exerciseStarted)
+                  TimerCountdown(
+                    format: CountDownTimerFormat.secondsOnly,
+                    endTime: DateTime.now().add(
+                      const Duration(seconds: 5),
+
+                      /// EDIT DURATION HERE ///
+                    ),
+                    timeTextStyle: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    onEnd: () {
+                      flutterTts.speak("How many sit up have you done?");
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => AlertDialog(
+                          actions: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Text(
+                                    "How many sit up have you done?",
+                                    style: TextStyle(fontSize: 20),
                                   ),
-                                ),
-                                const SizedBox(height: 20),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      segak["Sit up"] = _controller.text;
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              steptestPage(), // Navigate to steptestPage
-                                        ),
-                                      );
-                                    });
-                                  },
-                                  child: const Text("Confirm"),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),
-
-              const SizedBox(height: 50),
-              Text(segak.toString())
-            ],
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: _controller,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      labelText: "Enter number",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        if (_controller.text.isNotEmpty) {
+                                          segak["Sit up"] = _controller.text;
+                                          Navigator.pop(context);
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Sitandreach(), // Navigate to steptestPage
+                                            ),
+                                            (_) => false,
+                                          );
+                                        }
+                                      });
+                                    },
+                                    child: const Text("Confirm"),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),

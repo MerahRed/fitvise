@@ -1,6 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/situp.dart';
 import 'package:FitVise/main.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';
@@ -37,6 +36,11 @@ class _PushupPageState extends State<PushupPage> {
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
+    flutterTts.setIosAudioCategory(
+      IosTextToSpeechAudioCategory.ambient,
+      [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
+    );
+    flutterTts.setVolume(15);
   }
 
   Future<void> _startVoiceCountdown() async {
@@ -72,118 +76,126 @@ class _PushupPageState extends State<PushupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Push Up",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text(
+            "Push Up",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => MainApp())); // should be pushupPage()
-          },
+                MaterialPageRoute(builder: (context) => MainApp()),
+                (_) => false,
+              );
+            },
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.black87,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.black87,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("lib/assets/bear.gif", scale: 3),
-              const SizedBox(height: 10),
-              const Text(
-                "Push Up",
-                style: TextStyle(color: Colors.black, fontSize: 30),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Show countdown
-              if (!_exerciseStarted)
-                Text(
-                  _countdownText,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("lib/assets/bear.gif", scale: 3),
+                const SizedBox(height: 10),
+                const Text(
+                  "Push Up",
+                  style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
 
-              // After countdown
-              if (_exerciseStarted)
-                TimerCountdown(
-                  format: CountDownTimerFormat.secondsOnly,
-                  endTime: DateTime.now().add(
-                    const Duration(seconds: 3),
+                const SizedBox(height: 30),
 
-                    /// EDIT DURATION HERE ///
+                // Show countdown
+                if (!_exerciseStarted)
+                  Text(
+                    _countdownText,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                  timeTextStyle: const TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  onEnd: () {
-                    flutterTts.speak("How many push up have you done?");
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        actions: [
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Text(
-                                  "How many push up have you done?",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                const SizedBox(height: 20),
-                                TextField(
-                                  controller: _controller,
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    labelText: "Enter number",
-                                    border: OutlineInputBorder(),
+
+                // After countdown
+                if (_exerciseStarted)
+                  TimerCountdown(
+                    format: CountDownTimerFormat.secondsOnly,
+                    endTime: DateTime.now().add(
+                      const Duration(seconds: 5),
+
+                      /// EDIT DURATION HERE ///
+                    ),
+                    timeTextStyle: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    onEnd: () {
+                      flutterTts.speak("How many push up have you done?");
+                      showDialog(
+                        context: context,
+                        barrierDismissible:
+                            false, // Prevent closing by tapping outside
+                        builder: (context) => AlertDialog(
+                          actions: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Text(
+                                    "How many push up have you done?",
+                                    style: TextStyle(fontSize: 20),
                                   ),
-                                ),
-                                const SizedBox(height: 20),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      segak["Push up"] = _controller.text;
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SitupPage(), // Navigate to SitupPage
-                                        ),
-                                      );
-                                    });
-                                  },
-                                  child: const Text("Confirm"),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: _controller,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      labelText: "Enter number",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_controller.text.isNotEmpty) {
+                                        setState(() {
+                                          segak["Push up"] = _controller.text;
+                                          Navigator.pop(context);
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => SitupPage(),
+                                            ),
+                                            (_) => false,
+                                          );
+                                        });
+                                      }
+                                    },
+                                    child: const Text("Confirm"),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
 
-              const SizedBox(height: 50),
-            ],
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/utilities/iconCard.dart';
+import 'package:FitVise/utilities/icon_card.dart';
 
 class Healthpage extends StatelessWidget {
   const Healthpage({super.key});
@@ -150,7 +150,7 @@ class Healthpage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Icon(Icons.search, size: 50),
-                          Text('Disease Finder'),
+                          Text('Disease Facts'),
                         ],
                       ),
                     ),

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:FitVise/Pages/SEGAK/segakPage.dart';
 import 'package:FitVise/profile_Service.dart';
+import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
@@ -173,6 +173,19 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
 
+          // TESTING AREA
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+            child: Textcard(
+              endColor: Colors.green,
+              startColor: Colors.blue,
+              title: "Welcome to FitVise!",
+              description:
+                  "'Your personal fitness companion. Let's embark on a journey to a healthier, fitter you!'",
+            ),
+          ),
+
           //                    EXCERCISE
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
@@ -180,14 +193,22 @@ class _HomepageState extends State<Homepage> {
               onTap: () {
                 setState(() {
                   pageIndex = 1;
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => MainApp()),
+                    (_) => false,
                   );
                 });
               },
               child: Container(
                 decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white12.withValues(),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
                         colors: [Colors.teal, Colors.tealAccent.shade400],
@@ -235,14 +256,22 @@ class _HomepageState extends State<Homepage> {
               onTap: () {
                 setState(() {
                   pageIndex = 2;
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => MainApp()),
+                    (_) => false,
                   );
                 });
               },
               child: Container(
                 decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white12.withValues(),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(20),
                     gradient: LinearGradient(
                         colors: [Colors.indigo.shade600, Colors.blueAccent],

@@ -56,19 +56,17 @@ class _RegisterPageState extends State<RegisterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Welcome to ",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text("Welcome to ", style: TextStyle(fontSize: 40)),
                 Text(
                   "FitVise",
                   style: TextStyle(
-                      color: Colors.greenAccent,
-                      fontSize: 20,
+                      color: Colors.green.shade300,
+                      fontSize: 40,
                       fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 70),
             Text(
               "Sign Up",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
@@ -93,9 +91,38 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             //SignUp
             SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: signUp,
-              child: const Text('Sign Up'),
+            GestureDetector(
+              onTap: () {
+                signUp();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [Colors.green.shade400, Colors.green.shade700],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: 32),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          letterSpacing: 1.1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 10),
           ],

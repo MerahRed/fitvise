@@ -73,30 +73,22 @@ class _MainAppState extends State<MainApp> {
 
         bottomNavigationBar: BottomNavigationBar(
           onTap: (page) {
-            // page is current page index
             updatePage(page);
           },
           currentIndex: pageIndex,
           items: [
-            //home
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
-
-            //fit
             BottomNavigationBarItem(
               icon: Icon(Icons.fitness_center),
               label: 'Fitness',
             ),
-
-            //health
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
               label: 'Health',
             ),
-
-            //profile
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),

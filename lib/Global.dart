@@ -14,30 +14,28 @@ String user_status = "Normal";
 final date = DateTime.now();
 
 /*
-🟢 Duduk Melunjur (Tanpa Kotak)
 
-Cara:
 
-1.Pelajar duduk di lantai, kaki lurus, rapat & tapak kaki tegak.
+Sit and Reach
 
-2.Tangan lurus ke depan, cuba capai hujung jari kaki.
+Procedure:
 
-3.Catat tahap capaiannya.
+1. Student sits on the floor with legs straight, feet together, and soles upright.
+2. Arms extended forward, try to reach the toes.
+3. Record the furthest point reached.
 
-Skala markah cadangan:
+Suggested Scoring Scale:
 
-5 markah: Jari tangan melepasi jari kaki (sampai ke tapak kaki atau lebih).
+ 5 points: Fingers pass beyond the toes (reaching the feet or further).
+ 4 points: Fingers exactly reach the tips of the toes.
+ 3 points: Fingers slightly short (around the ankles).
+ 2 points: Fingers only reach the middle of the shins.
+ 1 point: Fingers only reach around the knees.
 
-4 markah: Jari tangan tepat sampai hujung jari kaki.
 
-3 markah: Jari tangan kurang sedikit (sekitar buku lali).
-
-2 markah: Jari tangan hanya sampai ke pertengahan betis.
-
-1 markah: Jari tangan hanya sampai sekitar lutut.
 */
 
-Map segak = {
+Map<String, dynamic> segak = {
   "Push up": 0,
   "Sit up": 0, // ringkuk tubi separa
   "Step test": 0, // naik turun bangku

@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
+import 'package:FitVise/Pages/SEGAK/resultPage.dart';
 import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
@@ -85,17 +86,18 @@ class _steptestPageState extends State<steptestPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Sit Up",
+          "Step Test",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        leading: BackButton(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
           color: Colors.white,
           onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MainApp())); // should be pushupPage()
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MainApp()),
+              (_) => false,
+            );
           },
         ),
         centerTitle: true,
@@ -110,7 +112,7 @@ class _steptestPageState extends State<steptestPage> {
               Image.asset("lib/assets/SIT_UP.gif", scale: 3),
               const SizedBox(height: 10),
               const Text(
-                "Sit Up",
+                "Step Test",
                 style: TextStyle(color: Colors.black, fontSize: 30),
               ),
 
@@ -132,7 +134,7 @@ class _steptestPageState extends State<steptestPage> {
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,
                   endTime: DateTime.now().add(
-                    const Duration(seconds: 3),
+                    const Duration(seconds: 5),
 
                     /// EDIT DURATION HERE ///
                   ),
@@ -145,6 +147,7 @@ class _steptestPageState extends State<steptestPage> {
                     audioPlayer.stop();
                     flutterTts.speak("calculate your pulse rate");
                     showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) => AlertDialog(
                         actions: [
@@ -169,17 +172,20 @@ class _steptestPageState extends State<steptestPage> {
                                 const SizedBox(height: 20),
                                 ElevatedButton(
                                   onPressed: () {
-                                    audioPlayer.stop();
-                                    setState(() {
-                                      segak["Sit up"] = _controller.text;
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PushupPage(),
-                                        ),
-                                      );
-                                    });
+                                    if (_controller.text.isNotEmpty) {
+                                      audioPlayer.stop();
+                                      setState(() {
+                                        segak["Step test"] = _controller.text;
+                                        Navigator.pop(context);
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Resultpage(),
+                                          ),
+                                          (_) => false,
+                                        );
+                                      });
+                                    }
                                   },
                                   child: const Text("Confirm"),
                                 )
@@ -191,9 +197,6 @@ class _steptestPageState extends State<steptestPage> {
                     );
                   },
                 ),
-
-              const SizedBox(height: 50),
-              Text(segak.toString())
             ],
           ),
         ),

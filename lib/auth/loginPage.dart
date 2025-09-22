@@ -2,9 +2,6 @@ import 'package:FitVise/auth/auth_service.dart';
 import 'package:FitVise/auth/registerPage.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
-import 'package:FitVise/Pages/bmi.dart';
-import 'package:FitVise/Pages/home.dart';
-import 'package:FitVise/Global.dart';
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -52,19 +49,17 @@ class _LoginpageState extends State<Loginpage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Welcome back to ",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text("Welcome back to ", style: TextStyle(fontSize: 40)),
                   Text(
                     "FitVise",
                     style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 20,
+                        color: Colors.green.shade400,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 70),
               Text(
                 "Log In",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
@@ -80,11 +75,40 @@ class _LoginpageState extends State<Loginpage> {
                 decoration: InputDecoration(labelText: "Password"),
                 controller: _passwordController,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               //login
-              ElevatedButton(
-                onPressed: login,
-                child: const Text('Login'),
+              GestureDetector(
+                onTap: () {
+                  login();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      colors: [Colors.green.shade400, Colors.green.shade700],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 14.0, horizontal: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Log In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            letterSpacing: 1.1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 10),
               GestureDetector(
@@ -106,7 +130,7 @@ class _LoginpageState extends State<Loginpage> {
                             decoration: TextDecoration.underline),
                       )
                     ],
-                  )))
+                  ))),
             ],
           ),
         ),

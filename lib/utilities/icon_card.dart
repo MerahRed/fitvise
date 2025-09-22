@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../Pages/flexibles/infoPage.dart';
 
+// ignore: camel_case_types
 class itemCard extends StatelessWidget {
   final String cardIcon;
   final String title;
   final String description;
+  // ignore: prefer_typing_uninitialized_variables
   final cardColor;
   final String exerciseImage;
   final String details;
@@ -51,7 +53,7 @@ class itemCard extends StatelessWidget {
           },
           trailing: Icon(Icons.arrow_forward_ios_rounded),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           tileColor: Colors.white24,
         ),
       ],

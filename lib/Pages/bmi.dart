@@ -71,11 +71,12 @@ class _BmipageState extends State<Bmipage> {
         currentheight = int.tryParse(height0);
         user_status = status;
         saveUserInfo(); // save result to supabase
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => const MainApp(),
           ),
+          (_) => false,
         );
       },
     );
