@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/segakPage.dart';
+import 'package:FitVise/Pages/bmi.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -80,63 +81,130 @@ class _FitpageState extends State<Fitpage> {
               child: Textcard(
                 title: "Lets Improve our physical body!",
                 description: "Start your fitness journey now",
-                startColor: Colors.blue.shade300,
-                endColor: Colors.blueAccent,
+                startColor: Colors.blueAccent,
+                endColor: Colors.black12,
               ),
             ),
 
             //                    SEGAK
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Segakpage()),
-                    );
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(colors: [
-                        Colors.green.shade900,
-                        Colors.green.shade300
-                      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.data_saver_off_rounded,
-                              size: 40,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("Measure your Health"),
-                            Text(
-                              "SEGAK",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 30),
-                            ),
-                          ],
+                    padding:
+                        const EdgeInsets.only(top: 20.0, left: 20, right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Segakpage()),
+                          );
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                                colors: [Colors.black87, Colors.green.shade700],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.data_saver_off_rounded,
+                                    size: 40,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text("Measure your Health via"),
+                                  Text(
+                                    "SEGAK",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  ),
+                                ],
+                              ),
+                              Image.asset(
+                                'lib/assets/Segak.png',
+                                scale: 5,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
                         ),
-                        Image.asset(
-                          'lib/assets/Segak.png',
-                          scale: 5,
-                          color: Colors.white,
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+                //                       BMI
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20.0, left: 10, right: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Bmipage()),
+                          );
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                                colors: [Colors.black87, Colors.grey],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight)),
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.monitor_weight_outlined,
+                                    size: 40,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text("Check your BMI with"),
+                                  Text(
+                                    "BMI Calculator",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  ),
+                                ],
+                              ),
+                              Icon(
+                                Icons.calculate_rounded,
+                                size: 100,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

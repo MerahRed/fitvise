@@ -1,8 +1,8 @@
 import 'package:FitVise/Global.dart';
+import 'package:FitVise/Pages/flexibles/infoPage.dart';
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
-import 'bmi.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({super.key});
@@ -20,9 +20,9 @@ class _ProfilepageState extends State<Profilepage> {
 
   void updatePage() {
     setState(() {
-      height = currentheight;
-      weight = currentweight;
-      status = user_status;
+      height = currentHeight;
+      weight = currentWeight;
+      status = userStatus;
     });
   }
 
@@ -52,107 +52,122 @@ class _ProfilepageState extends State<Profilepage> {
     return Scaffold(
       body: ListView(
         children: [
-          SizedBox(
-            height: 50,
-          ),
-          Icon(
-            Icons.person,
-            size: 70,
-            color: Colors.greenAccent,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+          Center(
             child: Column(
               children: [
-                Text(
-                  currentUsername,
-                  style: TextStyle(
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
-                ),
-                Text(
-                  currentEmail,
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                Text(
-                  status,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
-                ),
                 SizedBox(
                   height: 50,
                 ),
-                SizedBox(height: 50),
+                Text(
+                  currentUsername,
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  currentEmail,
+                  style: TextStyle(fontSize: 20, color: Colors.grey[600]),
+                ),
+                Icon(
+                  Icons.accessibility_new_rounded,
+                  size: 300,
+                  color: userStatus == "Normal"
+                        ? Colors.green
+                        : userStatus == "Obesity"
+                            ? Colors.red
+                            : Colors.grey,
+                ),
+                Text(
+                  '-$userStatus-',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: userStatus == "Normal"
+                        ? Colors.green
+                        : userStatus == "Obesity"
+                            ? Colors.red
+                            : Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    //    height
                     Container(
-                      width: 150,
-                      height: 150,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            colors: [Colors.black, Colors.black12],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white10,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.height_rounded,
-                            size: 60,
-                          ),
-                          Text('Height:'),
-                          Text('${currentheight}m')
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.height,
+                              size: 100,
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                Text(
+                                  "Height",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "$currentHeight cm",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    //        mass
                     Container(
-                      width: 150,
-                      height: 150,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            colors: [Colors.black, Colors.black12],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white10,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.accessibility,
-                            size: 60,
-                          ),
-                          Text('Weight:'),
-                          Text(currentweight.toString() + 'Kg')
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.speed,
+                              size: 100,
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              children: [
+                                Text(
+                                  "Weight",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "$currentWeight kg",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: MaterialButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Bmipage()),
-                      );
-                      updatePage(); // Trigger UI refresh after returning
-                    },
-                    color: Colors.green,
-                    child: Text('Edit'),
-                  ),
-                )
               ],
             ),
+          ),
+          SizedBox(height: 20),
+          Divider(
+            indent: 20,
+            endIndent: 20,
+            color: Colors.white24,
+            thickness: 1,
           ),
           Padding(
               padding: const EdgeInsets.all(8.0),
@@ -162,6 +177,37 @@ class _ProfilepageState extends State<Profilepage> {
                     leading: Icon(Icons.contact_mail),
                     title: Text('Contact Us'),
                     trailing: Icon(Icons.arrow_forward_ios_rounded),
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InfoPage(
+                                exerciseName: "Contact Us",
+                                exerciseImage: "",
+                                exerciseDescription:
+                                    "Contact us at Innovvice5001@gmail.com",
+                                isDiet: false),
+                          ),
+                          (_) => false);
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.person_2),
+                    title: Row(
+                      children: [
+                        Text('Apply Teacher Account'),
+                        if (!isTeacher)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Icon(
+                              Icons.stars_rounded,
+                              color: Colors.greenAccent,
+                              size: 20,
+                            ),
+                          ),
+                      ],
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios_rounded),
                     onTap: () {},
                   ),
                   ListTile(
@@ -170,52 +216,75 @@ class _ProfilepageState extends State<Profilepage> {
                     trailing: Icon(Icons.arrow_forward_ios_rounded),
                     onTap: () {
                       showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                actions: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Are you sure?",
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        SizedBox(height: 30),
-                                        Row(
-                                          children: [
-                                            MaterialButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  Navigator.of(context).pop();
-                                                });
-                                              },
-                                              child: Text('Cancel'),
-                                            ),
-                                            SizedBox(width: 10),
-                                            MaterialButton(
-                                              textColor: Colors.red,
-                                              onPressed: () {
-                                                setState(() {
-                                                  logout();
-                                                  Navigator.of(context).pop();
-                                                });
-                                              },
-                                              child: Text('Log Out'),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ));
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: Colors.grey.shade700,
+                          title: Row(
+                            children: [
+                              Icon(Icons.logout,
+                                  color: Colors.redAccent, size: 28),
+                              SizedBox(width: 10),
+                              Text(
+                                "Log Out",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            ],
+                          ),
+                          content: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              "Are you sure you want to log out?",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                          actionsAlignment: MainAxisAlignment.spaceBetween,
+                          actions: [
+                            TextButton.icon(
+                              icon: Icon(Icons.cancel, color: Colors.white),
+                              label: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ElevatedButton.icon(
+                              icon:
+                                  Icon(Icons.exit_to_app, color: Colors.white),
+                              label: Text(
+                                'Log Out',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.redAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: () {
+                                logout();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
                     },
                   ),
                   ListTile(
                     title: Text('Developed by MerahRed'),
                     subtitle: Text('Version 1.0.0'),
-                    trailing: Icon(Icons.info_outline),
+                    leading: Icon(Icons.info_outline),
                   ),
                 ],
               )),

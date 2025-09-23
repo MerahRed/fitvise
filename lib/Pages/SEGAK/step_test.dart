@@ -134,7 +134,7 @@ class _steptestPageState extends State<steptestPage> {
                 TimerCountdown(
                   format: CountDownTimerFormat.secondsOnly,
                   endTime: DateTime.now().add(
-                    const Duration(seconds: 5),
+                    const Duration(seconds: 60),
 
                     /// EDIT DURATION HERE ///
                   ),

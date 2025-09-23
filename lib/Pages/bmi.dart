@@ -67,17 +67,10 @@ class _BmipageState extends State<Bmipage> {
           kcalIndex = 3;
         }
 
-        currentweight = int.tryParse(weight0);
-        currentheight = int.tryParse(height0);
-        user_status = status;
+        currentWeight = int.tryParse(weight0);
+        currentHeight = int.tryParse(height0);
+        userStatus = status;
         saveUserInfo(); // save result to supabase
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainApp(),
-          ),
-          (_) => false,
-        );
       },
     );
   }
@@ -85,12 +78,12 @@ class _BmipageState extends State<Bmipage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('BMI Calculator')),
       body: Center(
         child: ListView(
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(Icons.speed, size: 100, color: Colors.greenAccent),
                 SizedBox(height: 10),
@@ -133,6 +126,7 @@ class _BmipageState extends State<Bmipage> {
                     controller: _heightController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      labelText: 'Height',
                       border: OutlineInputBorder(),
                       hintText: '(Cm)',
                     ),
@@ -155,6 +149,7 @@ class _BmipageState extends State<Bmipage> {
                     controller: _weightController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
+                      labelText: 'Weight',
                       border: OutlineInputBorder(),
                       hintText: '(Kg)',
                     ),
@@ -165,13 +160,98 @@ class _BmipageState extends State<Bmipage> {
                 SizedBox(height: 50),
 
                 //                      -BUTTON-
-                MaterialButton(
+                ElevatedButton.icon(
+                  icon: Icon(Icons.calculate, color: Colors.white),
+                  label: Text(
+                    'Calculate',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   onPressed: () {
-                    calculate(_heightController, _weightController);
-                    //    MaterialPageRoute(builder: (context) => Homepage()));
+                    if (_weightController.text.isNotEmpty &&
+                        _heightController.text.isNotEmpty) {
+                      calculate(_heightController, _weightController);
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: userStatus == "Normal"
+                              ? Colors.green
+                              : userStatus == "Obesity"
+                                  ? Colors.red
+                                  : Colors.grey.shade700,
+                          title: Center(
+                            child: Text(
+                              userStatus,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 40),
+                            ),
+                          ),
+                          content: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              userStatus == "Normal"
+                                  ? "Great! Keep it up!"
+                                  : userStatus == "Underweight"
+                                      ? "You need to gain some weight."
+                                      : userStatus == "Overweight"
+                                          ? "You need to lose some weight."
+                                          : "You need to lose a lot of weight.",
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.grey[200]),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          actionsAlignment: MainAxisAlignment.spaceBetween,
+                          actions: [
+                            TextButton.icon(
+                              icon: Icon(Icons.cancel, color: Colors.white),
+                              label: Text(
+                                'Close',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ElevatedButton.icon(
+                              icon:
+                                  Icon(Icons.exit_to_app, color: Colors.white),
+                              label: Text(
+                                'Exit',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (context) => MainApp(),
+                                  ),
+                                  (_) => false,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
-                  color: Colors.green[700],
-                  child: Text('Calculate..'),
                 ),
 
                 //                      -GAP-

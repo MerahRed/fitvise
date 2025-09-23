@@ -11,9 +11,10 @@ Future<void> saveUserInfo() async {
     'id': user.id,
     'email': currentEmail,
     'username': currentUsername, //username
-    'height': currentheight,
-    'weight': currentweight,
-    'status': user_status,
+    'height': currentHeight,
+    'weight': currentWeight,
+    'status': userStatus,
+    'is_teacher': isTeacher,
   });
 }
 
@@ -27,8 +28,9 @@ Future<void> loadUserInfo() async {
   if (response != null) {
     currentEmail = response['email'] ?? "";
     currentUsername = response['username'] ?? "user";
-    currentheight = response['height'];
-    currentweight = response['weight'];
-    user_status = response['status'] ?? "Normal";
+    currentHeight = response['height'];
+    currentWeight = response['weight'];
+    userStatus = response['status'] ?? "Normal";
+    isTeacher = response['is_teacher'] ?? false;
   }
 }

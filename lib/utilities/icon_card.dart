@@ -54,7 +54,7 @@ class itemCard extends StatelessWidget {
           trailing: Icon(Icons.arrow_forward_ios_rounded),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          tileColor: Colors.white24,
+          tileColor: Colors.grey,
         ),
       ],
     );

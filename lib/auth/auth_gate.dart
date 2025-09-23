@@ -32,7 +32,7 @@ class AuthGate extends StatelessWidget {
     await loadUserInfo();
 
     // Check BMI status
-    if (currentheight == 0 || currentweight == 0) {
+    if (currentHeight == 0 || currentWeight == 0) {
       return const Bmipage(); // go to BMI first
     } else {
       final List page = [Homepage(), Fitpage(), Healthpage(), Profilepage()];

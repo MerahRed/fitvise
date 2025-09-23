@@ -9,8 +9,8 @@ class PdfGenerator {
   /// Convert any numeric values to String when you call this.
   static Future<File> generateResultSheetPdf({
     required String currentUsername,
-    required String currentheight,
-    required String currentweight,
+    required String currentHeight,
+    required String currentWeight,
     required String userStatus,
     required String overall,
     required Map<String, dynamic> segak,
@@ -21,8 +21,8 @@ class PdfGenerator {
     // Build the label/value pairs based on your Table
     final List<List<String>> rows = [
       ['Name', currentUsername],
-      ['Height (cm)', currentheight],
-      ['Weight (kg)', currentweight],
+      ['Height (cm)', currentHeight],
+      ['Weight (kg)', currentWeight],
       ['BMI', userStatus],
       ['Push Up Count', '${segak['Push up'] ?? ''}'],
       ['Sit Up Count', '${segak['Sit up'] ?? ''}'],

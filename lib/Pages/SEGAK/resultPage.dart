@@ -81,9 +81,9 @@ class _resultPageState extends State<Resultpage> {
                               final file =
                                   await PdfGenerator.generateResultSheetPdf(
                                 currentUsername: currentUsername,
-                                currentheight: '$currentheight',
-                                currentweight: '$currentweight',
-                                userStatus: user_status,
+                                currentHeight: '$currentHeight',
+                                currentWeight: '$currentWeight',
+                                userStatus: userStatus,
                                 overall: overall,
                                 segak: segak,
                                 filename:

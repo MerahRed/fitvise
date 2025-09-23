@@ -42,17 +42,17 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> calculateTarget() async {
-    final result = currentweight! / currentheight!;
+    final result = currentWeight! / currentHeight!;
     double bmiTarget = 0;
 
-    if (currentheight != null && currentweight != null) {
-      if (currentheight != null &&
-          currentweight != null &&
-          currentheight! > 0 &&
-          currentweight! > 0) {
-        double heightInMeters = currentheight! / 100;
+    if (currentHeight != null && currentWeight != null) {
+      if (currentHeight != null &&
+          currentWeight != null &&
+          currentHeight! > 0 &&
+          currentWeight! > 0) {
+        double heightInMeters = currentHeight! / 100;
         double heightSquared = heightInMeters * heightInMeters;
-        double result = currentweight! / heightSquared;
+        double result = currentWeight! / heightSquared;
 
         if (result < 18.5) {
           bmiTarget = 18.6;
@@ -113,19 +113,19 @@ class _HomepageState extends State<Homepage> {
                                 //status
                                 Icon(Icons.healing,
                                     size: 15, color: Colors.grey),
-                                Text('$user_status •',
+                                Text('$userStatus •',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 13)),
                                 //weight
                                 Icon(Icons.accessibility,
                                     size: 15, color: Colors.grey),
-                                Text('$currentweight Kg •',
+                                Text('$currentWeight Kg •',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 13)),
                                 //height
                                 Icon(Icons.height_rounded,
                                     size: 15, color: Colors.grey),
-                                Text('$currentheight m  ',
+                                Text('$currentHeight m  ',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 13)),
                               ])
@@ -156,17 +156,15 @@ class _HomepageState extends State<Homepage> {
                   child: Column(
                     children: [
                       Text(
-                        user_status != 'Normal'
+                        userStatus != 'Normal'
                             ? 'Target Weight'
                             : 'Congratulations for your current body!',
                       ),
                       Text(
-                        user_status != 'Normal'
-                            ? '$targetKg Kg'
-                            : 'Keep it up!',
+                        userStatus != 'Normal' ? '$targetKg Kg' : 'Keep it up!',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: user_status != 'Normal' ? 60 : 40),
+                            fontSize: userStatus != 'Normal' ? 60 : 40),
                       )
                     ],
                   )),

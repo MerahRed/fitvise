@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class Textcard extends StatelessWidget {
@@ -37,15 +35,16 @@ class Textcard extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 22,
+                    fontSize: 28,
                     letterSpacing: 1.1,
                   ),
                 ),
                 SizedBox(height: 12),
                 Text(
                   description,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
                     fontSize: 18,
                   ),

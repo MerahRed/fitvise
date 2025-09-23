@@ -40,9 +40,9 @@ class AuthService {
     await _supabase.auth.signOut();
     currentEmail = "";
     currentUsername = "user";
-    currentheight = 0;
-    currentweight = 0;
-    user_status = "Normal";
+    currentHeight = 0;
+    currentWeight = 0;
+    userStatus = "Normal";
     pageIndex = 3;
     targetKg = 0;
   }

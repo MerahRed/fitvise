@@ -1,15 +1,19 @@
+// ignore_for_file: file_names
+
 library;
 
 import 'package:FitVise/auth/auth_service.dart';
 
 int pageIndex = 0;
-int? currentheight = 0;
-int? currentweight = 0;
+int? currentHeight = 0;
+int? currentWeight = 0;
 int targetKg = 0;
 
 String currentEmail = AuthService().getCurrentUserEmail().toString();
 String currentUsername = "user";
-String user_status = "Normal";
+String userStatus = "Normal";
+
+bool isTeacher = false;
 
 final date = DateTime.now();
 

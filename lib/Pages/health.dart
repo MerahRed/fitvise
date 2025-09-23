@@ -1,3 +1,4 @@
+import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/utilities/icon_card.dart';
@@ -105,60 +106,122 @@ class Healthpage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.black87,
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.blue.shade700,
-                              Colors.lightBlueAccent.shade200
-                            ],
-                            begin: Alignment.center,
-                            end: Alignment.bottomRight)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(Icons.apple, size: 50),
-                          Text('Food Pyramid'),
-                        ],
+            child: Textcard(
+                title: "Discover More With FitVise",
+                description:
+                    "With FitVise, health diet become easier and simpler.",
+                startColor: Colors.deepOrangeAccent,
+                endColor: Colors.black12),
+          ),
+          Row(
+            // row
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //                       Class
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 20.0, left: 20, right: 10),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              colors: [Colors.black87, Colors.blue.shade700],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight)),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.book_rounded,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text("Improve Your Health Together With"),
+                                Text(
+                                  "Join a Class",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.school_rounded,
+                              size: 100,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.black87,
-                        gradient: LinearGradient(
-                            colors: [Colors.teal, Colors.tealAccent.shade400],
-                            begin: Alignment.center,
-                            end: Alignment.bottomRight)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(Icons.search, size: 50),
-                          Text('Disease Facts'),
-                        ],
+              ),
+              //                       IDK yet
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 20.0, left: 10, right: 20),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              colors: [Colors.black87, Colors.purple.shade300],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight)),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.tips_and_updates_rounded,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text("learn more about"),
+                                Text(
+                                  "Health Tips",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              Icons.troubleshoot_rounded,
+                              size: 100,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          )
+              ),
+            ],
+          ),
         ],
       ),
     );
