@@ -1,3 +1,5 @@
+import 'package:FitVise/Pages/Classroom/classMenu.dart';
+import 'package:FitVise/Pages/tips_page.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -12,97 +14,76 @@ class Healthpage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black87,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Calories Needed",
-                        style: TextStyle(
-                          color: Colors.greenAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        )),
-                    Text(
-                        (kcal[kcalIndex][0] +
-                                kcal[kcalIndex][1] +
-                                kcal[kcalIndex][2] +
-                                kcal[kcalIndex][3])
-                            .toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 50,
-                        )),
-                  ],
-                ),
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              child: Textcard(
+                  title:
+                      '${kcal[kcalIndex][0] + kcal[kcalIndex][1] + kcal[kcalIndex][2] + kcal[kcalIndex][3]} Kcal',
+                  description: "Calories needed for today",
+                  startColor: Colors.green,
+                  endColor: Colors.black12)),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black87,
+                gradient: LinearGradient(
+                  colors: [Colors.transparent, Colors.grey.shade900],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Today's Diet",
-                      style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                    "Today's Diet",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Divider(
-                      color: Colors.white10,
-                    ),
-                    itemCard(
-                      cardIcon: 'lib/assets/croissant.png',
-                      title: 'Breakfast',
-                      description: kcal[kcalIndex][0].toString() + ' kcal',
-                      cardColor: Colors.yellow[800],
-                      exerciseImage: 'lib/assets/breakfastPic.jpeg',
+                  ),
+                  Divider(
+                    color: Colors.white10,
+                    thickness: 2,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  itemCard(
+                    cardIcon: 'lib/assets/croissant.png',
+                    title: 'Breakfast',
+                    description: '${kcal[kcalIndex][0]} kcal',
+                    cardColor: Colors.yellow[800],
+                    exerciseImage: 'lib/assets/breakfastPic.jpeg',
+                    details:
+                        'Breakfast is the first meal of the day. It is important to have a balanced meal that includes protein, fiber, and healthy fats.',
+                  ),
+                  itemCard(
+                      cardIcon: 'lib/assets/apple.png',
+                      title: 'Snack',
+                      description: '${kcal[kcalIndex][1]} kcal',
+                      cardColor: Colors.red[900],
+                      exerciseImage: 'lib/assets/snackPic.jpeg',
                       details:
-                          'Breakfast is the first meal of the day. It is important to have a balanced meal that includes protein, fiber, and healthy fats.',
-                    ),
-                    itemCard(
-                        cardIcon: 'lib/assets/apple.png',
-                        title: 'Snack',
-                        description: kcal[kcalIndex][1].toString() + ' kcal',
-                        cardColor: Colors.red[900],
-                        exerciseImage: 'lib/assets/snackPic.jpeg',
-                        details:
-                            'Snacks are small meals that can help keep your energy levels up throughout the day. They should be healthy and balanced, including protein, fiber, and healthy fats.'),
-                    itemCard(
-                        cardIcon: 'lib/assets/dish.png',
-                        title: 'Lunch',
-                        description: kcal[kcalIndex][2].toString() + ' kcal',
-                        cardColor: Colors.green[700],
-                        exerciseImage: 'lib/assets/lunchPic.jpeg',
-                        details:
-                            'Lunch is the meal eaten in the middle of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.'),
-                    itemCard(
-                      cardIcon: 'lib/assets/dinner.png',
-                      title: 'Dinner',
-                      description: kcal[kcalIndex][3].toString() + ' kcal',
-                      cardColor: Colors.blue[900],
-                      exerciseImage: 'lib/assets/dinnerPic.jpeg',
+                          'Snacks are small meals that can help keep your energy levels up throughout the day. They should be healthy and balanced, including protein, fiber, and healthy fats.'),
+                  itemCard(
+                      cardIcon: 'lib/assets/dish.png',
+                      title: 'Lunch',
+                      description: '${kcal[kcalIndex][2]} kcal',
+                      cardColor: Colors.green[700],
+                      exerciseImage: 'lib/assets/lunchPic.jpeg',
                       details:
-                          'Dinner is the last meal of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.',
-                    ),
-                  ],
-                ),
+                          'Lunch is the meal eaten in the middle of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.'),
+                  itemCard(
+                    cardIcon: 'lib/assets/dinner.png',
+                    title: 'Dinner',
+                    description: '${kcal[kcalIndex][3]} kcal',
+                    cardColor: Colors.blue[900],
+                    exerciseImage: 'lib/assets/dinnerPic.jpeg',
+                    details:
+                        'Dinner is the last meal of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.',
+                  ),
+                ],
               ),
             ),
           ),
@@ -126,12 +107,15 @@ class Healthpage extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(top: 20.0, left: 20, right: 10),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Classmenu()));
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
-                              colors: [Colors.black87, Colors.blue.shade700],
+                              colors: [Colors.black12, Colors.blue.shade700],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)),
                       child: Padding(
@@ -170,18 +154,21 @@ class Healthpage extends StatelessWidget {
                   ),
                 ),
               ),
-              //                       IDK yet
+              //                       Health Tips
               Expanded(
                 child: Padding(
                   padding:
                       const EdgeInsets.only(top: 20.0, left: 10, right: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => TipsPage()));
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
-                              colors: [Colors.black87, Colors.purple.shade300],
+                              colors: [Colors.black12, Colors.purple.shade300],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)),
                       child: Padding(

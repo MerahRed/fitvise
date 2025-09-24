@@ -17,28 +17,6 @@ bool isTeacher = false;
 
 final date = DateTime.now();
 
-/*
-
-
-Sit and Reach
-
-Procedure:
-
-1. Student sits on the floor with legs straight, feet together, and soles upright.
-2. Arms extended forward, try to reach the toes.
-3. Record the furthest point reached.
-
-Suggested Scoring Scale:
-
- 5 points: Fingers pass beyond the toes (reaching the feet or further).
- 4 points: Fingers exactly reach the tips of the toes.
- 3 points: Fingers slightly short (around the ankles).
- 2 points: Fingers only reach the middle of the shins.
- 1 point: Fingers only reach around the knees.
-
-
-*/
-
 Map<String, dynamic> segak = {
   "Push up": 0,
   "Sit up": 0, // ringkuk tubi separa
@@ -129,3 +107,130 @@ List kcal = [
 
 int exerciseIndex = 1;
 int kcalIndex = 1;
+
+int getTargetCalories(String status, String meal) {
+  switch (status) {
+    case 'Underweight':
+      return meal == 'Breakfast'
+          ? 700
+          : meal == 'Snack'
+              ? 500
+              : meal == 'Lunch'
+                  ? 800
+                  : meal == 'Dinner'
+                      ? 800
+                      : 0;
+    case 'Normal':
+      return meal == 'Breakfast'
+          ? 500
+          : meal == 'Snack'
+              ? 400
+              : meal == 'Lunch'
+                  ? 600
+                  : meal == 'Dinner'
+                      ? 600
+                      : 0;
+    case 'Overweight':
+      return meal == 'Breakfast'
+          ? 400
+          : meal == 'Snack'
+              ? 300
+              : meal == 'Lunch'
+                  ? 600
+                  : meal == 'Dinner'
+                      ? 450
+                      : 0;
+    case 'Obesity':
+      return meal == 'Breakfast'
+          ? 300
+          : meal == 'Snack'
+              ? 150
+              : meal == 'Lunch'
+                  ? 500
+                  : meal == 'Dinner'
+                      ? 400
+                      : 0;
+    default:
+      return 0;
+  }
+}
+
+// Table for breakfast calorie
+final Map<String, List<Map<String, dynamic>>> dietData = {
+  "Breakfast": [
+    {"name": "Scrambled Eggs", "serving": "2 large eggs", "calories": 140},
+    {"name": "Boiled Eggs", "serving": "2 large eggs", "calories": 150},
+    {"name": "Toast (white bread)", "serving": "1 slice", "calories": 80},
+    {"name": "Wholemeal Bread", "serving": "1 slice", "calories": 70},
+    {"name": "Kaya Toast", "serving": "2 slices", "calories": 320},
+    {"name": "Peanut Butter Toast", "serving": "2 slices", "calories": 350},
+    {"name": "Oatmeal", "serving": "1 bowl", "calories": 150},
+    {"name": "Cereal with Milk", "serving": "1 bowl", "calories": 200},
+    {"name": "Roti Canai", "serving": "1 piece", "calories": 300},
+    {"name": "Nasi Lemak", "serving": "1 plate", "calories": 450},
+    {"name": "Coffee", "serving": "1 cup (240ml)", "calories": 5},
+    {"name": "Latte", "serving": "1 cup (240ml)", "calories": 190},
+    {"name": "Cappuccino", "serving": "1 cup (240ml)", "calories": 120},
+  ],
+  "Lunch": [
+    {"name": "Nasi Lemak", "serving": "1 plate", "calories": 450},
+    {"name": "Chicken Rice", "serving": "1 plate", "calories": 600},
+    {"name": "Fried Rice", "serving": "1 plate", "calories": 630},
+    {"name": "Chapati & Dhal", "serving": "2 pieces + dhal", "calories": 320},
+    {
+      "name": "Vegetable Stir-Fry with Rice",
+      "serving": "1 plate",
+      "calories": 400
+    },
+    {"name": "Curry Laksa", "serving": "1 bowl", "calories": 550},
+    {"name": "Mee Goreng Mamak", "serving": "1 plate", "calories": 650},
+    {"name": "Salad with Chicken", "serving": "1 bowl", "calories": 300},
+    {"name": "Sandwich (Tuna)", "serving": "1 sandwich", "calories": 350},
+    {"name": "Soup with Bread", "serving": "1 bowl + bread", "calories": 280},
+    {"name": "Iced Lemon Tea", "serving": "1 glass (250ml)", "calories": 90},
+    {"name": "Orange Juice", "serving": "1 glass (250ml)", "calories": 110},
+    {"name": "Apple Juice", "serving": "1 glass (250ml)", "calories": 115},
+    {"name": "Soft Drink (Coke)", "serving": "1 can (330ml)", "calories": 140},
+    {"name": "Iced Chocolate", "serving": "1 glass (250ml)", "calories": 220},
+    {"name": "Bubble Milk Tea", "serving": "1 cup (500ml)", "calories": 350},
+  ],
+  "Snack": [
+    {"name": "Banana", "serving": "1 medium", "calories": 105},
+    {"name": "Apple", "serving": "1 medium", "calories": 95},
+    {"name": "Orange", "serving": "1 medium", "calories": 85},
+    {"name": "Granola Bar", "serving": "1 bar", "calories": 120},
+    {"name": "Milo", "serving": "1 cup", "calories": 165},
+    {"name": "Teh Tarik", "serving": "1 cup", "calories": 120},
+    {"name": "Yogurt (low-fat)", "serving": "1 small cup", "calories": 100},
+    {"name": "Mixed Nuts", "serving": "30g handful", "calories": 180},
+    {"name": "Popcorn (light)", "serving": "3 cups", "calories": 90},
+    {"name": "Protein Shake", "serving": "1 scoop + milk", "calories": 200},
+    {"name": "Coffee", "serving": "1 cup (240ml)", "calories": 5},
+    {"name": "Latte", "serving": "1 cup (240ml)", "calories": 190},
+    {"name": "Cappuccino", "serving": "1 cup (240ml)", "calories": 120},
+    {"name": "Green Tea", "serving": "1 cup (240ml)", "calories": 2},
+    {"name": "Iced Lemon Tea", "serving": "1 glass (250ml)", "calories": 90},
+    {"name": "Orange Juice", "serving": "1 glass (250ml)", "calories": 110},
+    {"name": "Apple Juice", "serving": "1 glass (250ml)", "calories": 115},
+    {"name": "Soft Drink (Coke)", "serving": "1 can (330ml)", "calories": 140},
+    {"name": "Iced Chocolate", "serving": "1 glass (250ml)", "calories": 220},
+    {"name": "Bubble Milk Tea", "serving": "1 cup (500ml)", "calories": 350},
+  ],
+  "Dinner": [
+    {"name": "Grilled Fish", "serving": "150g", "calories": 250},
+    {"name": "Steamed Vegetables", "serving": "1 cup", "calories": 80},
+    {"name": "Grilled Chicken Breast", "serving": "150g", "calories": 280},
+    {"name": "Tofu Stir-Fry", "serving": "1 plate", "calories": 200},
+    {"name": "Vegetable Soup", "serving": "1 bowl", "calories": 150},
+    {"name": "Spaghetti Aglio Olio", "serving": "1 plate", "calories": 400},
+    {"name": "Brown Rice with Veggies", "serving": "1 plate", "calories": 350},
+    {"name": "Salmon Teriyaki", "serving": "150g + sauce", "calories": 360},
+    {"name": "Caesar Salad", "serving": "1 bowl", "calories": 280},
+    {"name": "Iced Lemon Tea", "serving": "1 glass (250ml)", "calories": 90},
+    {"name": "Orange Juice", "serving": "1 glass (250ml)", "calories": 110},
+    {"name": "Apple Juice", "serving": "1 glass (250ml)", "calories": 115},
+    {"name": "Soft Drink (Coke)", "serving": "1 can (330ml)", "calories": 140},
+    {"name": "Iced Chocolate", "serving": "1 glass (250ml)", "calories": 220},
+    {"name": "Bubble Milk Tea", "serving": "1 cup (500ml)", "calories": 350},
+  ],
+};

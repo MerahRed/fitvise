@@ -1,4 +1,5 @@
 import 'package:FitVise/main.dart';
+import 'package:FitVise/utilities/diet_table.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 
@@ -20,6 +21,14 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+  late final int target;
+
+  @override
+  void initState() {
+    super.initState();
+    target = getTargetCalories(userStatus, widget.exerciseName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,80 +114,46 @@ class _InfoPageState extends State<InfoPage> {
                         )),
                     SizedBox(height: 20),
                     widget.isDiet == true // check if it's diet page
-                        ? Container(
-                            padding: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.black87,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Target Kcal",
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
+                        ? Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${widget.exerciseName} Suggestion',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                    ),
                                   ),
+                                ],
+                              ),
+                              Divider(),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: DietTable(mealType: widget.exerciseName),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
-                                  //              WELCOME TO SPAGGHETTI CODE HELL  >:) (forgive me my future self;-;)
-                                  userStatus == 'Underweight'
-                                      ? widget.exerciseName == 'Breakfast'
-                                          ? "700"
-                                          : widget.exerciseName == 'Snack'
-                                              ? "500"
-                                              : widget.exerciseName == 'Lunch'
-                                                  ? "800"
-                                                  : widget.exerciseName ==
-                                                          'Dinner'
-                                                      ? "800"
-                                                      : "null"
-                                      : userStatus == 'Normal'
-                                          ? widget.exerciseName == 'Breakfast'
-                                              ? "500"
-                                              : widget.exerciseName == 'Snack'
-                                                  ? "400"
-                                                  : widget.exerciseName ==
-                                                          'Lunch'
-                                                      ? "600"
-                                                      : widget.exerciseName ==
-                                                              'Dinner'
-                                                          ? "600"
-                                                          : "null"
-                                          : userStatus == 'Overweight'
-                                              ? widget.exerciseName ==
-                                                      'Breakfast'
-                                                  ? "400"
-                                                  : widget.exerciseName ==
-                                                          'Snack'
-                                                      ? "300"
-                                                      : widget.exerciseName ==
-                                                              'Lunch'
-                                                          ? "600"
-                                                          : widget.exerciseName ==
-                                                                  'Dinner'
-                                                              ? "450"
-                                                              : "null"
-                                              : userStatus == 'Obesity'
-                                                  ? widget.exerciseName ==
-                                                          'Breakfast'
-                                                      ? "300"
-                                                      : widget.exerciseName ==
-                                                              'Snack'
-                                                          ? "150"
-                                                          : widget.exerciseName ==
-                                                                  'Lunch'
-                                                              ? "500"
-                                                              : widget.exerciseName ==
-                                                                      'Dinner'
-                                                                  ? "400"
-                                                                  : "null"
-                                                  : "null",
-                                  style: TextStyle(fontSize: 20),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Target Kcal",
+                                      style: TextStyle(fontSize: 30),
+                                    ),
+                                    Text(
+                                      '$target',
+                                      style: TextStyle(
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           )
                         : Container(),
                     SizedBox(height: 20),

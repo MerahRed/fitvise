@@ -23,40 +23,43 @@ class itemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 10),
-        ListTile(
-          enabled: true,
-          leading: Container(
-            decoration: BoxDecoration(shape: BoxShape.circle, color: cardColor),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Image.asset(
-                cardIcon,
-                color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+      child: Column(
+        children: [
+          ListTile(
+            enabled: true,
+            leading: Container(
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: cardColor),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Image.asset(
+                  cardIcon,
+                  color: Colors.white,
+                ),
               ),
             ),
+            title: Text(title),
+            subtitle: Text(description),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => InfoPage(
+                            exerciseName: title,
+                            exerciseImage: exerciseImage,
+                            exerciseDescription: details,
+                            isDiet: cardColor == Colors.blue ? false : true,
+                          )));
+            },
+            trailing: Icon(Icons.arrow_forward_ios_rounded),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            tileColor: Colors.white10,
           ),
-          title: Text(title),
-          subtitle: Text(description),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => InfoPage(
-                          exerciseName: title,
-                          exerciseImage: exerciseImage,
-                          exerciseDescription: details,
-                          isDiet: cardColor == Colors.blue ? false : true,
-                        )));
-          },
-          trailing: Icon(Icons.arrow_forward_ios_rounded),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          tileColor: Colors.grey,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

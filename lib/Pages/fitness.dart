@@ -26,7 +26,11 @@ class _FitpageState extends State<Fitpage> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.black87,
+                  gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.grey.shade900],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -36,9 +40,9 @@ class _FitpageState extends State<Fitpage> {
                       Text(
                         "Today's Exercise",
                         style: TextStyle(
-                          color: Colors.greenAccent,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                          fontSize: 40,
                         ),
                       ),
                       Divider(
@@ -108,7 +112,7 @@ class _FitpageState extends State<Fitpage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(
-                                colors: [Colors.black87, Colors.green.shade700],
+                                colors: [Colors.black12, Colors.green.shade700],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight)),
                         child: Padding(
@@ -165,7 +169,7 @@ class _FitpageState extends State<Fitpage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(
-                                colors: [Colors.black87, Colors.grey],
+                                colors: [Colors.black12, Colors.grey],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight)),
                         child: Padding(

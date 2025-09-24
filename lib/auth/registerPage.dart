@@ -1,3 +1,4 @@
+import 'package:FitVise/Global.dart';
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -89,6 +90,20 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _confirmPaswordController,
               decoration: InputDecoration(labelText: "Confirm Password"),
             ),
+            TextField(
+              //controller: _confirmPaswordController,
+              decoration: InputDecoration(labelText: "Enter your current age"),
+            ),
+            Row(
+              children: [
+                Text("Im a Male"),
+                Checkbox(
+                  value: false,
+                  onChanged: (value) {},
+                ),
+              ],
+            ),
+
             //SignUp
             SizedBox(height: 10),
             GestureDetector(
