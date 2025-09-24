@@ -39,11 +39,20 @@ class TipsPage extends StatelessWidget {
           FunCard(
             title: 'Facts About Skin',
             decoration: Icon(
+              Icons.back_hand_rounded,
+              size: 150,
+            ),
+            subtitle:
+                "The skin is the body's largest organ and is constantly shedding and replacing itself. ",
+          ),
+          FunCard(
+            title: 'Facts About Bones',
+            decoration: Icon(
               Icons.boy_rounded,
               size: 150,
             ),
             subtitle:
-                "Skin: The skin is the body's largest organ and is constantly shedding and replacing itself. ",
+                "The bone mass in the skeleton makes up about 14% of the total body weight ( ca. 10–11 kg for an average person) and reaches maximum mass between the ages of 25 and 30.",
           ),
         ],
       ),
