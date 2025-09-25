@@ -42,7 +42,6 @@ class _HomepageState extends State<Homepage> {
   }
 
   Future<void> calculateTarget() async {
-    final result = currentWeight! / currentHeight!;
     double bmiTarget = 0;
 
     if (currentHeight != null && currentWeight != null) {
@@ -81,14 +80,13 @@ class _HomepageState extends State<Homepage> {
             child: GestureDetector(
               //             - EDIT / DIALOG ALERT -
               child: Container(
-                height: 80,
-                width: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
+                    colors: [Colors.greenAccent.shade700, Colors.blue],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -98,37 +96,23 @@ class _HomepageState extends State<Homepage> {
                       Row(
                         children: <Widget>[
                           //SizedBox(width: 10),
-                          Icon(Icons.person, size: 50),
+                          CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.white30,
+                              child: Icon(Icons.person, size: 50)),
+                          SizedBox(width: 20),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(children: [
-                                Text('Hello, ' + currentUsername + '!',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20)),
-                              ]),
-                              Row(children: [
-                                //status
-                                Icon(Icons.healing,
-                                    size: 15, color: Colors.grey),
-                                Text('$userStatus •',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 13)),
-                                //weight
-                                Icon(Icons.accessibility,
-                                    size: 15, color: Colors.grey),
-                                Text('$currentWeight Kg •',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 13)),
-                                //height
-                                Icon(Icons.height_rounded,
-                                    size: 15, color: Colors.grey),
-                                Text('$currentHeight m  ',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 13)),
-                              ])
+                              Text('Hello, ' + currentUsername + ' 👋',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20)),
+                              SizedBox(width: 30),
+                              Text(DateFormat.yMMMMd().format(date),
+                                  style: const TextStyle(
+                                      color: Colors.white70, fontSize: 14)),
                             ],
                           ),
                         ],
@@ -141,15 +125,20 @@ class _HomepageState extends State<Homepage> {
           ),
 
           //                       Data
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _statBox(Icons.accessibility, "$currentWeight kg", "Weight"),
+              _statBox(Icons.height, "$currentHeight cm", "Height"),
+              _statBox(Icons.healing, userStatus, "BMI"),
+            ],
+          ),
 
           Padding(
             padding: EdgeInsets.all(20),
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.black12, Colors.black38],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
+                  color: Colors.blueGrey.shade900,
                   borderRadius: BorderRadius.circular(20)),
               child: Padding(
                   padding: const EdgeInsets.all(15),
@@ -157,30 +146,23 @@ class _HomepageState extends State<Homepage> {
                     children: [
                       Text(
                         userStatus != 'Normal'
-                            ? 'Target Weight'
-                            : 'Congratulations for your current body!',
+                            ? "🎯 Target Weight"
+                            : "👏 Keep it up!",
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
                       ),
+                      const SizedBox(height: 8),
                       Text(
-                        userStatus != 'Normal' ? '$targetKg Kg' : 'Keep it up!',
+                        userStatus != 'Normal'
+                            ? "$targetKg Kg"
+                            : "You're on track!",
                         style: TextStyle(
+                            fontSize: userStatus != 'Normal' ? 40 : 28,
                             fontWeight: FontWeight.bold,
-                            fontSize: userStatus != 'Normal' ? 60 : 40),
-                      )
+                            color: Colors.tealAccent),
+                      ),
                     ],
                   )),
-            ),
-          ),
-
-          // TESTING AREA
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-            child: Textcard(
-              endColor: Colors.green,
-              startColor: Colors.blue,
-              title: "Welcome to FitVise!",
-              description:
-                  "'Your personal fitness companion. Let's embark on a journey to a healthier, fitter you!'",
             ),
           ),
 
@@ -202,9 +184,9 @@ class _HomepageState extends State<Homepage> {
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white12.withValues(),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
+                        color: Colors.black,
+                        blurRadius: 12,
+                        offset: const Offset(3, 6),
                       ),
                     ],
                     borderRadius: BorderRadius.circular(20),
@@ -221,17 +203,19 @@ class _HomepageState extends State<Homepage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.today,
+                            Icons.fitness_center_rounded,
                             size: 40,
                           ),
                           SizedBox(
                             height: 20,
                           ),
-                          Text("Today's Exercises"),
                           Text(
-                            DateFormat.EEEE().format(date),
+                            "Today's Exercises",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30),
+                          ),
+                          Text(
+                            DateFormat.EEEE().format(date),
                           ),
                         ],
                       ),
@@ -284,18 +268,18 @@ class _HomepageState extends State<Homepage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.today,
+                            Icons.restaurant_menu_rounded,
                             size: 40,
                           ),
                           SizedBox(
                             height: 20,
                           ),
-                          Text("Today's Diet"),
                           Text(
-                            DateFormat.EEEE().format(date),
+                            "Today's Diet",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 30),
                           ),
+                          Text(DateFormat.EEEE().format(date)),
                         ],
                       ),
                       Image.asset(
@@ -313,4 +297,16 @@ class _HomepageState extends State<Homepage> {
       ),
     );
   }
+}
+
+Widget _statBox(IconData icon, String value, String label) {
+  return Column(
+    children: [
+      Icon(icon, size: 28, color: Colors.tealAccent),
+      const SizedBox(height: 6),
+      Text(value,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+      Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+    ],
+  );
 }

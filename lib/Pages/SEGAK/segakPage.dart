@@ -1,6 +1,4 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
-import 'package:FitVise/Pages/SEGAK/sitandreach.dart';
-import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 
 class Segakpage extends StatelessWidget {
@@ -14,11 +12,7 @@ class Segakpage extends StatelessWidget {
           leading: BackButton(
             color: Colors.white,
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainApp()),
-                (_) => false,
-              );
+              Navigator.pop(context);
             },
           ),
           title: Text(

@@ -2,6 +2,7 @@ import 'package:FitVise/Global.dart';
 import 'package:FitVise/Pages/flexibles/infoPage.dart';
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:FitVise/profile_Service.dart';
+import 'package:FitVise/utilities/premium_popup.dart';
 import 'package:flutter/material.dart';
 
 class Profilepage extends StatefulWidget {
@@ -12,26 +13,7 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
-  String status = '';
-  int? height = 0;
-  int? weight = 0;
-
-  String message = '';
-
-  void updatePage() {
-    setState(() {
-      height = currentHeight;
-      weight = currentWeight;
-      status = userStatus;
-    });
-  }
-
   final authService = AuthService();
-  //log out
-  void logout() async {
-    await authService.signOut();
-  }
-
   bool loading = true;
 
   @override
@@ -42,252 +24,250 @@ class _ProfilepageState extends State<Profilepage> {
 
   Future<void> loadData() async {
     await loadUserInfo();
-    setState(() {
-      loading = false;
-    });
+    setState(() => loading = false);
+  }
+
+  void logout() async {
+    await authService.signOut();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Center(
-            child: Column(
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
               children: [
-                SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  currentUsername,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  currentEmail,
-                  style: TextStyle(fontSize: 20, color: Colors.grey[600]),
-                ),
-                Icon(
-                  Icons.accessibility_new_rounded,
-                  size: 300,
-                  color: userStatus == "Normal"
-                        ? Colors.green
-                        : userStatus == "Obesity"
-                            ? Colors.red
-                            : Colors.grey,
-                ),
-                Text(
-                  '-$userStatus-',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: userStatus == "Normal"
-                        ? Colors.green
-                        : userStatus == "Obesity"
-                            ? Colors.red
-                            : Colors.grey,
+                //  --------------------------------------------------Profile Header
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.green.shade900, Colors.greenAccent],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(32),
+                      bottomRight: Radius.circular(32),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.white,
+                        child:
+                            Icon(Icons.person, size: 60, color: Colors.green),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        currentUsername,
+                        style: const TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        currentEmail,
+                        style: TextStyle(fontSize: 16, color: Colors.white38),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 14),
+                        decoration: BoxDecoration(
+                          color: userStatus == "Normal"
+                              ? Colors.green.shade700
+                              : userStatus == "Obesity"
+                                  ? Colors.red.shade700
+                                  : Colors.grey.shade600,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          userStatus,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //    height
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white10,
+
+                const SizedBox(height: 20),
+
+                // ---------------------------------------------------- Stats
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _statCard("Height", "$currentHeight cm",
+                            Icons.height, Colors.blue),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.height,
-                              size: 100,
-                            ),
-                            SizedBox(width: 10),
-                            Column(
-                              children: [
-                                Text(
-                                  "Height",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "$currentHeight cm",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          ],
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _statCard("Weight", "$currentWeight kg",
+                            Icons.monitor_weight, Colors.orange),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _statCard(
+                          "BMI",
+                          ((currentWeight! /
+                                  ((currentHeight! / 100) *
+                                      (currentHeight! / 100)))
+                              .toStringAsFixed(1)),
+                          Icons.favorite,
+                          Colors.pink,
                         ),
                       ),
-                    ),
-                    //        mass
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white10,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.speed,
-                              size: 100,
-                            ),
-                            SizedBox(width: 10),
-                            Column(
-                              children: [
-                                Text(
-                                  "Weight",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "$currentWeight kg",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          Divider(
-            indent: 20,
-            endIndent: 20,
-            color: Colors.white24,
-            thickness: 1,
-          ),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.contact_mail),
-                    title: Text('Contact Us'),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded),
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => InfoPage(
+
+                const SizedBox(height: 30),
+
+                // ----------------------------------------------------  Options
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    children: [
+                      _profileTile(
+                        icon: Icons.contact_mail,
+                        title: "Contact Us",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InfoPage(
                                 exerciseName: "Contact Us",
                                 exerciseImage: "",
                                 exerciseDescription:
                                     "Contact us at Innovvice5001@gmail.com",
-                                isDiet: false),
-                          ),
-                          (_) => false);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.person_2),
-                    title: Row(
-                      children: [
-                        Text('Apply Teacher Account'),
-                        if (!isTeacher)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Icon(
-                              Icons.stars_rounded,
-                              color: Colors.greenAccent,
-                              size: 20,
-                            ),
-                          ),
-                      ],
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text('Log Out'),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded),
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          backgroundColor: Colors.grey.shade700,
-                          title: Row(
-                            children: [
-                              Icon(Icons.logout,
-                                  color: Colors.redAccent, size: 28),
-                              SizedBox(width: 10),
-                              Text(
-                                "Log Out",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.redAccent,
-                                ),
+                                isDiet: false,
                               ),
-                            ],
-                          ),
-                          content: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              "Are you sure you want to log out?",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
                             ),
-                          ),
-                          actionsAlignment: MainAxisAlignment.spaceBetween,
-                          actions: [
-                            TextButton.icon(
-                              icon: Icon(Icons.cancel, color: Colors.white),
-                              label: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            ElevatedButton.icon(
-                              icon:
-                                  Icon(Icons.exit_to_app, color: Colors.white),
-                              label: Text(
-                                'Log Out',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.redAccent,
+                          );
+                        },
+                      ),
+                      _profileTile(
+                        icon: Icons.person_2,
+                        title: "Apply Teacher Account",
+                        trailing: !isTeacher
+                            ? const Icon(Icons.workspace_premium,
+                                color: Colors.cyanAccent)
+                            : null,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                insetPadding: const EdgeInsets.all(16),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(24),
                                 ),
-                              ),
-                              onPressed: () {
-                                logout();
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                                child: const PremiumPopup(),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      _profileTile(
+                        icon: Icons.logout,
+                        title: "Log Out",
+                        color: Colors.redAccent,
+                        onTap: () {
+                          _confirmLogout(context);
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        "Developed by MerahRed\nVersion 1.0.0",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
                   ),
-                  ListTile(
-                    title: Text('Developed by MerahRed'),
-                    subtitle: Text('Version 1.0.0'),
-                    leading: Icon(Icons.info_outline),
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+    );
+  }
+
+  // -----------------------------------------------------------------  stat card
+  Widget _statCard(String title, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: color, size: 40),
+          const SizedBox(height: 8),
+          Text(value,
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text(title,
+              style: TextStyle(fontSize: 14, color: Colors.grey.shade700)),
+        ],
+      ),
+    );
+  }
+
+  // ----------------------------------------------------  profile tile
+  Widget _profileTile(
+      {required IconData icon,
+      required String title,
+      Color? color,
+      Widget? trailing,
+      required VoidCallback onTap}) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: Icon(icon, color: color ?? Colors.green),
+        title: Text(title,
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
+        trailing: trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: onTap,
+      ),
+    );
+  }
+
+// ---------------------------------------------------- log out dialogbox
+  void _confirmLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.grey.shade800,
+        title: const Text("Log Out", style: TextStyle(color: Colors.redAccent)),
+        content: const Text(
+          "Are you sure you want to log out?",
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          TextButton(
+            child:
+                const Text("Cancel", style: TextStyle(color: Colors.white70)),
+            onPressed: () => Navigator.pop(context),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+            child: const Text("Log Out"),
+            onPressed: () {
+              logout();
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
     );

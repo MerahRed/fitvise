@@ -68,31 +68,56 @@ class _MainAppState extends State<MainApp> {
         ),
       ),
       home: Scaffold(
-        //set current page
-        body: AuthGate(), //_page[pageIndex],
+          //set current page
+          body: AuthGate(), //_page[pageIndex],
 
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (page) {
-            updatePage(page);
-          },
-          currentIndex: pageIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: const Offset(0, -3),
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fitness_center),
-              label: 'Fitness',
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              elevation: 10,
+              backgroundColor: Colors.black,
+              selectedItemColor: Colors.green.shade700,
+              unselectedItemColor: Colors.grey.shade500,
+              selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+              showUnselectedLabels: true,
+              onTap: (page) {
+                updatePage(page);
+              },
+              currentIndex: pageIndex,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home, size: 28),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.fitness_center, size: 28),
+                  label: 'Fitness',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite, size: 28),
+                  label: 'Health',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person, size: 28),
+                  label: 'Profile',
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: 'Health',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

@@ -14,13 +14,33 @@ class Healthpage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-              child: Textcard(
-                  title:
+            padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade900,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Text(
+                      'Calorie Needed 🥗',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
                       '${kcal[kcalIndex][0] + kcal[kcalIndex][1] + kcal[kcalIndex][2] + kcal[kcalIndex][3]} Kcal',
-                  description: "Calories needed for today",
-                  startColor: Colors.green,
-                  endColor: Colors.black12)),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.tealAccent),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
@@ -39,7 +59,7 @@ class Healthpage extends StatelessWidget {
                     "Today's Diet",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -113,6 +133,13 @@ class Healthpage extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 12,
+                              offset: const Offset(3, 6),
+                            ),
+                          ],
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
                               colors: [Colors.black12, Colors.blue.shade700],
@@ -166,6 +193,13 @@ class Healthpage extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 12,
+                              offset: const Offset(3, 6),
+                            ),
+                          ],
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
                               colors: [Colors.black12, Colors.purple.shade300],

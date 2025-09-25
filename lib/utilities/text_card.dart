@@ -33,9 +33,9 @@ class Textcard extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
-                    fontSize: 28,
+                    fontSize: 20,
                     letterSpacing: 1.1,
                   ),
                 ),
@@ -45,8 +45,8 @@ class Textcard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 18,
+                    color: Colors.grey,
+                    fontSize: 12,
                   ),
                 ),
               ],

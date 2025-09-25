@@ -1,3 +1,4 @@
+import 'package:FitVise/utilities/premium_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
@@ -37,7 +38,22 @@ class Classmenu extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           tooltip: "Create new Class",
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return Dialog(
+                  backgroundColor: Colors.transparent,
+                  insetPadding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const PremiumPopup(),
+                );
+              },
+            );
+          },
           child: Icon(Icons.add),
         ));
   }

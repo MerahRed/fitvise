@@ -1,5 +1,6 @@
 import 'package:FitVise/Pages/SEGAK/segakPage.dart';
 import 'package:FitVise/Pages/bmi.dart';
+import 'package:FitVise/utilities/fun_card.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -42,7 +43,7 @@ class _FitpageState extends State<Fitpage> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 40,
+                          fontSize: 28,
                         ),
                       ),
                       Divider(
@@ -77,9 +78,7 @@ class _FitpageState extends State<Fitpage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
+
             Padding(
               padding: const EdgeInsets.all(20),
               child: Textcard(
@@ -110,6 +109,13 @@ class _FitpageState extends State<Fitpage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 12,
+                                offset: const Offset(3, 6),
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(
                                 colors: [Colors.black12, Colors.green.shade700],
@@ -167,6 +173,13 @@ class _FitpageState extends State<Fitpage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 12,
+                                offset: const Offset(3, 6),
+                              ),
+                            ],
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(
                                 colors: [Colors.black12, Colors.grey],
@@ -210,6 +223,44 @@ class _FitpageState extends State<Fitpage> {
                 ),
               ],
             ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.grey.shade900],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Did you know?',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      Divider(
+                        color: Colors.white10,
+                        thickness: 2,
+                        indent: 20,
+                        endIndent: 20,
+                      ),
+                      Icon(Icons.directions_walk_rounded, size: 150),
+                      Text(
+                        'Going for a walk after a meal can significantly improve blood sugar control.',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
