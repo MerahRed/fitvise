@@ -61,12 +61,23 @@ class _ProfilepageState extends State<Profilepage> {
                             Icon(Icons.person, size: 60, color: Colors.green),
                       ),
                       const SizedBox(height: 12),
-                      Text(
-                        currentUsername,
-                        style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            currentUsername,
+                            style: const TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          isPremium
+                              ? Icon(
+                                  Icons.workspace_premium,
+                                  color: Colors.tealAccent,
+                                )
+                              : SizedBox()
+                        ],
                       ),
                       Text(
                         currentEmail,
@@ -159,21 +170,46 @@ class _ProfilepageState extends State<Profilepage> {
                         trailing: !isTeacher
                             ? const Icon(Icons.workspace_premium,
                                 color: Colors.cyanAccent)
-                            : null,
+                            : const Icon(Icons.check, color: Colors.cyanAccent),
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor: Colors.transparent,
-                                insetPadding: const EdgeInsets.all(16),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                child: const PremiumPopup(),
-                              );
-                            },
-                          );
+                          if (isPremium == false) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: const EdgeInsets.all(16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  child: const PremiumPopup(),
+                                );
+                              },
+                            );
+                          } else {
+                            setState(() {
+                              isTeacher = !isTeacher;
+                              saveUserInfo();
+                            });
+                          }
+                        },
+                      ),
+                      _profileTile(
+                        icon: Icons.handyman_rounded,
+                        title: "Im the Developer",
+                        color: Colors.grey,
+                        trailing: isPremium
+                            ? const Icon(Icons.check_box_outlined)
+                            : const Icon(
+                                Icons.check_box_outline_blank_outlined),
+                        onTap: () {
+                          setState(() {
+                            isPremium = !isPremium;
+                            if (isPremium == false) {
+                              isTeacher = false;
+                            }
+                            saveUserInfo();
+                          });
                         },
                       ),
                       _profileTile(
@@ -186,7 +222,7 @@ class _ProfilepageState extends State<Profilepage> {
                       ),
                       const SizedBox(height: 12),
                       const Text(
-                        "Developed by MerahRed\nVersion 1.0.0",
+                        "Developed by MerahRed\nVersion 1.8.0",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey),
                       ),

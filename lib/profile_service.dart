@@ -15,6 +15,7 @@ Future<void> saveUserInfo() async {
     'weight': currentWeight,
     'status': userStatus,
     'is_teacher': isTeacher,
+    'is_premium': isPremium,
   });
 }
 
@@ -32,5 +33,6 @@ Future<void> loadUserInfo() async {
     currentWeight = response['weight'];
     userStatus = response['status'] ?? "Normal";
     isTeacher = response['is_teacher'] ?? false;
+    isPremium = response['is_premium'] ?? false;
   }
 }

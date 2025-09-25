@@ -1,7 +1,6 @@
 import 'package:FitVise/utilities/premium_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/main.dart';
 
 class Classmenu extends StatelessWidget {
   const Classmenu({super.key});
@@ -39,20 +38,54 @@ class Classmenu extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           tooltip: "Create new Class",
           onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) {
-                return Dialog(
-                  backgroundColor: Colors.transparent,
-                  insetPadding: const EdgeInsets.all(16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: const PremiumPopup(),
+            if (!isPremium) {
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    backgroundColor: Colors.transparent,
+                    insetPadding: const EdgeInsets.all(16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: const PremiumPopup(),
+                  );
+                },
+              );
+            } else {
+              if (!isTeacher) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      insetPadding: const EdgeInsets.all(16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: const Text('Please apply for Teacher Account'),
+                    );
+                  },
                 );
-              },
-            );
+              } else {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      insetPadding: const EdgeInsets.all(16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: const Text('Coming Soon'),
+                    );
+                  },
+                );
+              }
+            }
           },
           child: Icon(Icons.add),
         ));

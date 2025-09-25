@@ -14,6 +14,7 @@ String currentUsername = "user";
 String userStatus = "Normal";
 
 bool isTeacher = false;
+bool isPremium = false;
 
 final date = DateTime.now();
 
