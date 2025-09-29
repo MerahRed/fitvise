@@ -9,6 +9,7 @@ int? currentHeight = 0;
 int? currentWeight = 0;
 int targetKg = 0;
 
+String classCode = "XXXXXX";
 String currentEmail = AuthService().getCurrentUserEmail().toString();
 String currentUsername = "user";
 String userStatus = "Normal";

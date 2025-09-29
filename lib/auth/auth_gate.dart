@@ -55,7 +55,7 @@ class AuthGate extends StatelessWidget {
         final session = snapshot.hasData ? snapshot.data!.session : null;
 
         if (session != null) {
-          // User logged in → decide BMI vs Home
+          // User logged in  decide BMI / Home
           return FutureBuilder<Widget>(
             future: _getRedirectPage(),
             builder: (context, snapshot) {

@@ -1,9 +1,18 @@
+import 'package:FitVise/Pages/Classroom/classroom_page.dart';
+import 'package:FitVise/Pages/Classroom/create_class_popup.dart';
 import 'package:FitVise/utilities/premium_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 
 class Classmenu extends StatelessWidget {
-  const Classmenu({super.key});
+  Classmenu({super.key});
+
+  final _controller = TextEditingController();
+
+  void joinClass() {
+    // Implement join class logic here
+    classCode = _controller.text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +29,7 @@ class Classmenu extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(200),
                 child: TextField(
+                  controller: _controller,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter Class Code',
@@ -28,7 +38,14 @@ class Classmenu extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Handle join class action
+                  // Handle join class
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ClassroomPage(code: _controller.text),
+                    ),
+                  );
                 },
                 child: Text('Join Class'),
               ),
@@ -80,7 +97,7 @@ class Classmenu extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: const Text('Coming Soon'),
+                      child: CreateClassPopup(),
                     );
                   },
                 );

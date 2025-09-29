@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/Classroom/classMenu.dart';
+import 'package:FitVise/Pages/Classroom/classroom_page.dart';
 import 'package:FitVise/Pages/tips_page.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
@@ -128,8 +129,16 @@ class Healthpage extends StatelessWidget {
                       const EdgeInsets.only(top: 20.0, left: 20, right: 10),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Classmenu()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => (classCode.isNotEmpty)
+                              ? ClassroomPage(
+                                  code: classCode,
+                                )
+                              : Classmenu(),
+                        ),
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
