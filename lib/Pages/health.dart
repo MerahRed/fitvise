@@ -11,6 +11,9 @@ class Healthpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // get screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: ListView(
         children: [
@@ -122,7 +125,7 @@ class Healthpage extends StatelessWidget {
             // row
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //                       Class
+              //        ------------------ Class --------------------
               Expanded(
                 child: Padding(
                   padding:
@@ -151,7 +154,10 @@ class Healthpage extends StatelessWidget {
                           ],
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
-                              colors: [Colors.black12, Colors.blue.shade700],
+                              colors: [
+                                Colors.blue.shade900,
+                                Colors.blue.shade100
+                              ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)),
                       child: Padding(
@@ -163,26 +169,25 @@ class Healthpage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Icon(
-                                  Icons.book_rounded,
-                                  size: 40,
+                                  Icons.school_rounded,
+                                  size: screenWidth * 0.04,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Text("Improve Your Health Together With"),
+                                Text(
+                                  "Improve Your Health Together With",
+                                  style:
+                                      TextStyle(fontSize: screenWidth * 0.015),
+                                ),
                                 Text(
                                   "Join a Class",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 30),
+                                      fontSize: screenWidth * 0.04),
                                 ),
                               ],
                             ),
-                            Icon(
-                              Icons.school_rounded,
-                              size: 100,
-                              color: Colors.white,
-                            )
                           ],
                         ),
                       ),
@@ -190,7 +195,7 @@ class Healthpage extends StatelessWidget {
                   ),
                 ),
               ),
-              //                       Health Tips
+              //      --------------------- Health Tips ---------------------
               Expanded(
                 child: Padding(
                   padding:
@@ -211,7 +216,10 @@ class Healthpage extends StatelessWidget {
                           ],
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
-                              colors: [Colors.black12, Colors.purple.shade300],
+                              colors: [
+                                Colors.purple.shade900,
+                                Colors.purple.shade100
+                              ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)),
                       child: Padding(
@@ -224,25 +232,24 @@ class Healthpage extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.tips_and_updates_rounded,
-                                  size: 40,
+                                  size: screenWidth * 0.04,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Text("learn more about"),
+                                Text(
+                                  "learn more about",
+                                  style:
+                                      TextStyle(fontSize: screenWidth * 0.015),
+                                ),
                                 Text(
                                   "Health Tips",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 30),
+                                      fontSize: screenWidth * 0.04),
                                 ),
                               ],
                             ),
-                            Icon(
-                              Icons.troubleshoot_rounded,
-                              size: 100,
-                              color: Colors.white,
-                            )
                           ],
                         ),
                       ),

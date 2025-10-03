@@ -5,7 +5,7 @@ class FunCard extends StatelessWidget {
   final Widget decoration;
   final String subtitle;
 
-  FunCard({
+  const FunCard({
     super.key,
     required this.title,
     required this.decoration,
@@ -14,6 +14,8 @@ class FunCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -26,7 +28,7 @@ class FunCard extends StatelessWidget {
             title,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: screenWidth * 0.04,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -39,7 +41,7 @@ class FunCard extends StatelessWidget {
             subtitle,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: screenWidth * 0.02,
             ),
             textAlign: TextAlign.center,
           ),

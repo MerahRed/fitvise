@@ -125,9 +125,9 @@ class _sitandreachState extends State<Sitandreach> {
                               controller: _controller,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                labelText: "Enter number 1 - 5",
-                                border: OutlineInputBorder(),
-                              ),
+                                  labelText: "Enter number 1 - 5",
+                                  border: OutlineInputBorder(),
+                                  fillColor: Colors.grey),
                             ),
                           ),
                         ],

@@ -45,7 +45,7 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<AuthState>(
       stream: Supabase.instance.client.auth.onAuthStateChange,
       builder: (context, snapshot) {
-        // Loading...
+        // Loading... (no internet)
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -68,7 +68,7 @@ class AuthGate extends StatelessWidget {
             },
           );
         } else {
-          // User logged out → go to Login
+          // User logged out (go to Login)
           return const Loginpage();
         }
       },

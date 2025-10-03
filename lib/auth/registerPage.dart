@@ -50,23 +50,31 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Welcome to ", style: TextStyle(fontSize: 40)),
-                Text(
-                  "FitVise",
-                  style: TextStyle(
-                      color: Colors.green.shade300,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Welcome to ",
+                    style: TextStyle(fontSize: 40),
+                  ),
+                  Text(
+                    "FitVise",
+                    style: TextStyle(
+                      color: Colors.green.shade400,
                       fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
+
             SizedBox(height: 70),
             Text(
               "Sign Up",

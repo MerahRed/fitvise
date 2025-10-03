@@ -16,12 +16,15 @@ class Fitpage extends StatefulWidget {
 class _FitpageState extends State<Fitpage> {
   @override
   Widget build(BuildContext context) {
+    //get screen size
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return PopScope(
       canPop: false,
       child: Scaffold(
         body: ListView(
           children: [
-            //                    Today's Exercise
+            // ---------------- Today's Exercise ----------------
             Padding(
               padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
               child: Container(
@@ -46,9 +49,7 @@ class _FitpageState extends State<Fitpage> {
                           fontSize: 28,
                         ),
                       ),
-                      Divider(
-                        color: Colors.white10,
-                      ),
+                      const Divider(color: Colors.white10),
                       itemCard(
                         cardIcon: 'lib/assets/fitness.png',
                         title: exercise[exerciseIndex][0][0],
@@ -79,8 +80,9 @@ class _FitpageState extends State<Fitpage> {
               ),
             ),
 
+            // ---------------- Text Card ----------------
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               child: Textcard(
                 title: "Lets Improve our physical body!",
                 description: "Start your fitness journey now",
@@ -89,67 +91,72 @@ class _FitpageState extends State<Fitpage> {
               ),
             ),
 
-            //                    SEGAK
+            // ---------------- SEGAK & BMI ----------------
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // SEGAK
                 Expanded(
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 20.0, left: 20, right: 10),
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Segakpage()),
-                          );
-                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Segakpage()),
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                blurRadius: 12,
-                                offset: const Offset(3, 6),
-                              ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 12,
+                              offset: Offset(3, 6),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.green.shade900,
+                              Colors.green.shade300
                             ],
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: LinearGradient(
-                                colors: [Colors.black12, Colors.green.shade700],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight)),
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
                         child: Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.data_saver_off_rounded,
-                                    size: 40,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text("Measure your Health via"),
-                                  Text(
-                                    "SEGAK",
-                                    style: TextStyle(
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.data_saver_off_rounded,
+                                        size: screenWidth * 0.04),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Measure your Health via",
+                                      style: TextStyle(
+                                          fontSize: screenWidth * 0.02),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "SEGAK",
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 30),
-                                  ),
-                                ],
+                                        fontSize: screenWidth *
+                                            0.03, // smaller for fit
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Image.asset(
-                                'lib/assets/Segak.png',
-                                scale: 5,
-                                color: Colors.white,
-                              )
                             ],
                           ),
                         ),
@@ -157,63 +164,68 @@ class _FitpageState extends State<Fitpage> {
                     ),
                   ),
                 ),
-                //                       BMI
+
+                // BMI
                 Expanded(
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 20.0, left: 10, right: 20),
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Bmipage()),
-                          );
-                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Bmipage()),
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                blurRadius: 12,
-                                offset: const Offset(3, 6),
-                              ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 12,
+                              offset: Offset(3, 6),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.grey.shade700,
+                              Colors.grey.shade300
                             ],
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: LinearGradient(
-                                colors: [Colors.black12, Colors.grey],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight)),
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
                         child: Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.monitor_weight_outlined,
-                                    size: 40,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text("Check your BMI with"),
-                                  Text(
-                                    "BMI Calculator",
-                                    style: TextStyle(
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.calculate,
+                                        size: screenWidth * 0.04),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Check your BMI with",
+                                      style: TextStyle(
+                                          fontSize: screenWidth * 0.02),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "BMI Calculator",
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 30),
-                                  ),
-                                ],
+                                        fontSize: screenWidth * 0.03,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Icon(
-                                Icons.calculate_rounded,
-                                size: 100,
-                                color: Colors.white,
-                              )
                             ],
                           ),
                         ),
@@ -223,8 +235,10 @@ class _FitpageState extends State<Fitpage> {
                 ),
               ],
             ),
+
+            // ---------------- Did You Know ----------------
             Padding(
-              padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -238,29 +252,29 @@ class _FitpageState extends State<Fitpage> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Did you know?',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.white10,
                         thickness: 2,
                         indent: 20,
                         endIndent: 20,
                       ),
-                      Icon(Icons.directions_walk_rounded, size: 150),
+                      Icon(Icons.directions_walk_rounded,
+                          size: screenWidth * 0.2),
                       Text(
                         'Going for a walk after a meal can significantly improve blood sugar control.',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+                        style: TextStyle(fontSize: screenWidth * 0.015),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

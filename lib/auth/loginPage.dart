@@ -46,19 +46,27 @@ class _LoginpageState extends State<Loginpage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Greetings
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Welcome back to ", style: TextStyle(fontSize: 40)),
-                  Text(
-                    "FitVise",
-                    style: TextStyle(
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Welcome back to ",
+                      style: TextStyle(fontSize: 40),
+                    ),
+                    Text(
+                      "FitVise",
+                      style: TextStyle(
                         color: Colors.green.shade400,
                         fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
               SizedBox(height: 70),
               Text(
                 "Log In",

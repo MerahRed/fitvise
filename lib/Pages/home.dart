@@ -166,72 +166,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
 
-          //                    EXCERCISE
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  pageIndex = 1;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainApp()),
-                    (_) => false,
-                  );
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 12,
-                        offset: const Offset(3, 6),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                        colors: [Colors.teal, Colors.tealAccent.shade400],
-                        begin: Alignment.center,
-                        end: Alignment.bottomRight)),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.fitness_center_rounded,
-                            size: 40,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Today's Exercises",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 30),
-                          ),
-                          Text(
-                            DateFormat.EEEE().format(date),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        'lib/assets/exercise.png',
-                        scale: 4,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          //                   DIET
+//                   DIET
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: GestureDetector(
@@ -247,46 +182,109 @@ class _HomepageState extends State<Homepage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white12.withValues(),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                        colors: [Colors.indigo.shade600, Colors.blueAccent],
-                        begin: Alignment.center,
-                        end: Alignment.bottomRight)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white12.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.indigo.shade600, Colors.blueAccent],
+                    begin: Alignment.center,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.restaurant_menu_rounded,
-                            size: 40,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Today's Diet",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 30),
-                          ),
-                          Text(DateFormat.EEEE().format(date)),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.restaurant_menu_rounded, size: 40),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Today's \nDiet",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 24),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(DateFormat.EEEE().format(date),
+                                style: const TextStyle(fontSize: 14)),
+                          ],
+                        ),
                       ),
                       Image.asset(
                         'lib/assets/dish.png',
                         scale: 5,
                         color: Colors.white,
-                      )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+//                   EXERCISE
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  pageIndex = 1;
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainApp()),
+                    (_) => false,
+                  );
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(3, 6),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.teal, Colors.tealAccent.shade400],
+                    begin: Alignment.center,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.fitness_center_rounded, size: 40),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Today's \nExercises",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 24),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(DateFormat.EEEE().format(date),
+                                style: const TextStyle(fontSize: 14)),
+                          ],
+                        ),
+                      ),
+                      Image.asset(
+                        'lib/assets/exercise.png',
+                        scale: 5,
+                        color: Colors.white,
+                      ),
                     ],
                   ),
                 ),

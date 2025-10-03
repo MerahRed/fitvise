@@ -61,8 +61,7 @@ Future<void> loadClassData(String code) async {
   final response =
       await supabase.from('classrooms').select().eq('code', code).maybeSingle();
 
-  if (response != null) {
-    className = response['name'] ?? "No class joined";
+    className = response!['name'] ?? "No class joined";
     classCode = response['code'] ?? "XXXXXX";
     teacherId = response['teacher_id'] ?? "No id assigned";
 
@@ -75,6 +74,5 @@ Future<void> loadClassData(String code) async {
     if (teacherResponse != null) {
       teacherName = teacherResponse['username'] ?? "No teacher assigned";
       teacherEmail = teacherResponse['email'] ?? "No email assigned";
-    }
   }
 }
