@@ -140,7 +140,7 @@ class _FitpageState extends State<Fitpage> {
                                         size: screenWidth * 0.04),
                                     const SizedBox(height: 10),
                                     Text(
-                                      "Measure your Health via",
+                                      "Measure",
                                       style: TextStyle(
                                           fontSize: screenWidth * 0.02),
                                       overflow: TextOverflow.ellipsis,
@@ -210,13 +210,13 @@ class _FitpageState extends State<Fitpage> {
                                         size: screenWidth * 0.04),
                                     const SizedBox(height: 10),
                                     Text(
-                                      "Check your BMI with",
+                                      "Calculate",
                                       style: TextStyle(
                                           fontSize: screenWidth * 0.02),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
-                                      "BMI Calculator",
+                                      "BMI",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: screenWidth * 0.03,

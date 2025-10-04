@@ -176,12 +176,12 @@ class Healthpage extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  "Improve Your Health Together With",
+                                  "Join",
                                   style:
                                       TextStyle(fontSize: screenWidth * 0.015),
                                 ),
                                 Text(
-                                  "Join a Class",
+                                  "Class",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: screenWidth * 0.04),
@@ -238,12 +238,12 @@ class Healthpage extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  "learn more about",
+                                  "learn",
                                   style:
                                       TextStyle(fontSize: screenWidth * 0.015),
                                 ),
                                 Text(
-                                  "Health Tips",
+                                  "Advices",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: screenWidth * 0.04),
