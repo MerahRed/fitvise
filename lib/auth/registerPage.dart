@@ -61,13 +61,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Text(
                     "Welcome to ",
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 30),
                   ),
                   Text(
                     "FitVise",
                     style: TextStyle(
                       color: Colors.green.shade400,
-                      fontSize: 40,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 70),
             Text(
               "Sign Up",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             SizedBox(height: 30),
             TextField(
@@ -93,23 +93,12 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               decoration: InputDecoration(labelText: "Password"),
               controller: _passwordController,
+              obscureText: true,
             ),
             TextField(
               controller: _confirmPaswordController,
               decoration: InputDecoration(labelText: "Confirm Password"),
-            ),
-            TextField(
-              //controller: _confirmPaswordController,
-              decoration: InputDecoration(labelText: "Enter your current age"),
-            ),
-            Row(
-              children: [
-                Text("Im a Male"),
-                Checkbox(
-                  value: false,
-                  onChanged: (value) {},
-                ),
-              ],
+              obscureText: true,
             ),
 
             //SignUp

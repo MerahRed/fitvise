@@ -170,7 +170,7 @@ class Healthpage extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.school_rounded,
-                                  size: screenWidth * 0.04,
+                                  size: screenWidth * 0.08,
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -178,13 +178,13 @@ class Healthpage extends StatelessWidget {
                                 Text(
                                   "Join",
                                   style:
-                                      TextStyle(fontSize: screenWidth * 0.015),
+                                      TextStyle(fontSize: screenWidth * 0.04),
                                 ),
                                 Text(
                                   "Class",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth * 0.04),
+                                      fontSize: screenWidth * 0.07),
                                 ),
                               ],
                             ),
@@ -232,21 +232,21 @@ class Healthpage extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.tips_and_updates_rounded,
-                                  size: screenWidth * 0.04,
+                                  size: screenWidth * 0.08,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
                                 Text(
-                                  "learn",
+                                  "Learn",
                                   style:
-                                      TextStyle(fontSize: screenWidth * 0.015),
+                                      TextStyle(fontSize: screenWidth * 0.04),
                                 ),
                                 Text(
                                   "Advices",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth * 0.04),
+                                      fontSize: screenWidth * 0.07),
                                 ),
                               ],
                             ),

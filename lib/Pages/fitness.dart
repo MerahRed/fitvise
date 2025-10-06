@@ -137,20 +137,19 @@ class _FitpageState extends State<Fitpage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Icon(Icons.data_saver_off_rounded,
-                                        size: screenWidth * 0.04),
+                                        size: screenWidth * 0.08),
                                     const SizedBox(height: 10),
                                     Text(
                                       "Measure",
                                       style: TextStyle(
-                                          fontSize: screenWidth * 0.02),
+                                          fontSize: screenWidth * 0.04),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       "SEGAK",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: screenWidth *
-                                            0.03, // smaller for fit
+                                        fontSize: screenWidth * 0.07,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -207,19 +206,19 @@ class _FitpageState extends State<Fitpage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Icon(Icons.calculate,
-                                        size: screenWidth * 0.04),
+                                        size: screenWidth * 0.08),
                                     const SizedBox(height: 10),
                                     Text(
                                       "Calculate",
                                       style: TextStyle(
-                                          fontSize: screenWidth * 0.02),
+                                          fontSize: screenWidth * 0.04),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       "BMI",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: screenWidth * 0.03,
+                                        fontSize: screenWidth * 0.07,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -267,7 +266,7 @@ class _FitpageState extends State<Fitpage> {
                           size: screenWidth * 0.2),
                       Text(
                         'Going for a walk after a meal can significantly improve blood sugar control.',
-                        style: TextStyle(fontSize: screenWidth * 0.015),
+                        style: TextStyle(fontSize: screenWidth * 0.03),
                         textAlign: TextAlign.center,
                       ),
                     ],

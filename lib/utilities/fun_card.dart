@@ -41,7 +41,7 @@ class FunCard extends StatelessWidget {
             subtitle,
             style: TextStyle(
               color: Colors.white,
-              fontSize: screenWidth * 0.02,
+              fontSize: screenWidth * 0.04,
             ),
             textAlign: TextAlign.center,
           ),

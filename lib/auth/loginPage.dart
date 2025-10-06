@@ -37,6 +37,8 @@ class _LoginpageState extends State<Loginpage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -53,13 +55,13 @@ class _LoginpageState extends State<Loginpage> {
                   children: [
                     Text(
                       "Welcome back to ",
-                      style: TextStyle(fontSize: 40),
+                      style: TextStyle(fontSize: 30),
                     ),
                     Text(
                       "FitVise",
                       style: TextStyle(
                         color: Colors.green.shade400,
-                        fontSize: 40,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -70,7 +72,7 @@ class _LoginpageState extends State<Loginpage> {
               SizedBox(height: 70),
               Text(
                 "Log In",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
               SizedBox(height: 30),
               //email
@@ -82,6 +84,7 @@ class _LoginpageState extends State<Loginpage> {
               TextField(
                 decoration: InputDecoration(labelText: "Password"),
                 controller: _passwordController,
+                obscureText: true,
               ),
               SizedBox(height: 20),
               //login

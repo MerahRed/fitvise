@@ -49,8 +49,8 @@ class _DietTableState extends State<DietTable> {
           columnWidths: const {
             0: FlexColumnWidth(2),
             1: FlexColumnWidth(2),
-            2: FlexColumnWidth(1),
-            3: FlexColumnWidth(1),
+            2: FlexColumnWidth(1.6),
+            3: FlexColumnWidth(1.5),
           },
           children: [
             // Header row
@@ -61,24 +61,25 @@ class _DietTableState extends State<DietTable> {
                   padding: EdgeInsets.all(8.0),
                   child: Text("Food",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text("Serving",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text("Calories",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 9)),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text("Select",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
                 ),
               ],
             ),
@@ -89,15 +90,20 @@ class _DietTableState extends State<DietTable> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(foods[i]["name"]),
+                    child: Text(
+                      foods[i]["name"],
+                      style: TextStyle(fontSize: 10),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(foods[i]["serving"]),
+                    child: Text(foods[i]["serving"],
+                        style: TextStyle(fontSize: 10)),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("${foods[i]["calories"]} kcal"),
+                    child: Text("${foods[i]["calories"]} kcal",
+                        style: TextStyle(fontSize: 10)),
                   ),
                   Center(
                     child: Checkbox(
@@ -125,7 +131,7 @@ class _DietTableState extends State<DietTable> {
                   padding: EdgeInsets.all(8.0),
                   child: Text("Total",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -136,7 +142,7 @@ class _DietTableState extends State<DietTable> {
                   child: Text(
                     "$totalCalories kcal",
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
+                        fontWeight: FontWeight.bold, fontSize: 10),
                   ),
                 ),
                 const SizedBox(),

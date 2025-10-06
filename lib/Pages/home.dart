@@ -70,6 +70,19 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "FitVise",
+          style: TextStyle(
+            color: Colors.greenAccent,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      ),
       body: ListView(
         children: [
           // SizedBox(height: 130),
@@ -83,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   gradient: LinearGradient(
-                    colors: [Colors.greenAccent.shade700, Colors.blue],
+                    colors: [Colors.blue.shade700, Colors.green],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
