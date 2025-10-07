@@ -10,6 +10,7 @@ String teacherId = "id not assigned";
 String teacherName = "No teacher assigned";
 String teacherEmail = "No email assigned";
 // ignore: prefer_typing_uninitialized_variables
+List task = [];
 var studentList;
 
 //data
@@ -76,6 +77,48 @@ class _ClassroomPageState extends State<ClassroomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: isTeacher
+          ? FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    String newTask = '';
+                    return AlertDialog(
+                      title: const Text('Edit Announcement'),
+                      content: TextField(
+                        onChanged: (value) {
+                          newTask = value;
+                        },
+                        controller: TextEditingController(text: newTask),
+                        decoration:
+                            const InputDecoration(hintText: 'Assign task'),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            setState(() {
+                              task.add(newTask);
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Save'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              tooltip: 'Assign Task',
+              child: const Icon(Icons.add),
+            )
+          : null,
       appBar: AppBar(
         title: Text('Classroom'),
         centerTitle: false,
@@ -251,6 +294,59 @@ class _ClassroomPageState extends State<ClassroomPage> {
                           ),
                         ),
                         // Add more announcements here
+                        ...task
+                            .map<Widget>((t) => Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white12,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 8,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 6),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Icon(Icons.task,
+                                          color: Colors.white, size: 32),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          t,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        child: isTeacher
+                                            ? IconButton(
+                                                icon: const Icon(Icons.delete,
+                                                    color: Colors.white),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    task.remove(t);
+                                                  });
+                                                },
+                                              )
+                                            : Checkbox(
+                                                value: false,
+                                                onChanged: (checked) {
+                                                },
+                                              ),
+                                      )
+                                    ],
+                                  ),
+                                ))
+                            .toList(),
                       ],
                     ),
                   ],
