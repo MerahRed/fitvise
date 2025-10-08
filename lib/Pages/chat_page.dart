@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 
 class FitViseChatPage extends StatefulWidget {
   const FitViseChatPage({super.key});
@@ -12,6 +13,52 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
   final Random _random = Random();
+
+  // 🔹 Hint system
+  final List<String> _hintTexts = [
+    "Say something...",
+    "Ask me about workouts 💪",
+    "Need motivation? Try asking me for one!",
+    "Ask about SEGAK test tips 🏃",
+    "Want a quick diet tip?",
+    "Curious about recovery?",
+    "How can I assist you today?",
+    "Looking for workout ideas?",
+    "Need help with nutrition?",
+    "Ask me about fitness goals!",
+    "Hmmm... who made me?",
+    "Feeling bored? Ask me for a joke!",
+  ];
+  int _currentHintIndex = 0;
+  Timer? _hintTimer;
+  bool _isTyping = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 🔁 Rotate hints automatically
+    _hintTimer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (!_isTyping) {
+        setState(() {
+          _currentHintIndex = (_currentHintIndex + 1) % _hintTexts.length;
+        });
+      }
+    });
+
+    _controller.addListener(() {
+      setState(() {
+        _isTyping = _controller.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _hintTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
 
   String _getResponse(String input) {
     input = input.toLowerCase().trim();
@@ -237,10 +284,6 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
       ]);
     }
 
-    if (_contains(input, ['lazy', 'no energy', 'dont feel like'])) {
-      return "We all have lazy days — what matters is showing up anyway! Do one small thing right now: stretch, drink water, or take 10 steps. Small wins build momentum!";
-    }
-
     // Mental health and emotions
     if (_contains(input, [
       'sad',
@@ -414,17 +457,21 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
       "I'm learning every day! Try asking me about: workout tips, meal ideas, staying motivated, or recovery advice. What interests you?",
       "Hmm, not quite sure I got that! But I'm here to help with fitness, nutrition, and mindset. What can I assist you with?",
       "I want to help! Could you rephrase that? Or just tell me what you're working on today!",
+      "Wow, that's a new one! I'm still learning, but I can help with workouts, nutrition, and motivation. What would you like to know?",
+      "That's an interesting thought! I'm here to help with fitness and health. What specific questions do you have?",
+      "I'm not sure I understand, but I'm eager to help! What fitness or nutrition topic are you curious about?",
+      "Hmm, I don't have an answer for that yet. But I can help with workouts, nutrition, and motivation! What would you like to discuss?",
+      "That's a unique question! I'm still learning, but I can assist with fitness and health topics. What would you like to know?",
+      "I don't have a response for that yet, but I'm here to help with fitness and nutrition! What can I assist you with?",
     ];
 
     return defaults[_random.nextInt(defaults.length)];
   }
 
-  // Helper: check if input contains any keyword
   bool _contains(String input, List<String> keywords) {
     return keywords.any((keyword) => input.contains(keyword));
   }
 
-  // Helper: return random response
   String _randomResponse(List<String> responses) {
     return responses[_random.nextInt(responses.length)];
   }
@@ -461,19 +508,15 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.fitness_center,
-                          size: 64,
-                          color: Colors.green.shade300,
-                        ),
+                        Icon(Icons.tips_and_updates_rounded,
+                            size: 64, color: Colors.green.shade300),
                         const SizedBox(height: 16),
                         Text(
                           "Start a conversation!",
                           style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
-                          ),
+                              fontSize: 18,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -543,29 +586,36 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: "Say something...",
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide.none,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide(
-                          color: Colors.green.shade300,
-                          width: 2,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: TextField(
+                      key: ValueKey(_currentHintIndex),
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: _hintTexts[_currentHintIndex],
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide(
+                            color: Colors.green.shade300,
+                            width: 2,
+                          ),
                         ),
                       ),
+                      onSubmitted: (_) => _sendMessage(),
+                      onChanged: (_) {
+                        setState(() {
+                          _isTyping = _controller.text.isNotEmpty;
+                        });
+                      },
                     ),
-                    onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
                 const SizedBox(width: 8),

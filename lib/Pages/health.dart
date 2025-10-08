@@ -1,6 +1,6 @@
 import 'package:FitVise/Pages/Classroom/classMenu.dart';
 import 'package:FitVise/Pages/Classroom/classroom_page.dart';
-import 'package:FitVise/Pages/tips_page.dart';
+import 'package:FitVise/Pages/chat_page.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -240,12 +240,12 @@ class Healthpage extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  "Learn",
+                                  "Ask our",
                                   style:
                                       TextStyle(fontSize: screenWidth * 0.04),
                                 ),
                                 Text(
-                                  "Advices",
+                                  "ChatBot",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: screenWidth * 0.07),
