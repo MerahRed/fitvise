@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';
 import 'package:flutter_tts/flutter_tts.dart'; // 👈 Import TTS
+import 'package:audioplayers/audioplayers.dart'; // 👈 Import audioplayers
 
 class PushupPage extends StatefulWidget {
   const PushupPage({super.key});
@@ -24,6 +25,12 @@ class _PushupPageState extends State<PushupPage> {
     super.initState();
     _setupTts();
     _startVoiceCountdown();
+  }
+
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  Future play() async {
+    await audioPlayer.play(AssetSource("assets/sounds/segakMusic.mp3"));
   }
 
   @override
@@ -67,6 +74,7 @@ class _PushupPageState extends State<PushupPage> {
       _countdownText = "Start!";
     });
     await flutterTts.speak("Start!");
+    //await play();
 
     // Show the timer
     setState(() {
@@ -104,7 +112,7 @@ class _PushupPageState extends State<PushupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("lib/assets/bear.gif", scale: 3),
+                Image.asset("assets/GIF FitVise/Push Up.gif", scale: 2),
                 const SizedBox(height: 10),
                 const Text(
                   "Push Up",
@@ -129,7 +137,7 @@ class _PushupPageState extends State<PushupPage> {
                   TimerCountdown(
                     format: CountDownTimerFormat.secondsOnly,
                     endTime: DateTime.now().add(
-                      const Duration(seconds: 5),
+                      Duration(seconds: isPremium ? 5 : 60),
 
                       /// EDIT DURATION HERE ///
                     ),

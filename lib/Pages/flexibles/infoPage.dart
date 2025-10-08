@@ -68,6 +68,7 @@ class _InfoPageState extends State<InfoPage> {
                           widget.exerciseImage,
                           fit: BoxFit.cover,
                           width: double.infinity,
+                          scale: 2,
                         ),
                       ),
                   ],

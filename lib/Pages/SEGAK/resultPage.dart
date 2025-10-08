@@ -14,6 +14,28 @@ class Resultpage extends StatefulWidget {
 class _resultPageState extends State<Resultpage> {
   String overall = "Well Done";
 
+  void calculateOverall() {
+    if (segak["Push up"]! >= 30 &&
+        segak["Sit up"]! >= 40 &&
+        segak["Step test"]! <= 60) {
+      overall = "Excellent";
+    } else if (segak["Push up"]! >= 25 &&
+        segak["Sit up"]! >= 35 &&
+        segak["Step test"]! <= 70) {
+      overall = "Good";
+    } else if (segak["Push up"]! >= 20 &&
+        segak["Sit up"]! >= 30 &&
+        segak["Step test"]! <= 80) {
+      overall = "Fair";
+    } else if (segak["Push up"]! >= 15 &&
+        segak["Sit up"]! >= 25 &&
+        segak["Step test"]! <= 90) {
+      overall = "Poor";
+    } else {
+      overall = "Very Poor";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -47,7 +69,7 @@ class _resultPageState extends State<Resultpage> {
                       ),
                       child: Column(
                         children: [
-                          Image.asset("lib/assets/bear.gif", scale: 2.5),
+                          Image.asset("lib/assets/Logo.JPG", scale: 2.5),
                           const SizedBox(height: 18),
                           const Text(
                             "Congratulations!",

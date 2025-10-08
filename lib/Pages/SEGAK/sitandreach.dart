@@ -68,7 +68,9 @@ class _sitandreachState extends State<Sitandreach> {
                       ),
                       child: Column(
                         children: [
-                          Image.asset("lib/assets/bear.gif", scale: 2.5),
+                          Image.asset(
+                              "assets/GIF FitVise/Jangkauan Melunjur.gif",
+                              scale: 2.5),
                           const SizedBox(height: 18),
                           const Text(
                             "Sit and Reach Guideline",
@@ -124,10 +126,12 @@ class _sitandreachState extends State<Sitandreach> {
                             child: TextField(
                               controller: _controller,
                               keyboardType: TextInputType.number,
+                              style: const TextStyle(color: Colors.black),
                               decoration: const InputDecoration(
-                                  labelText: "Enter number 1 - 5",
-                                  border: OutlineInputBorder(),
-                                  fillColor: Colors.grey),
+                                labelText: "Enter number 1 - 5",
+                                border: OutlineInputBorder(),
+                                labelStyle: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ),
                         ],

@@ -202,8 +202,10 @@ class Healthpage extends StatelessWidget {
                       const EdgeInsets.only(top: 20.0, left: 10, right: 20),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => TipsPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FitViseChatPage()));
                     },
                     child: Container(
                       decoration: BoxDecoration(

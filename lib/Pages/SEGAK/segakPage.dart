@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
+import 'package:FitVise/Pages/SEGAK/step_test.dart';
 import 'package:flutter/material.dart';
 
 class Segakpage extends StatelessWidget {

@@ -110,7 +110,7 @@ class _SitupPageState extends State<SitupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("lib/assets/SIT_UP.gif", scale: 3),
+                Image.asset("assets/GIF FitVise/Sit-Up.gif", scale: 3),
                 const SizedBox(height: 10),
                 const Text(
                   "Sit Up",
@@ -135,7 +135,7 @@ class _SitupPageState extends State<SitupPage> {
                   TimerCountdown(
                     format: CountDownTimerFormat.secondsOnly,
                     endTime: DateTime.now().add(
-                      const Duration(seconds: 5),
+                      Duration(seconds: isPremium ? 5 : 60),
 
                       /// EDIT DURATION HERE ///
                     ),
