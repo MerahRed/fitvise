@@ -4,6 +4,7 @@ import 'package:FitVise/Pages/Classroom/classroom_page.dart';
 
 final supabase = Supabase.instance.client;
 
+/// Save the current user info to Supabase
 Future<void> saveUserInfo() async {
   final user = supabase.auth.currentUser;
   if (user == null) throw Exception('No logged-in user');
@@ -21,6 +22,7 @@ Future<void> saveUserInfo() async {
   });
 }
 
+/// Load the current user's profile info from Supabase
 Future<void> loadUserInfo() async {
   final user = supabase.auth.currentUser;
   if (user == null) return;
@@ -40,8 +42,7 @@ Future<void> loadUserInfo() async {
   }
 }
 
-/// Classroom related functions
-
+/// Classroom-related functions
 Future<void> createClass(String name, String code) async {
   final user = supabase.auth.currentUser;
   if (user == null) throw Exception("No logged-in user");
@@ -50,23 +51,34 @@ Future<void> createClass(String name, String code) async {
     'name': name,
     'code': code,
     'teacher_id': user.id,
+    'tasks': [], // initialize empty task list
+    'text': 'No announcements yet',
   });
 }
 
 Future<void> loadClassData(String code) async {
-  // Implement loading class data logic here
   final user = supabase.auth.currentUser;
   if (user == null) return;
 
   final response =
       await supabase.from('classrooms').select().eq('code', code).maybeSingle();
 
-  className = response!['name'] ?? "No class joined";
+  if (response == null) throw Exception("Class not found");
+
+  className = response['name'] ?? "No class joined";
   classCode = response['code'] ?? "XXXXXX";
   teacherId = response['teacher_id'] ?? "No id assigned";
   announcementTitle = response['text'] ?? "No announcements yet";
 
-  //update clasroom_members table
+  // 🔹 Load tasks from Supabase (safe cast)
+  if (response['tasks'] != null) {
+    final List<dynamic> tasksFromDB = response['tasks'];
+    task = tasksFromDB.map((t) => Map<String, dynamic>.from(t as Map)).toList();
+  } else {
+    task = [];
+  }
+
+  // 🔹 If student, register to classroom_members
   if (isTeacher == false) {
     final memberResponse = await supabase
         .from('classroom_members')
@@ -83,30 +95,39 @@ Future<void> loadClassData(String code) async {
     }
   }
 
-  //assign teacher name and email
+  // 🔹 Assign teacher info
   final teacherResponse = await supabase
       .from('profiles')
       .select()
       .eq('id', teacherId)
       .maybeSingle();
+
   if (teacherResponse != null) {
     teacherName = teacherResponse['username'] ?? "No teacher assigned";
     teacherEmail = teacherResponse['email'] ?? "No email assigned";
   }
 }
 
-// announcement update function
+/// 🔸 Save updated tasks list to Supabase
+Future<void> saveTasks(String code, List<Map<String, dynamic>> tasks) async {
+  final safeTasks = tasks.map((t) => t.cast<String, Object?>()).toList();
+
+  await supabase.from('classrooms').update({
+    'tasks': safeTasks,
+  }).eq('code', code);
+}
+
+/// 🔸 Update classroom announcement
 Future<void> updateAnnouncement(String code, String title) async {
-  // Update the announcement text
   await supabase.from('classrooms').update({'text': title}).eq('code', code);
   loadClassData(code);
 }
 
+/// 🔸 Delete class (teacher only)
 Future<void> deleteClass(String code) async {
   final user = supabase.auth.currentUser;
   if (user == null) throw Exception("No logged-in user");
 
-  // Only the teacher can delete the class
   final response =
       await supabase.from('classrooms').select().eq('code', code).maybeSingle();
 
@@ -118,19 +139,19 @@ Future<void> deleteClass(String code) async {
   }
 }
 
+/// 🔸 Leave class (student only)
 Future<void> leaveClass() async {
   final user = supabase.auth.currentUser;
   if (user == null) throw Exception("No logged-in user");
 
-  // Only students can leave the class
   await supabase.from('classroom_members').delete().eq('student_id', user.id);
   saveUserInfo();
 }
 
-/// Fetch all students with the same class code
+/// 🔸 Fetch all students with the same class code
 Future<List<String>> getStudentsWithSameCode(String code) async {
   try {
-    final List<Map<String, dynamic>> response = await Supabase.instance.client
+    final List<Map<String, dynamic>> response = await supabase
         .from('classroom_members')
         .select()
         .eq('class_code', code);
