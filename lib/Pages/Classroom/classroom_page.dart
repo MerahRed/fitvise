@@ -1,9 +1,7 @@
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/Pages/fitness.dart';
 import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/profile_Service.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 String className = "No class joined";
 String teacherId = "id not assigned";
@@ -13,12 +11,11 @@ String teacherEmail = "No email assigned";
 List task = [];
 var studentList;
 
-//data
+// Data
 String announcementTitle = "No announcements yet";
 
 class ClassroomPage extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final code; // placeholder for class ID
+  final String code; // class code
 
   const ClassroomPage({
     super.key,
@@ -33,34 +30,29 @@ class _ClassroomPageState extends State<ClassroomPage> {
   late Future<void> _loadClassDataFuture;
 
   @override
-
-  /// -------------------------INITIALIZE CLASS DATA
   void initState() {
     super.initState();
-
-    ///save when entering class page
     _loadClassDataFuture = loadClassData(widget.code);
     classCode = widget.code;
     saveUserInfo();
     loadStudents();
   }
 
-  /// -------------------------         LOAD MEMBERS DATA
+  /// ------------------------- LOAD STUDENTS
   void loadStudents() async {
     final students = await getStudentsWithSameCode(widget.code);
-
     setState(() {
       studentList = students;
     });
   }
 
-  /// -------------------------             EXIT CLASS
+  /// ------------------------- LEAVE / DELETE CLASS
   void exit() async {
     classCode = "";
     if (isTeacher) {
       await deleteClass(widget.code);
     } else {
-      leaveClass();
+      await leaveClass();
     }
 
     await saveUserInfo();
@@ -73,7 +65,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
     }
   }
 
-  /// -------------------------             UI CLASS
+  /// ------------------------- UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,12 +77,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
                   builder: (context) {
                     String newTask = '';
                     return AlertDialog(
-                      title: const Text('Edit Announcement'),
+                      title: const Text('Assign Task'),
                       content: TextField(
                         onChanged: (value) {
                           newTask = value;
                         },
-                        controller: TextEditingController(text: newTask),
                         decoration:
                             const InputDecoration(hintText: 'Assign task'),
                       ),
@@ -103,9 +94,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            setState(() {
-                              task.add(newTask);
-                            });
+                            if (newTask.isNotEmpty) {
+                              setState(() {
+                                task.add(newTask);
+                              });
+                            }
                             Navigator.of(context).pop();
                           },
                           child: const Text('Save'),
@@ -120,7 +113,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
             )
           : null,
       appBar: AppBar(
-        title: Text('Classroom'),
+        title: const Text('Classroom'),
         centerTitle: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -151,6 +144,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
             return ListView(
               padding: const EdgeInsets.all(16),
               children: [
+                /// ------------------------- CLASS HEADER
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -165,195 +159,305 @@ class _ClassroomPageState extends State<ClassroomPage> {
                       'About The Teacher',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    ListTile(
-                      tileColor: Colors.white10,
-                      leading: const Icon(Icons.person),
-                      title: Text(teacherName),
-                      subtitle: Text(teacherEmail),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.indigo.shade700,
+                            radius: 28,
+                            child: const Icon(Icons.person,
+                                size: 32, color: Colors.white),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            teacherName,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            teacherEmail,
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ),
                     const Divider(),
                     Text(
-                      'Students Enrolled: ${studentList.length}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      'Students Enrolled: ${studentList != null ? studentList.length : 0}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: studentList
-                          .map<Widget>(
-                            (student) => ListTile(
-                              tileColor: Colors.white10,
-                              leading: const Icon(Icons.person),
-                              title: Text(student),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    Divider(), // -------------------------             ANNOUNCEMENTS
-                    const Text(
-                      'Announcements:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white12,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 8,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(20),
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(Icons.announcement,
-                                  color: Colors.white, size: 42),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      announcementTitle,
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Posted on ${DateTime.now().toLocal().toString().split(' ')[0]} by $teacherName',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              if (isTeacher)
-                                IconButton(
-                                  icon: const Icon(Icons.edit,
-                                      color: Colors.white),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        String newAnnouncement =
-                                            announcementTitle;
-                                        return AlertDialog(
-                                          title:
-                                              const Text('Edit Announcement'),
-                                          content: TextField(
-                                            onChanged: (value) {
-                                              newAnnouncement = value;
-                                            },
-                                            controller: TextEditingController(
-                                                text: announcementTitle),
-                                            decoration: const InputDecoration(
-                                                hintText:
-                                                    'Enter new announcement'),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Cancel'),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                await updateAnnouncement(
-                                                    widget.code,
-                                                    newAnnouncement);
-                                                setState(() {
-                                                  announcementTitle =
-                                                      newAnnouncement;
-                                                });
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('Save'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                            ],
-                          ),
-                        ),
-                        // Add more announcements here
-                        ...task
-                            .map<Widget>((t) => Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 8,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  padding: const EdgeInsets.all(16),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 6),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Icon(Icons.task,
-                                          color: Colors.white, size: 32),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          t,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                          ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: studentList != null
+                            ? studentList
+                                .map<Widget>(
+                                  (student) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: Colors.blue[500],
+                                          radius: 24,
+                                          child: const Icon(Icons.person,
+                                              size: 28, color: Colors.white),
                                         ),
-                                      ),
-                                      Container(
-                                        child: isTeacher
-                                            ? IconButton(
-                                                icon: const Icon(Icons.delete,
-                                                    color: Colors.white),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    task.remove(t);
-                                                  });
-                                                },
-                                              )
-                                            : Checkbox(
-                                                value: false,
-                                                onChanged: (checked) {},
-                                              ),
-                                      )
-                                    ],
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          student,
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ))
-                            .toList(),
-                      ],
+                                )
+                                .toList()
+                            : [],
+                      ),
                     ),
                   ],
                 ),
+                const Divider(),
+
+                /// ------------------------- ANNOUNCEMENT SECTION
+                const Text(
+                  'Announcements:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                _announcementCard(),
+
+                /// ------------------------- TASK SECTION
+                const SizedBox(height: 8),
+                ...task.map<Widget>((t) => _taskCard(context, t)),
               ],
             );
           }
         },
+      ),
+    );
+  }
+
+  /// ------------------------- ANNOUNCEMENT CARD WIDGET
+  Widget _announcementCard() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.indigo.shade700, Colors.indigo.shade400],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.indigo.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(24),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.15),
+            ),
+            padding: const EdgeInsets.all(10),
+            child:
+                const Icon(Icons.announcement, size: 38, color: Colors.white),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  announcementTitle,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.person, size: 14, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      teacherName,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Icon(Icons.calendar_today,
+                        size: 14, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Posted on ${DateTime.now().toLocal().toString().split(' ')[0]}',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          if (isTeacher)
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.18),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.edit, color: Colors.white),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      String newAnnouncement = announcementTitle;
+                      return AlertDialog(
+                        title: const Text('Edit Announcement'),
+                        content: TextField(
+                          onChanged: (value) {
+                            newAnnouncement = value;
+                          },
+                          controller:
+                              TextEditingController(text: announcementTitle),
+                          decoration: const InputDecoration(
+                            hintText: 'Enter new announcement',
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              await updateAnnouncement(
+                                  widget.code, newAnnouncement);
+                              if (mounted) {
+                                setState(() {
+                                  announcementTitle = newAnnouncement;
+                                });
+                                Navigator.of(context).pop();
+                              }
+                            },
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// ------------------------- TASK CARD WIDGET
+  Widget _taskCard(BuildContext context, String t) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blueGrey.shade800, Colors.blueGrey.shade400],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueGrey.withOpacity(0.25),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(18),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.18),
+            ),
+            padding: const EdgeInsets.all(8),
+            child: const Icon(Icons.task, color: Colors.white, size: 28),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  t,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.calendar_today,
+                        size: 13, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Assigned on ${DateTime.now().toLocal().toString().split(' ')[0]}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 8),
+            child: isTeacher
+                ? IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.white),
+                    tooltip: 'Delete Task',
+                    onPressed: () async {
+                      setState(() {
+                        task.remove(t);
+                      });
+                    },
+                  )
+                : Checkbox(
+                    value: false,
+                    onChanged: (checked) {},
+                    activeColor: Colors.indigo,
+                    checkColor: Colors.white,
+                  ),
+          )
+        ],
       ),
     );
   }
