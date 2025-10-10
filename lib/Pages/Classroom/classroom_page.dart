@@ -8,7 +8,7 @@ String teacherId = "id not assigned";
 String teacherName = "No teacher assigned";
 String teacherEmail = "No email assigned";
 // ignore: prefer_typing_uninitialized_variables
-List task = [];
+List<Map<String, dynamic>> task = [];
 var studentList;
 
 // Data
@@ -96,7 +96,8 @@ class _ClassroomPageState extends State<ClassroomPage> {
                           onPressed: () async {
                             if (newTask.isNotEmpty) {
                               setState(() {
-                                task.add(newTask);
+                                task.add({'name': newTask, 'completed': false});
+                                saveTasks(widget.code, task);
                               });
                             }
                             Navigator.of(context).pop();
@@ -148,6 +149,10 @@ class _ClassroomPageState extends State<ClassroomPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ///  ------------------------------ DBUGGER
+                    Text(task.toString()),
+
+                    ///
                     Text(
                       className,
                       style: const TextStyle(
@@ -234,7 +239,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
 
                 /// ------------------------- TASK SECTION
                 const SizedBox(height: 8),
-                ...task.map<Widget>((t) => _taskCard(context, t)),
+                ...task.map<Widget>((t) => _taskCard(context, t)), // Task cards
               ],
             );
           }
@@ -376,22 +381,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
   }
 
   /// ------------------------- TASK CARD WIDGET
-  Widget _taskCard(BuildContext context, String t) {
+  Widget _taskCard(BuildContext context, t) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blueGrey.shade800, Colors.blueGrey.shade400],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
         borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blueGrey.withOpacity(0.25),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        color: Colors.grey.shade900,
       ),
       padding: const EdgeInsets.all(18),
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -401,7 +395,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.18),
+              color: Colors.blue,
             ),
             padding: const EdgeInsets.all(8),
             child: const Icon(Icons.task, color: Colors.white, size: 28),
@@ -412,12 +406,15 @@ class _ClassroomPageState extends State<ClassroomPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  t,
-                  style: const TextStyle(
+                  t['name'].toString(),
+                  style: TextStyle(
                     fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.2,
+                    // decoration: t['completed']
+                    //     ? TextDecoration.lineThrough
+                    //     : TextDecoration.none,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -447,12 +444,17 @@ class _ClassroomPageState extends State<ClassroomPage> {
                     onPressed: () async {
                       setState(() {
                         task.remove(t);
+                        saveTasks(widget.code, task);
                       });
                     },
                   )
                 : Checkbox(
-                    value: false,
-                    onChanged: (checked) {},
+                    value: t['completed'] ?? false,
+                    onChanged: (checked) {
+                      setState(() {
+                        t['completed'] = !t['completed'];
+                      });
+                    },
                     activeColor: Colors.indigo,
                     checkColor: Colors.white,
                   ),
