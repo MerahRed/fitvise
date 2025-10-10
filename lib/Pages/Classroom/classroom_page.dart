@@ -1,7 +1,7 @@
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
+import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
-import 'package:FitVise/profile_Service.dart';
 
 String className = "No class joined";
 String teacherId = "id not assigned";
@@ -9,6 +9,7 @@ String teacherName = "No teacher assigned";
 String teacherEmail = "No email assigned";
 // ignore: prefer_typing_uninitialized_variables
 List<Map<String, dynamic>> task = [];
+List<Map> studentsData = [];
 var studentList;
 
 // Data
@@ -36,6 +37,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
     classCode = widget.code;
     saveUserInfo();
     loadStudents();
+    loadStudentsData(widget.code);
   }
 
   /// ------------------------- LOAD STUDENTS
@@ -127,11 +129,13 @@ class _ClassroomPageState extends State<ClassroomPage> {
           tooltip: 'Back',
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: exit,
-            tooltip: 'Leave Class',
-          ),
+          !isTeacher
+              ? IconButton(
+                  icon: const Icon(Icons.exit_to_app, color: Colors.redAccent),
+                  onPressed: exit,
+                  tooltip: 'Leave Class',
+                )
+              : SizedBox(),
         ],
       ),
       body: FutureBuilder<void>(
@@ -146,100 +150,224 @@ class _ClassroomPageState extends State<ClassroomPage> {
               padding: const EdgeInsets.all(16),
               children: [
                 /// ------------------------- CLASS HEADER
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///  ------------------------------ DBUGGER
-                    Text(task.toString()),
-
-                    ///
-                    Text(
-                      className,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Class Code: ${widget.code}'),
-                    const Divider(),
-                    const Text(
-                      'About The Teacher',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.indigo.shade700,
-                            radius: 28,
-                            child: const Icon(Icons.person,
-                                size: 32, color: Colors.white),
+                Card(
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          className,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            teacherName,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Class Code: ${widget.code}',
+                          style: const TextStyle(
+                            fontSize: 15,
                           ),
-                          Text(
-                            teacherEmail,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.grey),
+                        ),
+                        const Divider(height: 28),
+                        const Text(
+                          'About The Teacher',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                        ],
-                      ),
-                    ),
-                    const Divider(),
-                    Text(
-                      'Students Enrolled: ${studentList != null ? studentList.length : 0}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: studentList != null
-                            ? studentList
-                                .map<Widget>(
-                                  (student) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor: Colors.blue[500],
-                                          radius: 24,
-                                          child: const Icon(Icons.person,
-                                              size: 28, color: Colors.white),
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Text(
-                                          student,
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
-                                      ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.indigo.shade700,
+                                radius: 28,
+                                child: const Icon(Icons.person,
+                                    size: 32, color: Colors.white),
+                              ),
+                              const SizedBox(width: 14),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    teacherName,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                )
-                                .toList()
-                            : [],
-                      ),
+                                  Text(
+                                    teacherEmail,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 28),
+                        Text(
+                          'Students Enrolled: ${studentList != null ? studentList.length : 0}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: studentList != null
+                                ? studentList
+                                    .map<Widget>(
+                                      (student) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Column(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.green[500],
+                                              radius: 24,
+                                              child: const Icon(Icons.person,
+                                                  size: 28,
+                                                  color: Colors.white),
+                                            ),
+                                            const SizedBox(height: 6),
+                                            Text(
+                                              student,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList()
+                                : [],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 const Divider(),
 
                 /// ------------------------- ANNOUNCEMENT SECTION
-                const Text(
-                  'Announcements:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Card(
+                  color: Colors.white10,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Announcements:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _announcementCard(),
+                      ],
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 8),
-                _announcementCard(),
 
                 /// ------------------------- TASK SECTION
-                const SizedBox(height: 8),
-                ...task.map<Widget>((t) => _taskCard(context, t)), // Task cards
+                Card(
+                  color: Colors.white10,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Tasks:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        if (task.isEmpty)
+                          const Text(
+                            'No tasks assigned yet.',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ...task.map<Widget>((t) => _taskCard(context, t)),
+                      ],
+                    ),
+                  ),
+                ),
+
+                /// ------------------------- STUDENT DATA
+                isTeacher
+                    ? Column(
+                        children: [
+                          Divider(),
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Students Data:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  if (studentList.isEmpty)
+                                    const Text(
+                                      'No students yet.',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ...studentsData.map<Widget>(
+                                      (s) => _studentsCard(context, s)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             );
           }
@@ -288,7 +416,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                 Text(
                   announcementTitle,
                   style: const TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     letterSpacing: 0.5,
@@ -302,19 +430,19 @@ class _ClassroomPageState extends State<ClassroomPage> {
                     Text(
                       teacherName,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 10,
                         color: Colors.white70,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(width: 12),
                     const Icon(Icons.calendar_today,
-                        size: 14, color: Colors.white70),
+                        size: 10, color: Colors.white70),
                     const SizedBox(width: 4),
                     Text(
                       'Posted on ${DateTime.now().toLocal().toString().split(' ')[0]}',
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 10,
                         color: Colors.white70,
                       ),
                     ),
@@ -412,9 +540,9 @@ class _ClassroomPageState extends State<ClassroomPage> {
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.2,
-                    // decoration: t['completed']
-                    //     ? TextDecoration.lineThrough
-                    //     : TextDecoration.none,
+                    decoration: t['completed']
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -459,6 +587,94 @@ class _ClassroomPageState extends State<ClassroomPage> {
                     checkColor: Colors.white,
                   ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _studentsCard(BuildContext context, s) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: Colors.grey.shade900,
+      ),
+      padding: const EdgeInsets.all(18),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.green,
+            ),
+            padding: const EdgeInsets.all(8),
+            child: const Icon(Icons.person, color: Colors.white, size: 28),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  s['username'].toString(),
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                Text(
+                  s['email'].toString(),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white30,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.height, size: 13, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${s['height'].toString()}m',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    const Icon(Icons.speed, size: 13, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${s['weight'].toString()}kg',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    const Icon(Icons.healing, size: 13, color: Colors.white70),
+                    const SizedBox(width: 4),
+                    Text(
+                      s['status'].toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

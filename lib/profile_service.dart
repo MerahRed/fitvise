@@ -108,6 +108,26 @@ Future<void> loadClassData(String code) async {
   }
 }
 
+/// 🔸 Load students data from Supabase
+Future<void> loadStudentsData(String code) async {
+  final user = supabase.auth.currentUser;
+  if (user == null) return;
+
+  final response =
+      await supabase.from('profiles').select().eq('class_code', code);
+
+  // Filter response to get only specific student data, e.g., by student_id
+  studentsData = response
+      .map((student) => {
+            'username': student['username'],
+            'height': student['height'],
+            'weight': student['weight'],
+            'status': student['status'],
+            'email': student['email'],
+          })
+      .toList();
+}
+
 /// 🔸 Save updated tasks list to Supabase
 Future<void> saveTasks(String code, List<Map<String, dynamic>> tasks) async {
   final safeTasks = tasks.map((t) => t.cast<String, Object?>()).toList();
