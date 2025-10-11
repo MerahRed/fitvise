@@ -28,8 +28,11 @@ class PremiumPopup extends StatelessWidget {
             right: 0,
             child: IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close_rounded,
-                  size: 28, color: Colors.white),
+              icon: const Icon(
+                Icons.close_rounded,
+                size: 28,
+                color: Colors.white,
+              ),
             ),
           ),
 
@@ -81,8 +84,10 @@ class PremiumPopup extends StatelessWidget {
 
               // Price
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.black38,
                   borderRadius: BorderRadius.circular(20),
@@ -102,10 +107,7 @@ class PremiumPopup extends StatelessWidget {
                     SizedBox(width: 6),
                     Text(
                       "/year",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white70,
-                      ),
+                      style: TextStyle(fontSize: 18, color: Colors.white70),
                     ),
                   ],
                 ),
@@ -125,8 +127,8 @@ class PremiumPopup extends StatelessWidget {
                 children: [
                   _feature("Become a Teacher"),
                   _feature("Create a Class"),
-                  _feature("Sleep Tracker"),
-                  _feature("Measure your Water Level"),
+                  _feature("Generate Class SEGAK PDF file"),
+                  _feature("Acess Students Database"),
                 ],
               ),
 
@@ -154,10 +156,7 @@ class PremiumPopup extends StatelessWidget {
             child: Icon(Icons.check, color: Colors.black, size: 18),
           ),
           const SizedBox(width: 10),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
+          Text(text, style: const TextStyle(color: Colors.white, fontSize: 16)),
         ],
       ),
     );

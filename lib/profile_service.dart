@@ -124,6 +124,7 @@ Future<void> loadStudentsData(String code) async {
             'weight': student['weight'],
             'status': student['status'],
             'email': student['email'],
+            'segak': student['segak'],
           })
       .toList();
 }
@@ -182,5 +183,21 @@ Future<List<String>> getStudentsWithSameCode(String code) async {
     return usernames;
   } catch (error) {
     return [];
+  }
+}
+
+/// 🔸  save segak data
+
+Future<void> saveStudentsSegak() async {
+  final user = supabase.auth.currentUser;
+
+  if (user == null) return;
+  final memberResponse =
+      await supabase.from('profiles').select().eq('id', user.id).maybeSingle();
+
+  if (memberResponse != null) {
+    await supabase.from('profiles').update({
+      'segak': segak,
+    }).eq('id', user.id);
   }
 }

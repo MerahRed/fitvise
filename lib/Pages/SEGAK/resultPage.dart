@@ -1,4 +1,5 @@
 import 'package:FitVise/main.dart';
+import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 import 'package:open_filex/open_filex.dart';
@@ -12,27 +13,31 @@ class Resultpage extends StatefulWidget {
 }
 
 class _resultPageState extends State<Resultpage> {
-  String overall = "Well Done";
+  @override
+  void initState() {
+    super.initState();
+    calculateOverall();
+  }
 
   void calculateOverall() {
-    if (segak["Push up"]! >= 30 &&
-        segak["Sit up"]! >= 40 &&
-        segak["Step test"]! <= 60) {
-      overall = "Excellent";
-    } else if (segak["Push up"]! >= 25 &&
-        segak["Sit up"]! >= 35 &&
-        segak["Step test"]! <= 70) {
-      overall = "Good";
-    } else if (segak["Push up"]! >= 20 &&
-        segak["Sit up"]! >= 30 &&
-        segak["Step test"]! <= 80) {
-      overall = "Fair";
-    } else if (segak["Push up"]! >= 15 &&
-        segak["Sit up"]! >= 25 &&
-        segak["Step test"]! <= 90) {
-      overall = "Poor";
+    if (int.parse(segak["Push up"].toString()) >= 30 &&
+        int.parse(segak["Sit up"].toString()) >= 40 &&
+        int.parse(segak["Step test"].toString()) <= 60) {
+      segak["Overall"] = "Excellent";
+    } else if (int.parse(segak["Push up"].toString()) >= 25 &&
+        int.parse(segak["Sit up"].toString()) >= 35 &&
+        int.parse(segak["Step test"].toString()) <= 70) {
+      segak["Overall"] = "Good";
+    } else if (int.parse(segak["Push up"].toString()) >= 20 &&
+        int.parse(segak["Sit up"].toString()) >= 30 &&
+        int.parse(segak["Step test"].toString()) <= 80) {
+      segak["Overall"] = "Fair";
+    } else if (int.parse(segak["Push up"].toString()) >= 15 &&
+        int.parse(segak["Sit up"].toString()) >= 25 &&
+        int.parse(segak["Step test"].toString()) <= 90) {
+      segak["Overall"] = "Poor";
     } else {
-      overall = "Very Poor";
+      segak["Overall"] = "Very Poor";
     }
   }
 
@@ -99,6 +104,7 @@ class _resultPageState extends State<Resultpage> {
                           SizedBox(height: 30),
                           GestureDetector(
                             onTap: () async {
+                              await saveStudentsSegak();
                               // ensure everything converted to String
                               final file =
                                   await PdfGenerator.generateResultSheetPdf(
@@ -106,7 +112,7 @@ class _resultPageState extends State<Resultpage> {
                                 currentHeight: '$currentHeight',
                                 currentWeight: '$currentWeight',
                                 userStatus: userStatus,
-                                overall: overall,
+                                overall: segak["Overall"],
                                 segak: segak,
                                 filename:
                                     'result_sheet_$currentUsername.pdf', // optional

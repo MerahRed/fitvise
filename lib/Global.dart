@@ -24,6 +24,7 @@ Map<String, dynamic> segak = {
   "Sit up": 0, // ringkuk tubi separa
   "Step test": 0, // naik turun bangku
   "Sit and Reach": 0, // jangakuan melunjur : the value is based on mark
+  "Overall": ''
 };
 
 List exercise = [

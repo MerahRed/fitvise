@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_service.dart';
+import 'package:FitVise/utilities/pdf_gen.dart';
 import 'package:flutter/material.dart';
+import 'package:FitVise/utilities/classSegak_gen.dart';
+import 'package:open_filex/open_filex.dart';
 
 String className = "No class joined";
 String teacherId = "id not assigned";
@@ -343,12 +348,37 @@ class _ClassroomPageState extends State<ClassroomPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Students Data:',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Students Data:',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed: () async {
+                                            final file = await PdfBatchGenerator
+                                                .generateClassResultSheetPdf(
+                                              students: studentsData
+                                                  .cast<Map<String, dynamic>>(),
+                                            );
+
+                                            // show a quick snackbar and open with default viewer
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                  content: Text(
+                                                      'PDF saved: ${file.path}')),
+                                            );
+
+                                            await OpenFilex.open(file.path);
+                                          },
+                                          icon: Icon(Icons.file_open_outlined))
+                                    ],
                                   ),
                                   const SizedBox(height: 8),
                                   if (studentList.isEmpty)
