@@ -1,6 +1,7 @@
 import 'package:FitVise/Pages/Classroom/classMenu.dart';
 import 'package:FitVise/Pages/Classroom/classroom_page.dart';
 import 'package:FitVise/Pages/chat_page.dart';
+import 'package:FitVise/utilities/premium_popup.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -21,24 +22,28 @@ class Healthpage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.blueGrey.shade900,
-                  borderRadius: BorderRadius.circular(12)),
+                color: Colors.blueGrey.shade900,
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     Text(
                       'Calorie Needed 🥗',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                     SizedBox(height: 10),
                     Text(
                       '${kcal[kcalIndex][0] + kcal[kcalIndex][1] + kcal[kcalIndex][2] + kcal[kcalIndex][3]} Kcal',
                       style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.tealAccent),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.tealAccent,
+                      ),
                     ),
                   ],
                 ),
@@ -83,21 +88,23 @@ class Healthpage extends StatelessWidget {
                         'Breakfast is the first meal of the day. It is important to have a balanced meal that includes protein, fiber, and healthy fats.',
                   ),
                   itemCard(
-                      cardIcon: 'lib/assets/apple.png',
-                      title: 'Snack',
-                      description: '${kcal[kcalIndex][1]} kcal',
-                      cardColor: Colors.red[900],
-                      exerciseImage: 'lib/assets/snackPic.jpeg',
-                      details:
-                          'Snacks are small meals that can help keep your energy levels up throughout the day. They should be healthy and balanced, including protein, fiber, and healthy fats.'),
+                    cardIcon: 'lib/assets/apple.png',
+                    title: 'Snack',
+                    description: '${kcal[kcalIndex][1]} kcal',
+                    cardColor: Colors.red[900],
+                    exerciseImage: 'lib/assets/snackPic.jpeg',
+                    details:
+                        'Snacks are small meals that can help keep your energy levels up throughout the day. They should be healthy and balanced, including protein, fiber, and healthy fats.',
+                  ),
                   itemCard(
-                      cardIcon: 'lib/assets/dish.png',
-                      title: 'Lunch',
-                      description: '${kcal[kcalIndex][2]} kcal',
-                      cardColor: Colors.green[700],
-                      exerciseImage: 'lib/assets/lunchPic.jpeg',
-                      details:
-                          'Lunch is the meal eaten in the middle of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.'),
+                    cardIcon: 'lib/assets/dish.png',
+                    title: 'Lunch',
+                    description: '${kcal[kcalIndex][2]} kcal',
+                    cardColor: Colors.green[700],
+                    exerciseImage: 'lib/assets/lunchPic.jpeg',
+                    details:
+                        'Lunch is the meal eaten in the middle of the day. It is important to have a balanced meal that includes protein, vegetables, and healthy fats.',
+                  ),
                   itemCard(
                     cardIcon: 'lib/assets/dinner.png',
                     title: 'Dinner',
@@ -115,11 +122,12 @@ class Healthpage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20),
             child: Textcard(
-                title: "Discover More With FitVise",
-                description:
-                    "With FitVise, health diet become easier and simpler.",
-                startColor: Colors.deepOrangeAccent,
-                endColor: Colors.black12),
+              title: "Discover More With FitVise",
+              description:
+                  "With FitVise, health diet become easier and simpler.",
+              startColor: Colors.deepOrangeAccent,
+              endColor: Colors.black12,
+            ),
           ),
           Row(
             // row
@@ -128,38 +136,38 @@ class Healthpage extends StatelessWidget {
               //        ------------------ Class --------------------
               Expanded(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 20.0, left: 20, right: 10),
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    left: 20,
+                    right: 10,
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => (classCode.isNotEmpty)
-                              ? ClassroomPage(
-                                  code: classCode,
-                                )
+                              ? ClassroomPage(code: classCode)
                               : Classmenu(),
                         ),
                       );
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 12,
-                              offset: const Offset(3, 6),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              colors: [
-                                Colors.blue.shade900,
-                                Colors.blue.shade100
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 12,
+                            offset: const Offset(3, 6),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                          colors: [Colors.blue.shade900, Colors.blue.shade100],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
                       child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Row(
@@ -172,19 +180,19 @@ class Healthpage extends StatelessWidget {
                                   Icons.school_rounded,
                                   size: screenWidth * 0.08,
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                SizedBox(height: 20),
                                 Text(
                                   "Join",
-                                  style:
-                                      TextStyle(fontSize: screenWidth * 0.04),
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.04,
+                                  ),
                                 ),
                                 Text(
                                   "Class",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth * 0.07),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.07,
+                                  ),
                                 ),
                               ],
                             ),
@@ -198,32 +206,55 @@ class Healthpage extends StatelessWidget {
               //      --------------------- Health Tips ---------------------
               Expanded(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 20.0, left: 10, right: 20),
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    left: 10,
+                    right: 20,
+                  ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      if (isPremium == false) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.transparent,
+                              insetPadding: const EdgeInsets.all(16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: const PremiumPopup(),
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FitViseChatPage()));
+                            builder: (context) => FitViseChatPage(),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 12,
-                              offset: const Offset(3, 6),
-                            ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 12,
+                            offset: const Offset(3, 6),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.purple.shade900,
+                            Colors.purple.shade100,
                           ],
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              colors: [
-                                Colors.purple.shade900,
-                                Colors.purple.shade100
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
                       child: Padding(
                         padding: EdgeInsets.all(15),
                         child: Row(
@@ -236,19 +267,19 @@ class Healthpage extends StatelessWidget {
                                   Icons.tips_and_updates_rounded,
                                   size: screenWidth * 0.08,
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                SizedBox(height: 20),
                                 Text(
                                   "Ask our",
-                                  style:
-                                      TextStyle(fontSize: screenWidth * 0.04),
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.04,
+                                  ),
                                 ),
                                 Text(
                                   "ChatBot",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth * 0.07),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.07,
+                                  ),
                                 ),
                               ],
                             ),

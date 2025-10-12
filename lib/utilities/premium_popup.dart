@@ -126,7 +126,9 @@ class PremiumPopup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _feature("Become a Teacher"),
+                  _feature("Unlock FitVise-AI"),
                   _feature("Create a Class"),
+                  _feature("Get Advices and Tips from AI"),
                   _feature("Generate Class SEGAK PDF file"),
                   _feature("Acess Students Database"),
                 ],

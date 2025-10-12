@@ -57,8 +57,11 @@ class _ProfilepageState extends State<Profilepage> {
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.white,
-                        child:
-                            Icon(Icons.person, size: 60, color: Colors.green),
+                        child: Icon(
+                          Icons.person,
+                          size: 60,
+                          color: Colors.green,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       Row(
@@ -67,16 +70,17 @@ class _ProfilepageState extends State<Profilepage> {
                           Text(
                             currentUsername,
                             style: const TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                           isPremium
                               ? Icon(
                                   Icons.workspace_premium,
                                   color: Colors.tealAccent,
                                 )
-                              : SizedBox()
+                              : SizedBox(),
                         ],
                       ),
                       Text(
@@ -86,21 +90,24 @@ class _ProfilepageState extends State<Profilepage> {
                       const SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 6, horizontal: 14),
+                          vertical: 6,
+                          horizontal: 14,
+                        ),
                         decoration: BoxDecoration(
                           color: userStatus == "Normal"
                               ? Colors.green.shade700
                               : userStatus == "Obesity"
-                                  ? Colors.red.shade700
-                                  : Colors.grey.shade600,
+                              ? Colors.red.shade700
+                              : Colors.grey.shade600,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           userStatus,
                           style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -115,13 +122,21 @@ class _ProfilepageState extends State<Profilepage> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: _statCard("Height", "$currentHeight cm",
-                            Icons.height, Colors.blue),
+                        child: _statCard(
+                          "Height",
+                          "$currentHeight cm",
+                          Icons.height,
+                          Colors.blue,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: _statCard("Weight", "$currentWeight kg",
-                            Icons.monitor_weight, Colors.orange),
+                        child: _statCard(
+                          "Weight",
+                          "$currentWeight kg",
+                          Icons.monitor_weight,
+                          Colors.orange,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -168,8 +183,10 @@ class _ProfilepageState extends State<Profilepage> {
                         icon: Icons.person_2,
                         title: "Apply Teacher Account",
                         trailing: !isTeacher
-                            ? const Icon(Icons.workspace_premium,
-                                color: Colors.cyanAccent)
+                            ? const Icon(
+                                Icons.workspace_premium,
+                                color: Colors.cyanAccent,
+                              )
                             : const Icon(Icons.check, color: Colors.cyanAccent),
                         onTap: () {
                           if (isPremium == false) {
@@ -194,6 +211,7 @@ class _ProfilepageState extends State<Profilepage> {
                           }
                         },
                       ),
+                      // -------------------------- DeBugging Tools
                       _profileTile(
                         icon: Icons.handyman_rounded,
                         title: "Im the Developer",
@@ -201,15 +219,101 @@ class _ProfilepageState extends State<Profilepage> {
                         trailing: isPremium
                             ? const Icon(Icons.check_box_outlined)
                             : const Icon(
-                                Icons.check_box_outline_blank_outlined),
+                                Icons.check_box_outline_blank_outlined,
+                              ),
                         onTap: () {
-                          setState(() {
-                            isPremium = !isPremium;
-                            if (isPremium == false) {
+                          final passcode = TextEditingController();
+                          if (!isPremium) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Prove Yourself'),
+                                  content: TextField(
+                                    onChanged: (value) {
+                                      passcode.text = value;
+                                    },
+                                    controller: passcode,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Enter passcode..',
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        if (passcode.text == "innovvice") {
+                                          // Passcode
+                                          Navigator.pop(context);
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                  'Welcome Developer!',
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(
+                                                        context,
+                                                      ).pop();
+                                                    },
+                                                    child: const Text(
+                                                      'Start Developing',
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          setState(() {
+                                            isPremium = true;
+
+                                            saveUserInfo();
+                                          });
+                                        } else {
+                                          Navigator.pop(context);
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                  'Wrong Passcode',
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(
+                                                        context,
+                                                      ).pop();
+                                                    },
+                                                    child: const Text('Cancel'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                      child: const Text('Save'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          if (isPremium) {
+                            setState(() {
+                              isPremium = false;
                               isTeacher = false;
-                            }
-                            saveUserInfo();
-                          });
+                            });
+                          }
                         },
                       ),
                       _profileTile(
@@ -246,44 +350,48 @@ class _ProfilepageState extends State<Profilepage> {
         children: [
           Icon(icon, color: color, size: 40),
           const SizedBox(height: 8),
-          Text(value,
-              style:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text(title,
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade700)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+          ),
         ],
       ),
     );
   }
 
   // ----------------------------------------------------  profile tile
-  Widget _profileTile(
-      {required IconData icon,
-      required String title,
-      Color? color,
-      Widget? trailing,
-      required VoidCallback onTap}) {
+  Widget _profileTile({
+    required IconData icon,
+    required String title,
+    Color? color,
+    Widget? trailing,
+    required VoidCallback onTap,
+  }) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         leading: Icon(icon, color: color ?? Colors.green),
-        title: Text(title,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+        ),
         trailing: trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: onTap,
       ),
     );
   }
 
-// ---------------------------------------------------- log out dialogbox
+  // ---------------------------------------------------- log out dialogbox
   void _confirmLogout(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.grey.shade800,
         title: const Text("Log Out", style: TextStyle(color: Colors.redAccent)),
         content: const Text(
@@ -292,8 +400,10 @@ class _ProfilepageState extends State<Profilepage> {
         ),
         actions: [
           TextButton(
-            child:
-                const Text("Cancel", style: TextStyle(color: Colors.white70)),
+            child: const Text(
+              "Cancel",
+              style: TextStyle(color: Colors.white70),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           ElevatedButton(

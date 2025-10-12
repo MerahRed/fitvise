@@ -77,10 +77,11 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
             {
               'role': 'system',
               'content':
-                  'You are FitVise-Ai, a friendly fitness and health coach. '
-                  'Always focus your answers on fitness, workouts, nutrition, motivation, '
+                  'You are FitVise-Ai, a friendly fitness and health coach.'
+                  'Focus your answers on fitness, workouts, nutrition, motivation, '
                   'and the SEGAK test for students. Keep your responses short, positive, and encouraging.'
-                  'User name is $currentUsername and Weight about $currentWeight and Height is about $currentHeight',
+                  'User name is $currentUsername and Weight about $currentWeight and Height is about $currentHeight and user bmi is $userStatus'
+                  'Dont keeps saying the same thing',
             },
             {'role': 'user', 'content': userMessage},
           ],
@@ -121,7 +122,7 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("FitVise Chat"),
-        backgroundColor: Colors.green.shade700,
+        backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
       ),
       body: Column(
@@ -135,7 +136,7 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
                         Icon(
                           Icons.chat_bubble_outline,
                           size: 64,
-                          color: Colors.green.shade300,
+                          color: Colors.teal.shade300,
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -175,8 +176,8 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
                           ),
                           decoration: BoxDecoration(
                             color: isUser
-                                ? Colors.green.shade600
-                                : Colors.grey.shade200,
+                                ? Colors.tealAccent.shade700
+                                : Colors.grey.shade900,
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
@@ -189,7 +190,7 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
                           child: Text(
                             message['text']!,
                             style: TextStyle(
-                              color: isUser ? Colors.white : Colors.black87,
+                              color: isUser ? Colors.white : Colors.white,
                               fontSize: 15,
                             ),
                           ),
@@ -218,50 +219,59 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
               ),
             ),
           const Divider(height: 1),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: Row(
-              children: [
-                Expanded(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    child: TextField(
-                      key: ValueKey(_currentHintIndex),
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        hintText: _hintTexts[_currentHintIndex],
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide(
-                            color: Colors.green.shade300,
-                            width: 2,
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        child: TextField(
+                          key: ValueKey(_currentHintIndex),
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            hintText: _hintTexts[_currentHintIndex],
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(
+                                color: Colors.tealAccent.shade700,
+                                width: 2,
+                              ),
+                            ),
                           ),
+                          onSubmitted: (_) => _sendMessage(),
                         ),
                       ),
-                      onSubmitted: (_) => _sendMessage(),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    CircleAvatar(
+                      backgroundColor: Colors.tealAccent.shade700,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        onPressed: _sendMessage,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                CircleAvatar(
-                  backgroundColor: Colors.green.shade600,
-                  child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white, size: 20),
-                    onPressed: _sendMessage,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              Container(height: 50),
+            ],
           ),
         ],
       ),

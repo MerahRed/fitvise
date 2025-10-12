@@ -24,7 +24,7 @@ Map<String, dynamic> segak = {
   "Sit up": 0, // ringkuk tubi separa
   "Step test": 0, // naik turun bangku
   "Sit and Reach": 0, // jangakuan melunjur : the value is based on mark
-  "Overall": ''
+  "Overall": '',
 };
 
 List exercise = [
@@ -33,64 +33,91 @@ List exercise = [
       'Push Up',
       '15 times',
       'assets/GIF FitVise/Push Up.gif',
-      'Spread your fingers to really engage your upper body muscles, Erik says. Extend your legs, placing your feet hip distance apart, and engage your core to form a straight line from your head to your ankles. With control, bend your elbows to lower your entire body toward the ground.'
+      'Spread your fingers to really engage your upper body muscles, Erik says. Extend your legs, placing your feet hip distance apart, and engage your core to form a straight line from your head to your ankles. With control, bend your elbows to lower your entire body toward the ground.',
+      'assets/icons/pushup.png',
     ],
     [
       'Plank',
       '1 min',
       'assets/GIF FitVise/Plank.gif',
-      'Press your hands and knees to the floor with your back in a neutral position and your wrists aligned directly under your shoulders. Gaze about one foot in front of you. Your nose should point toward the floor and the back of your neck should be parallel to the ceiling'
+      'Press your hands and knees to the floor with your back in a neutral position and your wrists aligned directly under your shoulders. Gaze about one foot in front of you. Your nose should point toward the floor and the back of your neck should be parallel to the ceiling',
+      'assets/icons/plank.png',
     ],
     [
       'Cardio',
       '10 min',
       'lib/assets/Dance.gif', //  This is a placeholder image path
-      'Cardio, short for cardiovascular exercise, is any activity that raises your heart rate and breathing rate. It helps improve the health of your heart and lungs, burns calories, and increases your overall fitness. Good examples of cardio include walking, running, cycling, swimming, dancing, and jumping rope.'
-    ]
+      'Cardio, short for cardiovascular exercise, is any activity that raises your heart rate and breathing rate. It helps improve the health of your heart and lungs, burns calories, and increases your overall fitness. Good examples of cardio include walking, running, cycling, swimming, dancing, and jumping rope.',
+      'assets/icons/treadmill.png',
+    ],
   ],
   [
     [
       'Push Up',
       '20 times',
       'assets/GIF FitVise/Push Up.gif',
-      'Spread your fingers to really engage your upper body muscles, Erik says. Extend your legs, placing your feet hip distance apart, and engage your core to form a straight line from your head to your ankles. With control, bend your elbows to lower your entire body toward the ground.'
+      'Spread your fingers to really engage your upper body muscles, Erik says. Extend your legs, placing your feet hip distance apart, and engage your core to form a straight line from your head to your ankles. With control, bend your elbows to lower your entire body toward the ground.',
+      'assets/icons/pushup.png',
     ],
     [
       'Jogging',
       '1km',
       'assets/GIF FitVise/Jogging.gif',
-      'Start jogging at a slow, steady pace that allows you to breathe comfortably and hold a conversation. If you get tired, its okay to switch between jogging and walking. Keep your posture upright, your head facing forward, and your arms relaxed and bent at your sides.'
+      'Start jogging at a slow, steady pace that allows you to breathe comfortably and hold a conversation. If you get tired, its okay to switch between jogging and walking. Keep your posture upright, your head facing forward, and your arms relaxed and bent at your sides.',
+      'assets/icons/running.png',
     ],
     [
       'Squats',
       '20 times',
       'assets/GIF FitVise/Squat.gif',
-      'To squat, stand with your feet shoulder-width apart and your back straight. Bend your knees and push your hips back like youre sitting in a chair. Lower down until your thighs are parallel to the floor, then push through your heels to stand back up. Keep your chest up and knees aligned with your toes.'
-    ]
+      'To squat, stand with your feet shoulder-width apart and your back straight. Bend your knees and push your hips back like youre sitting in a chair. Lower down until your thighs are parallel to the floor, then push through your heels to stand back up. Keep your chest up and knees aligned with your toes.',
+      'assets/icons/squat.png',
+    ],
   ],
   [
-    ['Walking', '1 hour', 'assets/GIF FitVise/Walk.gif', 'just walk normally'],
+    [
+      'Squats',
+      '10 times',
+      'assets/GIF FitVise/Squat.gif',
+      'To squat, stand with your feet shoulder-width apart and your back straight. Bend your knees and push your hips back like youre sitting in a chair. Lower down until your thighs are parallel to the floor, then push through your heels to stand back up. Keep your chest up and knees aligned with your toes.',
+      'assets/icons/squat.png',
+    ],
     [
       'Dance',
       '10 min',
       'lib/assets/Dance.gif', // This is a placeholder image path
-      'To dance, start by choosing music you enjoy. Feel the beat and move your body to the rhythm. Keep your knees slightly bent and stay relaxed. Begin with simple steps, like side-to-side or forward and back. Watch dance videos or follow tutorials to learn new moves.'
+      'To dance, start by choosing music you enjoy. Feel the beat and move your body to the rhythm. Keep your knees slightly bent and stay relaxed. Begin with simple steps, like side-to-side or forward and back. Watch dance videos or follow tutorials to learn new moves.',
+      'assets/icons/dance.png',
     ],
-    ['Walking', '1 Hour', 'assets/GIF FitVise/Walk.gif', 'just walk normally'],
+    [
+      'Walking',
+      '1 Hour',
+      'assets/GIF FitVise/Walk.gif',
+      'just walk normally',
+      'assets/icons/walk.png',
+    ],
   ],
   [
     [
       'Wall Push Up',
       '10 times',
       'assets/GIF FitVise/Wall Push Up.gif',
-      'Stand facing a wall, about an arms length away. Place your hands on the wall at shoulder height and shoulder-width apart. Lean towards the wall, bending your elbows, then push back to the starting position. Keep your body straight and core engaged.'
+      'Stand facing a wall, about an arms length away. Place your hands on the wall at shoulder height and shoulder-width apart. Lean towards the wall, bending your elbows, then push back to the starting position. Keep your body straight and core engaged.',
+      'assets/icons/wall.png',
     ],
-    ['Walking', '30 min', 'assets/GIF FitVise/Walk.gif', 'just walk normally'],
+    [
+      'Walking',
+      '30 min',
+      'assets/GIF FitVise/Walk.gif',
+      'just walk normally',
+      'assets/icons/walk.png',
+    ],
     [
       'Squat on Chair',
       '10 times',
       'assets/GIF FitVise/Squat On Chair.gif',
-      'Stand in front of a chair with your feet shoulder-width apart. Lower your body as if you are going to sit down, keeping your knees behind your toes. When your thighs are parallel to the ground, pause, then push through your heels to stand back up.'
+      'Stand in front of a chair with your feet shoulder-width apart. Lower your body as if you are going to sit down, keeping your knees behind your toes. When your thighs are parallel to the ground, pause, then push through your heels to stand back up.',
+      'assets/icons/chair.png',
     ],
   ],
 ];
@@ -112,42 +139,42 @@ int getTargetCalories(String status, String meal) {
       return meal == 'Breakfast'
           ? 700
           : meal == 'Snack'
-              ? 500
-              : meal == 'Lunch'
-                  ? 800
-                  : meal == 'Dinner'
-                      ? 800
-                      : 0;
+          ? 500
+          : meal == 'Lunch'
+          ? 800
+          : meal == 'Dinner'
+          ? 800
+          : 0;
     case 'Normal':
       return meal == 'Breakfast'
           ? 500
           : meal == 'Snack'
-              ? 400
-              : meal == 'Lunch'
-                  ? 600
-                  : meal == 'Dinner'
-                      ? 600
-                      : 0;
+          ? 400
+          : meal == 'Lunch'
+          ? 600
+          : meal == 'Dinner'
+          ? 600
+          : 0;
     case 'Overweight':
       return meal == 'Breakfast'
           ? 400
           : meal == 'Snack'
-              ? 300
-              : meal == 'Lunch'
-                  ? 600
-                  : meal == 'Dinner'
-                      ? 450
-                      : 0;
+          ? 300
+          : meal == 'Lunch'
+          ? 600
+          : meal == 'Dinner'
+          ? 450
+          : 0;
     case 'Obesity':
       return meal == 'Breakfast'
           ? 300
           : meal == 'Snack'
-              ? 150
-              : meal == 'Lunch'
-                  ? 500
-                  : meal == 'Dinner'
-                      ? 400
-                      : 0;
+          ? 150
+          : meal == 'Lunch'
+          ? 500
+          : meal == 'Dinner'
+          ? 400
+          : 0;
     default:
       return 0;
   }
@@ -178,7 +205,7 @@ final Map<String, List<Map<String, dynamic>>> dietData = {
     {
       "name": "Vegetable Stir-Fry with Rice",
       "serving": "1 plate",
-      "calories": 400
+      "calories": 400,
     },
     {"name": "Curry Laksa", "serving": "1 bowl", "calories": 550},
     {"name": "Mee Goreng Mamak", "serving": "1 plate", "calories": 650},

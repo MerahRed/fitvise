@@ -1,7 +1,7 @@
 name: FitVise
 description: "A new Innovice project."
 publish_to: 'none'
-version: 0.1.0+5
+version: 0.1.0+6
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
@@ -44,6 +44,7 @@ flutter:
     - lib/assets/        # keep this for your GIFs
     - assets/sounds/     # add this for audio
     - assets/GIF FitVise/  # add this for GIFs
+    - assets/icons/
 
 
 

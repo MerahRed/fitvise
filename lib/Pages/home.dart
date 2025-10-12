@@ -75,7 +75,7 @@ class _HomepageState extends State<Homepage> {
           "FitVise",
           style: TextStyle(
             color: Colors.greenAccent,
-            fontSize: 30,
+            fontSize: 40,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -110,22 +110,30 @@ class _HomepageState extends State<Homepage> {
                         children: <Widget>[
                           //SizedBox(width: 10),
                           CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.white30,
-                              child: Icon(Icons.person, size: 50)),
+                            radius: 30,
+                            backgroundColor: Colors.white30,
+                            child: Icon(Icons.person, size: 50),
+                          ),
                           SizedBox(width: 20),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Hello, ' + currentUsername + ' 👋',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
+                              Text(
+                                'Hello, ' + currentUsername + ' 👋',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
                               SizedBox(width: 30),
-                              Text(DateFormat.yMMMMd().format(date),
-                                  style: const TextStyle(
-                                      color: Colors.white70, fontSize: 14)),
+                              Text(
+                                DateFormat.yMMMMd().format(date),
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -151,35 +159,40 @@ class _HomepageState extends State<Homepage> {
             padding: EdgeInsets.all(20),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.blueGrey.shade900,
-                  borderRadius: BorderRadius.circular(20)),
+                color: Colors.blueGrey.shade900,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Text(
-                        userStatus != 'Normal'
-                            ? "🎯 Target Weight"
-                            : "👏 Keep it up!",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Text(
+                      userStatus != 'Normal'
+                          ? "🎯 Target Weight"
+                          : "👏 Keep it up!",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        userStatus != 'Normal'
-                            ? "$targetKg Kg"
-                            : "You're on track!",
-                        style: TextStyle(
-                            fontSize: userStatus != 'Normal' ? 40 : 28,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.tealAccent),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      userStatus != 'Normal'
+                          ? "$targetKg Kg"
+                          : "You're on track!",
+                      style: TextStyle(
+                        fontSize: userStatus != 'Normal' ? 40 : 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.tealAccent,
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
 
-//                   DIET
+          //                   DIET
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: GestureDetector(
@@ -222,11 +235,15 @@ class _HomepageState extends State<Homepage> {
                             Text(
                               "Today's \nDiet",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Text(DateFormat.EEEE().format(date),
-                                style: const TextStyle(fontSize: 14)),
+                            Text(
+                              DateFormat.EEEE().format(date),
+                              style: const TextStyle(fontSize: 14),
+                            ),
                           ],
                         ),
                       ),
@@ -242,7 +259,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
 
-//                   EXERCISE
+          //                   EXERCISE
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: GestureDetector(
@@ -285,11 +302,15 @@ class _HomepageState extends State<Homepage> {
                             Text(
                               "Today's \nExercises",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Text(DateFormat.EEEE().format(date),
-                                style: const TextStyle(fontSize: 14)),
+                            Text(
+                              DateFormat.EEEE().format(date),
+                              style: const TextStyle(fontSize: 14),
+                            ),
                           ],
                         ),
                       ),
@@ -315,8 +336,10 @@ Widget _statBox(IconData icon, String value, String label) {
     children: [
       Icon(icon, size: 28, color: Colors.tealAccent),
       const SizedBox(height: 6),
-      Text(value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+      Text(
+        value,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
       Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
     ],
   );

@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_service.dart';
-import 'package:FitVise/utilities/pdf_gen.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/utilities/classSegak_gen.dart';
 import 'package:open_filex/open_filex.dart';
@@ -23,10 +20,7 @@ String announcementTitle = "No announcements yet";
 class ClassroomPage extends StatefulWidget {
   final String code; // class code
 
-  const ClassroomPage({
-    super.key,
-    required this.code,
-  });
+  const ClassroomPage({super.key, required this.code});
 
   @override
   State<ClassroomPage> createState() => _ClassroomPageState();
@@ -65,9 +59,9 @@ class _ClassroomPageState extends State<ClassroomPage> {
     await saveUserInfo();
 
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You have left the class.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("You have left the class.")));
       Navigator.pop(context);
     }
   }
@@ -89,8 +83,9 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         onChanged: (value) {
                           newTask = value;
                         },
-                        decoration:
-                            const InputDecoration(hintText: 'Assign task'),
+                        decoration: const InputDecoration(
+                          hintText: 'Assign task',
+                        ),
                       ),
                       actions: [
                         TextButton(
@@ -127,9 +122,10 @@ class _ClassroomPageState extends State<ClassroomPage> {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainApp()),
-                (_) => false);
+              context,
+              MaterialPageRoute(builder: (context) => MainApp()),
+              (_) => false,
+            );
           },
           tooltip: 'Back',
         ),
@@ -176,9 +172,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         const SizedBox(height: 6),
                         Text(
                           'Class Code: ${widget.code}',
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
+                          style: const TextStyle(fontSize: 15),
                         ),
                         const Divider(height: 28),
                         const Text(
@@ -195,8 +189,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
                               CircleAvatar(
                                 backgroundColor: Colors.indigo.shade700,
                                 radius: 28,
-                                child: const Icon(Icons.person,
-                                    size: 32, color: Colors.white),
+                                child: const Icon(
+                                  Icons.person,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
                               ),
                               const SizedBox(width: 14),
                               Column(
@@ -236,31 +233,35 @@ class _ClassroomPageState extends State<ClassroomPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: studentList != null
                                 ? studentList
-                                    .map<Widget>(
-                                      (student) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Column(
-                                          children: [
-                                            CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.green[500],
-                                              radius: 24,
-                                              child: const Icon(Icons.person,
+                                      .map<Widget>(
+                                        (student) => Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor:
+                                                    Colors.green[500],
+                                                radius: 24,
+                                                child: const Icon(
+                                                  Icons.person,
                                                   size: 28,
-                                                  color: Colors.white),
-                                            ),
-                                            const SizedBox(height: 6),
-                                            Text(
-                                              student,
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                            ),
-                                          ],
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 6),
+                                              Text(
+                                                student,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                    .toList()
+                                      )
+                                      .toList()
                                 : [],
                           ),
                         ),
@@ -277,7 +278,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 16),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -321,10 +322,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         if (task.isEmpty)
                           const Text(
                             'No tasks assigned yet.',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 10,
-                            ),
+                            style: TextStyle(color: Colors.grey, fontSize: 10),
                           ),
                         ...task.map<Widget>((t) => _taskCard(context, t)),
                       ],
@@ -348,37 +346,12 @@ class _ClassroomPageState extends State<ClassroomPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Students Data:',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () async {
-                                            final file = await PdfBatchGenerator
-                                                .generateClassResultSheetPdf(
-                                              students: studentsData
-                                                  .cast<Map<String, dynamic>>(),
-                                            );
-
-                                            // show a quick snackbar and open with default viewer
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'PDF saved: ${file.path}')),
-                                            );
-
-                                            await OpenFilex.open(file.path);
-                                          },
-                                          icon: Icon(Icons.file_open_outlined))
-                                    ],
+                                  Text(
+                                    'Students Data:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                   const SizedBox(height: 8),
                                   if (studentList.isEmpty)
@@ -390,7 +363,51 @@ class _ClassroomPageState extends State<ClassroomPage> {
                                       ),
                                     ),
                                   ...studentsData.map<Widget>(
-                                      (s) => _studentsCard(context, s)),
+                                    (s) => _studentsCard(context, s),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green,
+                                        minimumSize: Size(double.infinity, 50),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        final file =
+                                            await PdfBatchGenerator.generateClassResultSheetPdf(
+                                              students: studentsData
+                                                  .cast<Map<String, dynamic>>(),
+                                            );
+
+                                        // show a quick snackbar and open with default viewer
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'PDF saved: ${file.path}',
+                                            ),
+                                          ),
+                                        );
+
+                                        await OpenFilex.open(file.path);
+                                      },
+                                      child: Text(
+                                        'Print SEGAK Data',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -435,8 +452,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
               color: Colors.white.withOpacity(0.15),
             ),
             padding: const EdgeInsets.all(10),
-            child:
-                const Icon(Icons.announcement, size: 38, color: Colors.white),
+            child: const Icon(
+              Icons.announcement,
+              size: 38,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -466,8 +486,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const Icon(Icons.calendar_today,
-                        size: 10, color: Colors.white70),
+                    const Icon(
+                      Icons.calendar_today,
+                      size: 10,
+                      color: Colors.white70,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'Posted on ${DateTime.now().toLocal().toString().split(' ')[0]}',
@@ -500,8 +523,9 @@ class _ClassroomPageState extends State<ClassroomPage> {
                           onChanged: (value) {
                             newAnnouncement = value;
                           },
-                          controller:
-                              TextEditingController(text: announcementTitle),
+                          controller: TextEditingController(
+                            text: announcementTitle,
+                          ),
                           decoration: const InputDecoration(
                             hintText: 'Enter new announcement',
                           ),
@@ -516,7 +540,9 @@ class _ClassroomPageState extends State<ClassroomPage> {
                           ElevatedButton(
                             onPressed: () async {
                               await updateAnnouncement(
-                                  widget.code, newAnnouncement);
+                                widget.code,
+                                newAnnouncement,
+                              );
                               if (mounted) {
                                 setState(() {
                                   announcementTitle = newAnnouncement;
@@ -578,8 +604,11 @@ class _ClassroomPageState extends State<ClassroomPage> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.calendar_today,
-                        size: 13, color: Colors.white70),
+                    const Icon(
+                      Icons.calendar_today,
+                      size: 13,
+                      color: Colors.white70,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'Assigned on ${DateTime.now().toLocal().toString().split(' ')[0]}',
@@ -616,7 +645,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                     activeColor: Colors.indigo,
                     checkColor: Colors.white,
                   ),
-          )
+          ),
         ],
       ),
     );
@@ -676,9 +705,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         color: Colors.white70,
                       ),
                     ),
-                    SizedBox(
-                      width: 6,
-                    ),
+                    SizedBox(width: 6),
                     const Icon(Icons.speed, size: 13, color: Colors.white70),
                     const SizedBox(width: 4),
                     Text(
@@ -688,9 +715,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                         color: Colors.white70,
                       ),
                     ),
-                    SizedBox(
-                      width: 6,
-                    ),
+                    SizedBox(width: 6),
                     const Icon(Icons.healing, size: 13, color: Colors.white70),
                     const SizedBox(width: 4),
                     Text(
