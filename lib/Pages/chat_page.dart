@@ -17,7 +17,6 @@ class FitViseChatPage extends StatefulWidget {
 class _FitViseChatPageState extends State<FitViseChatPage> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
-  final Random _random = Random();
   final List<String> _hintTexts = [
     "Say something...",
     "Ask me about workouts 💪",
@@ -77,11 +76,12 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
             {
               'role': 'system',
               'content':
-                  'You are FitVise-Ai, a friendly fitness and health coach.'
-                  'Focus your answers on fitness, workouts, nutrition, motivation, '
-                  'and the SEGAK test for students. Keep your responses short, positive, and encouraging.'
+                  'You are FitVise-AI, a friendly and smart AI that knows everything about health and fitness.'
+                  'Focus your answers to help user about fitness, workouts, nutrition, motivation, '
+                  ''
+                  'Keep your responses short, positive, and encouraging.'
                   'User name is $currentUsername and Weight about $currentWeight and Height is about $currentHeight and user bmi is $userStatus'
-                  'Dont keeps saying the same thing',
+                  'talk about $_messages',
             },
             {'role': 'user', 'content': userMessage},
           ],
@@ -92,10 +92,10 @@ class _FitViseChatPageState extends State<FitViseChatPage> {
         final data = jsonDecode(response.body);
         return data['choices'][0]['message']['content'] ?? "No response.";
       } else {
-        return "⚠️ Server error (${response.statusCode}): ${response.body}";
+        return "Server error (${response.statusCode}): ${response.body}";
       }
     } catch (e) {
-      return "⚠️ Error fetching AI response: $e";
+      return "Error fetching AI response: $e";
     }
   }
 

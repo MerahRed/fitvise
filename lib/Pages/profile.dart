@@ -248,58 +248,38 @@ class _ProfilepageState extends State<Profilepage> {
                                     ElevatedButton(
                                       onPressed: () async {
                                         if (passcode.text == "innovvice") {
-                                          // Passcode
-                                          Navigator.pop(context);
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                  'Welcome Developer!',
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(
-                                                        context,
-                                                      ).pop();
-                                                    },
-                                                    child: const Text(
-                                                      'Start Developing',
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
                                           setState(() {
                                             isPremium = true;
 
                                             saveUserInfo();
                                           });
-                                        } else {
-                                          Navigator.pop(context);
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: const Text(
-                                                  'Wrong Passcode',
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(
-                                                        context,
-                                                      ).pop();
-                                                    },
-                                                    child: const Text('Cancel'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
+                                          // Passcode
                                         }
+                                        Navigator.pop(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                isPremium
+                                                    ? "Welcome Developer!"
+                                                    : 'Wrong Passcode',
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    isPremium
+                                                        ? "Start Developing!"
+                                                        : 'Close',
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       },
                                       child: const Text('Save'),
                                     ),
@@ -307,8 +287,7 @@ class _ProfilepageState extends State<Profilepage> {
                                 );
                               },
                             );
-                          }
-                          if (isPremium) {
+                          } else {
                             setState(() {
                               isPremium = false;
                               isTeacher = false;

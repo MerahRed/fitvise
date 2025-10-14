@@ -5,10 +5,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'Global.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Supabase.initialize(
     url: 'https://jvhwabzhfplqpwuxapbl.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2aHdhYnpoZnBscXB3dXhhcGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyODAwNjcsImV4cCI6MjA3MTg1NjA2N30.LCN0oRZeBa_Xo6Z1RXyGfQwTsePlpAXQKBApX-ZxfQU',
+
+    // authOptions: const FlutterAuthClientOptions(
+    //   autoRefreshToken: true,
+    //   persistSession: true,
+    // ),
   );
 
   if (Supabase.instance.client.auth.currentUser != null) {
