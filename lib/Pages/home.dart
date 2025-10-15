@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
@@ -198,13 +199,13 @@ class _HomepageState extends State<Homepage> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  pageIndex = 2;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainApp()),
-                    (_) => false,
-                  );
+                  pageIndex = 2; // Go to "Health" page
                 });
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AuthGate()),
+                  (_) => false,
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -265,13 +266,13 @@ class _HomepageState extends State<Homepage> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  pageIndex = 1;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainApp()),
-                    (_) => false,
-                  );
+                  pageIndex = 1; // Go to "Health" page
                 });
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => AuthGate()),
+                  (_) => false,
+                );
               },
               child: Container(
                 decoration: BoxDecoration(

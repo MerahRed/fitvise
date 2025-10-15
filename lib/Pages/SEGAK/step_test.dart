@@ -1,6 +1,5 @@
-import 'package:FitVise/Pages/SEGAK/pushup.dart';
 import 'package:FitVise/Pages/SEGAK/resultPage.dart';
-import 'package:FitVise/main.dart';
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';
@@ -95,7 +94,7 @@ class _steptestPageState extends State<steptestPage> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainApp()),
+              MaterialPageRoute(builder: (context) => AuthGate()),
               (_) => false,
             );
           },
@@ -188,10 +187,10 @@ class _steptestPageState extends State<steptestPage> {
                                     }
                                   },
                                   child: const Text("Confirm"),
-                                )
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     );

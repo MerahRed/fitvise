@@ -4,6 +4,10 @@ library;
 
 import 'package:FitVise/auth/auth_service.dart';
 
+
+//test
+bool first = false;
+
 int pageIndex = 0;
 int? currentHeight = 0;
 int? currentWeight = 0;

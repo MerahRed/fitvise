@@ -1,4 +1,5 @@
 import 'package:FitVise/Pages/SEGAK/situp.dart';
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
@@ -43,10 +44,9 @@ class _PushupPageState extends State<PushupPage> {
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
-    flutterTts.setIosAudioCategory(
-      IosTextToSpeechAudioCategory.ambient,
-      [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
-    );
+    flutterTts.setIosAudioCategory(IosTextToSpeechAudioCategory.ambient, [
+      IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+    ]);
     flutterTts.setVolume(15);
   }
 
@@ -98,7 +98,7 @@ class _PushupPageState extends State<PushupPage> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => MainApp()),
+                MaterialPageRoute(builder: (context) => AuthGate()),
                 (_) => false,
               );
             },
@@ -191,10 +191,10 @@ class _PushupPageState extends State<PushupPage> {
                                       }
                                     },
                                     child: const Text("Confirm"),
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       );

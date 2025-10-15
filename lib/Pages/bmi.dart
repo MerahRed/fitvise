@@ -1,3 +1,4 @@
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
@@ -217,7 +218,7 @@ class _BmipageState extends State<Bmipage> {
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => MainApp(),
+                                builder: (context) => AuthGate(),
                               ),
                               (_) => false,
                             );

@@ -1,43 +1,27 @@
-/*
-
-AUTH GATE - this continuosly listen for auth state changes.
-
--------------------------------------------------------------------------------------------
-
-unauthenticated - Login Page
-authenticated = Profile Page / Home Page
-
-*/
-
-import 'package:FitVise/Global.dart';
-import 'package:FitVise/Pages/bmi.dart';
-import 'package:FitVise/auth/loginPage.dart';
-import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-//page
-import 'package:FitVise/Pages/health.dart';
-import 'package:FitVise/Pages/fitness.dart';
-import 'package:FitVise/Pages/profile.dart';
+import 'package:FitVise/Global.dart';
+import 'package:FitVise/auth/loginPage.dart';
+import 'package:FitVise/Pages/bmi.dart';
 import 'package:FitVise/Pages/home.dart';
+import 'package:FitVise/Pages/fitness.dart';
+import 'package:FitVise/Pages/health.dart';
+import 'package:FitVise/Pages/profile.dart';
 
-class AuthGate extends StatelessWidget {
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
-  Future<Widget> _getRedirectPage() async {
-    final user = Supabase.instance.client.auth.currentUser;
-    if (user == null) return const Loginpage();
+  @override
+  State<AuthGate> createState() => _AuthGateState();
+}
 
-    // Load user info from Supabase
-    await loadUserInfo();
+class _AuthGateState extends State<AuthGate> {
+  List<Widget> pages = [Homepage(), Fitpage(), Healthpage(), Profilepage()];
 
-    // Check BMI status
-    if (currentHeight == 0 || currentWeight == 0) {
-      return const Bmipage(); // go to BMI first
-    } else {
-      final List page = [Homepage(), Fitpage(), Healthpage(), Profilepage()];
-      return page[pageIndex]; // normal navigation
-    }
+  void changePage(int index) {
+    setState(() {
+      pageIndex = index;
+    });
   }
 
   @override
@@ -45,32 +29,53 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<AuthState>(
       stream: Supabase.instance.client.auth.onAuthStateChange,
       builder: (context, snapshot) {
-        // Loading... (no internet)
+        final session = snapshot.hasData ? snapshot.data!.session : null;
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        final session = snapshot.hasData ? snapshot.data!.session : null;
-
-        if (session != null) {
-          // User logged in  decide BMI / Home
-          return FutureBuilder<Widget>(
-            future: _getRedirectPage(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Scaffold(
-                  body: Center(child: CircularProgressIndicator()),
-                );
-              }
-              return snapshot.data!;
-            },
-          );
-        } else {
-          // User logged out (go to Login)
+        if (session == null) {
           return const Loginpage();
         }
+
+        // Logged in
+        if (currentHeight == 0 || currentWeight == 0) {
+          return const Bmipage();
+        }
+
+        // Normal app pages + navigation
+        return Scaffold(
+          body: pages[pageIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: pageIndex,
+            onTap: (i) {
+              setState(() {
+                pageIndex = i;
+              });
+            },
+            selectedItemColor: Colors.green.shade700,
+            unselectedItemColor: Colors.grey.shade500,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.fitness_center),
+                label: 'Fitness',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Health',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+          ),
+        );
       },
     );
   }

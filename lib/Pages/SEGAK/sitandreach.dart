@@ -1,6 +1,7 @@
 import 'package:FitVise/Pages/SEGAK/pushup.dart';
 import 'package:FitVise/Pages/SEGAK/resultPage.dart';
 import 'package:FitVise/Pages/SEGAK/step_test.dart';
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -33,9 +34,7 @@ class _sitandreachState extends State<Sitandreach> {
             color: Colors.white,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => MainApp(),
-                ),
+                MaterialPageRoute(builder: (context) => AuthGate()),
                 (_) => false,
               );
             },
@@ -52,7 +51,9 @@ class _sitandreachState extends State<Sitandreach> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 24),
+                        vertical: 30,
+                        horizontal: 24,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(24),
@@ -63,14 +64,17 @@ class _sitandreachState extends State<Sitandreach> {
                             offset: const Offset(0, 6),
                           ),
                         ],
-                        border:
-                            Border.all(color: Colors.grey.shade300, width: 1.5),
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                          width: 1.5,
+                        ),
                       ),
                       child: Column(
                         children: [
                           Image.asset(
-                              "assets/GIF FitVise/Jangkauan Melunjur.gif",
-                              scale: 2.5),
+                            "assets/GIF FitVise/Jangkauan Melunjur.gif",
+                            scale: 2.5,
+                          ),
                           const SizedBox(height: 18),
                           const Text(
                             "Sit and Reach Guideline",
@@ -87,8 +91,7 @@ class _sitandreachState extends State<Sitandreach> {
                             indent: 30,
                             endIndent: 30,
                           ),
-                          Text(
-                            """
+                          Text("""
       Procedure:
       
       1. Student sits on the floor with legs straight, feet together, and soles upright.
@@ -102,9 +105,7 @@ class _sitandreachState extends State<Sitandreach> {
       - 3 points: Fingers slightly short (around the ankles).
       - 2 points: Fingers only reach the middle of the shins.
       - 1 point: Fingers only reach around the knees.
-      """,
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
+      """, style: TextStyle(color: Colors.black, fontSize: 20)),
                           const Text(
                             "Enter Your Score",
                             style: TextStyle(
@@ -149,7 +150,8 @@ class _sitandreachState extends State<Sitandreach> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => steptestPage()),
+                              builder: (context) => steptestPage(),
+                            ),
                             (_) => false,
                           );
                         }
@@ -160,7 +162,7 @@ class _sitandreachState extends State<Sitandreach> {
                           gradient: LinearGradient(
                             colors: [
                               Colors.green.shade400,
-                              Colors.green.shade700
+                              Colors.green.shade700,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -175,12 +177,17 @@ class _sitandreachState extends State<Sitandreach> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 14.0, horizontal: 32),
+                            vertical: 14.0,
+                            horizontal: 32,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(Icons.check_circle,
-                                  color: Colors.white, size: 28),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                               SizedBox(width: 12),
                               Text(
                                 "Next",

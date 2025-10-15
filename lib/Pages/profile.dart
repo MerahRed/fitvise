@@ -291,6 +291,7 @@ class _ProfilepageState extends State<Profilepage> {
                             setState(() {
                               isPremium = false;
                               isTeacher = false;
+                              saveUserInfo();
                             });
                           }
                         },

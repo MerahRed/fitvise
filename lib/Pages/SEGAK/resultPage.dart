@@ -1,4 +1,4 @@
-import 'package:FitVise/main.dart';
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
@@ -58,7 +58,9 @@ class _resultPageState extends State<Resultpage> {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 24),
+                        vertical: 30,
+                        horizontal: 24,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(24),
@@ -69,8 +71,10 @@ class _resultPageState extends State<Resultpage> {
                             offset: const Offset(0, 6),
                           ),
                         ],
-                        border:
-                            Border.all(color: Colors.grey.shade300, width: 1.5),
+                        border: Border.all(
+                          color: Colors.grey.shade300,
+                          width: 1.5,
+                        ),
                       ),
                       child: Column(
                         children: [
@@ -108,20 +112,21 @@ class _resultPageState extends State<Resultpage> {
                               // ensure everything converted to String
                               final file =
                                   await PdfGenerator.generateResultSheetPdf(
-                                currentUsername: currentUsername,
-                                currentHeight: '$currentHeight',
-                                currentWeight: '$currentWeight',
-                                userStatus: userStatus,
-                                overall: segak["Overall"],
-                                segak: segak,
-                                filename:
-                                    'result_sheet_$currentUsername.pdf', // optional
-                              );
+                                    currentUsername: currentUsername,
+                                    currentHeight: '$currentHeight',
+                                    currentWeight: '$currentWeight',
+                                    userStatus: userStatus,
+                                    overall: segak["Overall"],
+                                    segak: segak,
+                                    filename:
+                                        'result_sheet_$currentUsername.pdf', // optional
+                                  );
 
                               // show a quick snackbar and open with default viewer
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content: Text('PDF saved: ${file.path}')),
+                                  content: Text('PDF saved: ${file.path}'),
+                                ),
                               );
 
                               await OpenFilex.open(file.path);
@@ -132,7 +137,7 @@ class _resultPageState extends State<Resultpage> {
                                 gradient: LinearGradient(
                                   colors: [
                                     Colors.blue.shade400,
-                                    Colors.blue.shade700
+                                    Colors.blue.shade700,
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -147,12 +152,17 @@ class _resultPageState extends State<Resultpage> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 14.0, horizontal: 32),
+                                  vertical: 14.0,
+                                  horizontal: 32,
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    Icon(Icons.open_in_new_rounded,
-                                        color: Colors.white, size: 28),
+                                    Icon(
+                                      Icons.open_in_new_rounded,
+                                      color: Colors.white,
+                                      size: 28,
+                                    ),
                                     SizedBox(width: 12),
                                     Text(
                                       "View Result Sheet",
@@ -179,7 +189,7 @@ class _resultPageState extends State<Resultpage> {
                         segak["Step test"] = 0;
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => MainApp()),
+                          MaterialPageRoute(builder: (context) => AuthGate()),
                           (_) => false,
                         );
                       },
@@ -189,7 +199,7 @@ class _resultPageState extends State<Resultpage> {
                           gradient: LinearGradient(
                             colors: [
                               Colors.green.shade400,
-                              Colors.green.shade700
+                              Colors.green.shade700,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -204,12 +214,17 @@ class _resultPageState extends State<Resultpage> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 14.0, horizontal: 32),
+                            vertical: 14.0,
+                            horizontal: 32,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Icon(Icons.check_circle,
-                                  color: Colors.white, size: 28),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                               SizedBox(width: 12),
                               Text(
                                 "Complete",

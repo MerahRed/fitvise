@@ -1,4 +1,5 @@
 import 'package:FitVise/Global.dart';
+import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainApp()),
+              MaterialPageRoute(builder: (context) => AuthGate()),
               (_) => false,
             );
           },
