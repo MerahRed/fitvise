@@ -1,9 +1,13 @@
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/Global.dart';
 import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+
+Future<void> clearSession() async {
+  await Supabase.instance.client.auth.signOut();
+  // This will clear the stored session from local storage
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +17,12 @@ void main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2aHdhYnpoZnBscXB3dXhhcGJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyODAwNjcsImV4cCI6MjA3MTg1NjA2N30.LCN0oRZeBa_Xo6Z1RXyGfQwTsePlpAXQKBApX-ZxfQU',
   );
+
+  try {
+    await Supabase.instance.client.auth.signOut();
+  } catch (e) {
+    print('Error clearing session: $e');
+  }
 
   runApp(const MainApp());
 }

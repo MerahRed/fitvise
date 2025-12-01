@@ -1,3 +1,4 @@
+import 'package:FitVise/Pages/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:FitVise/Global.dart';
@@ -16,7 +17,13 @@ class AuthGate extends StatefulWidget {
 }
 
 class _AuthGateState extends State<AuthGate> {
-  List<Widget> pages = [Homepage(), Fitpage(), Healthpage(), Profilepage()];
+  List<Widget> pages = [
+    Homepage(),
+    Fitpage(),
+    Healthpage(),
+    Profilepage(),
+    Workouts(),
+  ];
 
   void changePage(int index) {
     setState(() {
@@ -72,6 +79,10 @@ class _AuthGateState extends State<AuthGate> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Profile',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.accessibility_new_rounded),
+                label: 'Exercise',
               ),
             ],
           ),

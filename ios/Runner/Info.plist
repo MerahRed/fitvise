@@ -47,7 +47,8 @@
 	</array>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>This app uses speech to guide exercises</string>
-
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses camera for tracking exercises.</string>
 </dict>
 </plist>
 <key>NSAppTransportSecurity</key>
