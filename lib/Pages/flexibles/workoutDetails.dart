@@ -19,6 +19,12 @@ class _WorkoutdetailsState extends State<Workoutdetails> {
   );
 
   List poses = [];
+  String testing = "no results";
+  String go = "Go Up";
+  Pose? lastPose;
+
+  int points = 0;
+  bool goingDown = false;
 
   @override
   void initState() {
@@ -83,10 +89,32 @@ class _WorkoutdetailsState extends State<Workoutdetails> {
     // Run pose detection
     final result = await poseDetector.processImage(inputImage);
 
+    PoseLandmark? rightWrist;
+    if (result.isNotEmpty) {
+      rightWrist = result.first.landmarks[PoseLandmarkType.rightWrist];
+    }
+
+    testing = rightWrist != null
+        ? 'Right Wrist: (${rightWrist.x.toStringAsFixed(0)}, ${rightWrist.y.toStringAsFixed(0)})'
+        : 'Right Wrist not detected';
+
+    if (rightWrist!.y < 100) {
+      go = 'Go Down';
+      goingDown = true;
+    }
+    if (rightWrist!.y > 400) {
+      go = 'Go Up';
+    }
+    if (goingDown == true && rightWrist!.y > 400) {
+      points += 1;
+      goingDown = false;
+    }
+
     // Safely update UI
     if (mounted) {
       setState(() {
         poses = result;
+        lastPose = poses.isNotEmpty ? poses.first : null;
       });
     }
   }
@@ -101,11 +129,104 @@ class _WorkoutdetailsState extends State<Workoutdetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Workout Details")),
-      body: ListView(
+      appBar: AppBar(
+        title: Text("Workout Details"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              points = 0;
+            },
+            icon: Icon(Icons.restore_page_outlined),
+          ),
+        ],
+      ),
+      body: Column(
         children: [
-          Text("Detected poses: ${poses.length}"),
-          Center(child: PoseCamera(onFrame: processCameraImage)),
+          Expanded(
+            child: Stack(
+              children: [
+                PoseCamera(onFrame: processCameraImage),
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          "Points: $points",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 16,
+                  right: 400,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          go,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 16,
+                  right: 750,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          testing,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
