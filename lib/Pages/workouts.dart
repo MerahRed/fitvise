@@ -1,10 +1,18 @@
-import 'package:FitVise/Pages/flexibles/workoutDetails.dart';
-import 'package:FitVise/utilities/pose_camera.dart';
+import 'package:FitVise/utilities/MLs/pushupLogic.dart';
+import 'package:FitVise/utilities/MLs/squatLogic.dart';
 import 'package:flutter/material.dart';
 
-final List<Map<String, String>> workoutList = [
-  {'name': 'Push Ups', 'description': 'A basic upper body exercise.'},
-  {'name': 'Squats', 'description': 'A fundamental lower body movement.'},
+final List<Map<String, dynamic>> workoutList = [
+  {
+    'name': 'Push Ups',
+    'description': 'A basic upper body exercise.',
+    'widget': PushupLogic(),
+  },
+  {
+    'name': 'Squats',
+    'description': 'A fundamental lower body movement.',
+    'widget': Squatlogic(),
+  },
 ];
 
 class Workouts extends StatelessWidget {
@@ -22,24 +30,19 @@ class Workouts extends StatelessWidget {
       body: ListView(
         children: workoutList.map((workout) {
           return ListTile(
+            leading: const Icon(Icons.fitness_center),
             title: Text(workout['name'] ?? 'Unnamed Workout'),
             subtitle: Text(
               workout['description'] ?? 'No description available',
             ),
-            leading: Icon(Icons.fitness_center),
-            trailing: Icon(Icons.arrow_forward_ios_rounded),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => // Workoutdetails(
-                          //   workoutName: workout['name'] ?? 'Workout',
-                          //   description: workout['description'] ?? 'no item',
-                          // ),
-                          Workoutdetails(),
-                ),
-              );
+              if (workout['widget'] != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => workout['widget']),
+                );
+              }
             },
           );
         }).toList(),
