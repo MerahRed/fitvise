@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-
 import 'package:FitVise/utilities/pose_camera.dart';
 
 class PushupLogic extends StatefulWidget {
@@ -14,29 +13,26 @@ class PushupLogic extends StatefulWidget {
 
 class _PushupLogicState extends State<PushupLogic> {
   late CameraController _cameraController;
+
   final poseDetector = PoseDetector(
-    options: PoseDetectorOptions(mode: PoseDetectionMode.stream),
+    options: PoseDetectorOptions(
+      mode: PoseDetectionMode.stream,
+      model: PoseDetectionModel.base, // BASE MODEL = FAST AND SUPPORTED
+    ),
   );
 
-  List poses = [];
+  // Use NOTIFIERS instead of setState (MUCH FASTER)
+  final lengthValue = ValueNotifier<int>(0);
+  final pointsValue = ValueNotifier<int>(0);
+  final boxY = ValueNotifier<double>(50);
+  final goText = ValueNotifier<String>('Go Down');
+  final goingDownValue = ValueNotifier<bool>(true);
 
-  //Extra variables for workout logic
-  String testing = "no results";
-  String go = "Go Up";
+  final test = ValueNotifier<double>(0);
+
+  bool _isBusy = false; // throttle ML
   Pose? lastPose;
 
-  int points = 0;
-  bool goingDown = true;
-
-  double boxPositionY = 100; //500
-
-  int length = 0;
-  String shoulder = "0";
-  String wrist = "0";
-
-  // ------------------ML Kit Pose Detection and Camera Setup------------------
-
-  // Initialize camera and start image stream
   @override
   void initState() {
     super.initState();
@@ -49,7 +45,7 @@ class _PushupLogicState extends State<PushupLogic> {
 
     _cameraController = CameraController(
       camera,
-      ResolutionPreset.medium,
+      ResolutionPreset.low, // ↓ LOWER = HUGE SPEED BOOST
       enableAudio: false,
     );
 
@@ -57,20 +53,68 @@ class _PushupLogicState extends State<PushupLogic> {
     _cameraController.startImageStream(processCameraImage);
   }
 
+  // ------------------------------ PROCESS FRAME ------------------------------
+
   void processCameraImage(CameraImage image) async {
-    // Convert camera image for ML Kit
-    final WriteBuffer allBytes = WriteBuffer();
-    for (Plane plane in image.planes) {
-      allBytes.putUint8List(plane.bytes);
+    if (_isBusy) return;
+    _isBusy = true;
+
+    final inputImage = _convertToInputImage(image);
+    final result = await poseDetector.processImage(inputImage);
+
+    if (result.isNotEmpty) {
+      final pose = result.first;
+      lastPose = pose;
+
+      final wrist = pose.landmarks[PoseLandmarkType.leftWrist];
+      final shoulder = pose.landmarks[PoseLandmarkType.leftShoulder];
+      final nose = pose.landmarks[PoseLandmarkType.nose];
+
+      test.value = wrist!.y;
+
+      if (shoulder != null && nose != null) {
+        final length = (wrist.y - shoulder.y).abs().toInt();
+        lengthValue.value = length;
+
+        // PUSHUP LOGIC
+        if (wrist.y > 300) {
+          if (length < 50 && nose.y > 200) {
+            boxY.value = 50;
+            goText.value = "Go Up";
+            goingDownValue.value = true;
+          }
+          if (goingDownValue.value == true && length > 200 && nose.y < 150) {
+            pointsValue.value++;
+            boxY.value = 600;
+            goText.value = "Go Down";
+            goingDownValue.value = false;
+          }
+        } else {
+          goText.value = "Place your hand on the ground";
+        }
+      }
     }
 
-    final bytes = allBytes.done().buffer.asUint8List();
-    final Size size = Size(image.width.toDouble(), image.height.toDouble());
+    _isBusy = false;
+  }
 
+  // ------------------------------ CONVERT IMAGE ------------------------------
+
+  InputImage _convertToInputImage(CameraImage image) {
+    final WriteBuffer allBytes = WriteBuffer();
+    for (final Plane plane in image.planes) {
+      allBytes.putUint8List(plane.bytes);
+    }
+    final bytes = allBytes.done().buffer.asUint8List();
+
+    final Size imageSize = Size(
+      image.width.toDouble(),
+      image.height.toDouble(),
+    );
+
+    final camera = _cameraController.description;
     final imageRotation =
-        InputImageRotationValue.fromRawValue(
-          _cameraController.description.sensorOrientation,
-        ) ??
+        InputImageRotationValue.fromRawValue(camera.sensorOrientation) ??
         InputImageRotation.rotation0deg;
 
     final inputImageFormat =
@@ -79,7 +123,7 @@ class _PushupLogicState extends State<PushupLogic> {
 
     final planeData = image.planes
         .map(
-          (plane) => InputImagePlaneMetadata(
+          (Plane plane) => InputImagePlaneMetadata(
             bytesPerRow: plane.bytesPerRow,
             height: plane.height,
             width: plane.width,
@@ -87,55 +131,15 @@ class _PushupLogicState extends State<PushupLogic> {
         )
         .toList();
 
-    final inputImage = InputImage.fromBytes(
+    return InputImage.fromBytes(
       bytes: bytes,
       inputImageData: InputImageData(
-        size: size,
+        size: imageSize,
         imageRotation: imageRotation,
         inputImageFormat: inputImageFormat,
         planeData: planeData,
       ),
     );
-
-    //  -------------------------- Run pose detection --------------------------
-
-    final result = await poseDetector.processImage(inputImage);
-
-    // Nose detection for Pushup
-    PoseLandmark? leftWrist;
-    PoseLandmark? leftShoulder;
-    if (result.isNotEmpty) {
-      leftWrist = result.first.landmarks[PoseLandmarkType.leftWrist];
-      leftShoulder = result.first.landmarks[PoseLandmarkType.leftShoulder];
-    }
-
-    wrist = leftWrist != null
-        ? 'leftWrist Position: (${leftWrist.x.toStringAsFixed(0)}, ${leftWrist.y.toStringAsFixed(0)})'
-        : 'No Body not detected';
-
-    shoulder = leftShoulder != null
-        ? 'leftShoulder Position: (${leftShoulder.x.toStringAsFixed(0)}, ${leftShoulder.y.toStringAsFixed(0)})'
-        : 'No Body not detected';
-
-    length = leftWrist != null && leftShoulder != null
-        ? (leftWrist.y - leftShoulder.y).abs().toInt()
-        : 0;
-
-    if (length < 100) {
-      goingDown = true;
-    }
-    if (goingDown == true && length > 150) {
-      points++;
-      goingDown = false;
-    }
-
-    // ------------------------------ update UI ------------------------------
-    if (mounted) {
-      setState(() {
-        poses = result;
-        lastPose = poses.isNotEmpty ? poses.first : null;
-      });
-    }
   }
 
   @override
@@ -145,165 +149,95 @@ class _PushupLogicState extends State<PushupLogic> {
     super.dispose();
   }
 
-  // ------------------------------ Build UI ------------------------------
+  // ------------------------------ BUILD UI ------------------------------
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Workout Details"),
+        title: Text("Push Up"),
         actions: [
           IconButton(
-            onPressed: () {
-              points = 0;
-            },
+            onPressed: () => pointsValue.value = 0,
             icon: Icon(Icons.restore_page_outlined),
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Stack(
-              children: [
-                PoseCamera(onFrame: processCameraImage),
-                /*
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          wrist,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),*/
-                Positioned(
-                  top: 16,
-                  right: 400,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          length.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                /*
-                Positioned(
-                  top: 16,
-                  right: 700,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          shoulder,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),*/
-                Positioned(
-                  top: 40,
-                  right: 700,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          goingDown.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+          // CAMERA PREVIEW
+          Positioned.fill(child: PoseCamera(onFrame: processCameraImage)),
 
-                Positioned(
-                  top: 100,
-                  right: 10,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          points.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+          // GUIDENCE
+          Positioned(
+            top: 16,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 150),
+                child: ValueListenableBuilder(
+                  valueListenable: goText,
+                  builder: (_, txt, __) {
+                    return _infoBox(txt, Colors.green, 36);
+                  },
                 ),
-              ],
+              ),
+            ),
+          ),
+
+          // GOING DOWN DISPLAY
+          ValueListenableBuilder(
+            valueListenable: boxY,
+            builder: (_, y, _) {
+              return Positioned(
+                top: y,
+                right: 450,
+                child: _infoBox("Move Here", Colors.blue, 32),
+              );
+            },
+          ),
+
+          // PUSHUP COUNT
+          Positioned(
+            top: 100,
+            right: 16,
+            child: ValueListenableBuilder(
+              valueListenable: pointsValue,
+              builder: (context, points, _) {
+                return _infoBox('Reps: $points', Colors.red, 18);
+              },
+            ),
+          ),
+          Positioned(
+            top: 200,
+            right: 16,
+            child: ValueListenableBuilder(
+              valueListenable: test,
+              builder: (_, txt, _) {
+                return _infoBox('pos y wrist: $txt', Colors.red, 18);
+              },
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _infoBox(String text, Color color, double fontSize) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.6),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
