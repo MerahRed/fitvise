@@ -21,6 +21,7 @@ void main() async {
   try {
     await Supabase.instance.client.auth.signOut();
   } catch (e) {
+    // ignore: avoid_print
     print('Error clearing session: $e');
   }
 

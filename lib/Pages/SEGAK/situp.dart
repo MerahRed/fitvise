@@ -1,9 +1,5 @@
-import 'package:FitVise/Pages/SEGAK/pushup.dart';
 import 'package:FitVise/Pages/SEGAK/sitandreach.dart';
-import 'package:FitVise/Pages/SEGAK/situp.dart';
-import 'package:FitVise/Pages/SEGAK/step_test.dart';
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:FitVise/Global.dart';

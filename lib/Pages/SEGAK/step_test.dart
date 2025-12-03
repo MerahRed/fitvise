@@ -1,4 +1,4 @@
-import 'package:FitVise/Pages/SEGAK/resultPage.dart';
+import 'package:FitVise/Pages/SEGAK/result_page.dart';
 import 'package:FitVise/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
@@ -6,6 +6,7 @@ import 'package:FitVise/Global.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+// ignore: camel_case_types
 class steptestPage extends StatefulWidget {
   const steptestPage({super.key});
 
@@ -13,6 +14,7 @@ class steptestPage extends StatefulWidget {
   State<steptestPage> createState() => _steptestPageState();
 }
 
+// ignore: camel_case_types
 class _steptestPageState extends State<steptestPage> {
   final _controller = TextEditingController();
   final FlutterTts flutterTts = FlutterTts();

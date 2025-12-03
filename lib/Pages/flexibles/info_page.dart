@@ -1,4 +1,3 @@
-import 'package:FitVise/main.dart';
 import 'package:FitVise/utilities/diet_table.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';

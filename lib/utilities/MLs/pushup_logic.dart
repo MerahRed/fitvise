@@ -1,3 +1,4 @@
+import 'package:FitVise/Global.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class _PushupLogicState extends State<PushupLogic> {
 
   // Use NOTIFIERS instead of setState (MUCH FASTER)
   final lengthValue = ValueNotifier<int>(0);
-  final pointsValue = ValueNotifier<int>(0);
-  final boxY = ValueNotifier<double>(50);
+  final pointsValue = ValueNotifier<int>(-1);
+  final boxY = ValueNotifier<double>(100);
   final goText = ValueNotifier<String>('Go Down');
   final goingDownValue = ValueNotifier<bool>(true);
 
@@ -32,6 +33,8 @@ class _PushupLogicState extends State<PushupLogic> {
 
   bool _isBusy = false; // throttle ML
   Pose? lastPose;
+  double MET = 4;
+  double totalBurned = 0;
 
   @override
   void initState() {
@@ -66,31 +69,28 @@ class _PushupLogicState extends State<PushupLogic> {
       final pose = result.first;
       lastPose = pose;
 
-      final wrist = pose.landmarks[PoseLandmarkType.leftWrist];
       final shoulder = pose.landmarks[PoseLandmarkType.leftShoulder];
-      final nose = pose.landmarks[PoseLandmarkType.nose];
+      final hip = pose.landmarks[PoseLandmarkType.leftHip];
 
-      test.value = wrist!.y;
+      if (shoulder != null && hip != null) {
+        final bodyHeight = (shoulder.y - hip.y).abs();
 
-      if (shoulder != null && nose != null) {
-        final length = (wrist.y - shoulder.y).abs().toInt();
-        lengthValue.value = length;
+        // You can tweak these:
+        const downThreshold = 60; // lowest point
+        const upThreshold = 140; // highest point
 
-        // PUSHUP LOGIC
-        if (wrist.y > 300) {
-          if (length < 50 && nose.y > 200) {
-            boxY.value = 50;
-            goText.value = "Go Up";
-            goingDownValue.value = true;
-          }
-          if (goingDownValue.value == true && length > 200 && nose.y < 150) {
-            pointsValue.value++;
-            boxY.value = 600;
-            goText.value = "Go Down";
-            goingDownValue.value = false;
-          }
-        } else {
-          goText.value = "Place your hand on the ground";
+        // 1. Detect going DOWN → reached bottom
+        if (!goingDownValue.value && bodyHeight < downThreshold) {
+          goingDownValue.value = true;
+          goText.value = "Go Up";
+          boxY.value = 120;
+        }
+        // 2. Detect coming UP → reached top (count rep)
+        else if (goingDownValue.value && bodyHeight > upThreshold) {
+          pointsValue.value++;
+          goingDownValue.value = false;
+          goText.value = "Go Down";
+          boxY.value = 600;
         }
       }
     }
@@ -142,6 +142,11 @@ class _PushupLogicState extends State<PushupLogic> {
     );
   }
 
+  void calculate(int reps) {
+    var minutes = (reps * 2) / 60;
+    totalBurned = MET * 3.5 * currentWeight! / 200 * minutes;
+  }
+
   @override
   void dispose() {
     _cameraController.dispose();
@@ -158,8 +163,55 @@ class _PushupLogicState extends State<PushupLogic> {
         title: Text("Push Up"),
         actions: [
           IconButton(
-            onPressed: () => pointsValue.value = 0,
-            icon: Icon(Icons.restore_page_outlined),
+            onPressed: () {
+              calculate(pointsValue.value);
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.green.shade600,
+                  title: Text(
+                    "Congratulatious",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+
+                  content: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      "You've burned total ${totalBurned.toStringAsFixed(2)} kalories!",
+                      style: TextStyle(fontSize: 18, color: Colors.grey[200]),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                  actions: [
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.done, color: Colors.white),
+                      label: Text(
+                        'Continue',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade800,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor: Colors.green,
+              child: Icon(Icons.done),
+            ),
           ),
         ],
       ),
@@ -189,11 +241,25 @@ class _PushupLogicState extends State<PushupLogic> {
           // GOING DOWN DISPLAY
           ValueListenableBuilder(
             valueListenable: boxY,
-            builder: (_, y, _) {
+            builder: (_, y, __) {
               return Positioned(
                 top: y,
                 right: 450,
-                child: _infoBox("Move Here", Colors.blue, 32),
+                child: Container(
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    "Move Here",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               );
             },
           ),
@@ -205,17 +271,7 @@ class _PushupLogicState extends State<PushupLogic> {
             child: ValueListenableBuilder(
               valueListenable: pointsValue,
               builder: (context, points, _) {
-                return _infoBox('Reps: $points', Colors.red, 18);
-              },
-            ),
-          ),
-          Positioned(
-            top: 200,
-            right: 16,
-            child: ValueListenableBuilder(
-              valueListenable: test,
-              builder: (_, txt, _) {
-                return _infoBox('pos y wrist: $txt', Colors.red, 18);
+                return _infoBox('Reps: $points', Colors.red, 32);
               },
             ),
           ),

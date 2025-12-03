@@ -13,6 +13,7 @@ class PoseCamera extends StatefulWidget {
 class _PoseCameraState extends State<PoseCamera> {
   CameraController? _controller;
 
+  @override
   void initState() {
     super.initState();
     initialiszeCamera();

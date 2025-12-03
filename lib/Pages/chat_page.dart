@@ -2,7 +2,6 @@ import 'package:FitVise/Global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:math';
 import 'dart:async';
 
 //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

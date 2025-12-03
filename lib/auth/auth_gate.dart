@@ -2,7 +2,7 @@ import 'package:FitVise/Pages/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/auth/loginPage.dart';
+import 'package:FitVise/auth/login_page.dart';
 import 'package:FitVise/Pages/bmi.dart';
 import 'package:FitVise/Pages/home.dart';
 import 'package:FitVise/Pages/fitness.dart';

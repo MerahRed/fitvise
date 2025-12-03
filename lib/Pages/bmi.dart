@@ -1,5 +1,4 @@
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';

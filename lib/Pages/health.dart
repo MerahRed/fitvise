@@ -1,4 +1,4 @@
-import 'package:FitVise/Pages/Classroom/classMenu.dart';
+import 'package:FitVise/Pages/Classroom/class_menu.dart';
 import 'package:FitVise/Pages/Classroom/classroom_page.dart';
 import 'package:FitVise/Pages/chat_page.dart';
 import 'package:FitVise/utilities/premium_popup.dart';

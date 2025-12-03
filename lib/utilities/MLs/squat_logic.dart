@@ -1,3 +1,4 @@
+import 'package:FitVise/Global.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,12 @@ class _SquatlogicState extends State<Squatlogic> {
   final goText = ValueNotifier<String>("Go Up");
   final boxY = ValueNotifier<double>(100);
 
+  double totalBurned = 0;
   bool goingDown = false;
   bool _isBusy = false;
   Pose? lastPose;
+  // ignore: non_constant_identifier_names
+  double MET = 3;
 
   @override
   void initState() {
@@ -138,6 +142,11 @@ class _SquatlogicState extends State<Squatlogic> {
     );
   }
 
+  void calculate(int reps) {
+    var minutes = (reps * 2) / 60;
+    totalBurned = MET * 3.5 * currentWeight! / 200 * minutes;
+  }
+
   @override
   void dispose() {
     _cameraController.dispose();
@@ -154,8 +163,55 @@ class _SquatlogicState extends State<Squatlogic> {
         title: Text("Squat"),
         actions: [
           IconButton(
-            onPressed: () => pointsValue.value = 0,
-            icon: Icon(Icons.restore_page_outlined),
+            onPressed: () {
+              calculate(pointsValue.value);
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.green.shade600,
+                  title: Text(
+                    "Congratulatious",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+
+                  content: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      "You've burned total ${totalBurned.toStringAsFixed(2)} kalories!",
+                      style: TextStyle(fontSize: 18, color: Colors.grey[200]),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                  actions: [
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.done, color: Colors.white),
+                      label: Text(
+                        'Continue',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade800,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor: Colors.green,
+              child: Icon(Icons.done),
+            ),
           ),
         ],
       ),

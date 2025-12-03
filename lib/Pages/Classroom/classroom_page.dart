@@ -1,9 +1,8 @@
 import 'package:FitVise/Global.dart';
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/main.dart';
 import 'package:FitVise/profile_service.dart';
 import 'package:flutter/material.dart';
-import 'package:FitVise/utilities/classSegak_gen.dart';
+import 'package:FitVise/utilities/class_segak_gen.dart';
 import 'package:open_filex/open_filex.dart';
 
 String className = "No class joined";
@@ -13,6 +12,7 @@ String teacherEmail = "No email assigned";
 // ignore: prefer_typing_uninitialized_variables
 List<Map<String, dynamic>> task = [];
 List<Map> studentsData = [];
+// ignore: prefer_typing_uninitialized_variables
 var studentList;
 
 // Data
@@ -388,6 +388,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
 
                                         // show a quick snackbar and open with default viewer
                                         ScaffoldMessenger.of(
+                                          // ignore: use_build_context_synchronously
                                           context,
                                         ).showSnackBar(
                                           SnackBar(
@@ -548,6 +549,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                                 setState(() {
                                   announcementTitle = newAnnouncement;
                                 });
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
                               }
                             },

@@ -1,5 +1,5 @@
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/Pages/flexibles/infoPage.dart';
+import 'package:FitVise/Pages/flexibles/info_page.dart';
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:FitVise/utilities/premium_popup.dart';

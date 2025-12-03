@@ -2,10 +2,8 @@
 
 import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/profile_Service.dart';
-import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
-import 'package:FitVise/main.dart';
 import 'package:intl/intl.dart';
 
 class Homepage extends StatefulWidget {

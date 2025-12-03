@@ -12,6 +12,7 @@ class Resultpage extends StatefulWidget {
   State<Resultpage> createState() => _resultPageState();
 }
 
+// ignore: camel_case_types
 class _resultPageState extends State<Resultpage> {
   @override
   void initState() {
@@ -123,6 +124,7 @@ class _resultPageState extends State<Resultpage> {
                                   );
 
                               // show a quick snackbar and open with default viewer
+                              // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('PDF saved: ${file.path}'),

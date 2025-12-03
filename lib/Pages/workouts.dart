@@ -1,5 +1,6 @@
-import 'package:FitVise/utilities/MLs/pushupLogic.dart';
-import 'package:FitVise/utilities/MLs/squatLogic.dart';
+import 'package:FitVise/utilities/MLs/jump_challange_logic.dart';
+import 'package:FitVise/utilities/MLs/pushup_logic.dart';
+import 'package:FitVise/utilities/MLs/squat_logic.dart';
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> workoutList = [
@@ -12,6 +13,11 @@ final List<Map<String, dynamic>> workoutList = [
     'name': 'Squats',
     'description': 'A fundamental lower body movement.',
     'widget': Squatlogic(),
+  },
+  {
+    'name': 'Jump Challange',
+    'description': 'Improve your leg strength and build up your stamina',
+    'widget': JumpChallagelogic(),
   },
 ];
 

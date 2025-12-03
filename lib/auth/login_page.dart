@@ -1,5 +1,5 @@
 import 'package:FitVise/auth/auth_service.dart';
-import 'package:FitVise/auth/registerPage.dart';
+import 'package:FitVise/auth/register_page.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +37,6 @@ class _LoginpageState extends State<Loginpage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -53,10 +51,7 @@ class _LoginpageState extends State<Loginpage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Welcome back to ",
-                      style: TextStyle(fontSize: 30),
-                    ),
+                    Text("Welcome back to ", style: TextStyle(fontSize: 30)),
                     Text(
                       "FitVise",
                       style: TextStyle(
@@ -103,7 +98,9 @@ class _LoginpageState extends State<Loginpage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 14.0, horizontal: 32),
+                      vertical: 14.0,
+                      horizontal: 32,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -123,25 +120,26 @@ class _LoginpageState extends State<Loginpage> {
               ),
               SizedBox(height: 10),
               GestureDetector(
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterPage(),
-                        ),
-                      ),
-                  child: Center(
-                      child: Row(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                ),
+                child: Center(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Don't have an account? "),
                       Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: Colors.greenAccent,
-                            decoration: TextDecoration.underline),
-                      )
+                          color: Colors.greenAccent,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ],
-                  ))),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Pages/flexibles/infoPage.dart';
+import '../Pages/flexibles/info_page.dart';
 
 // ignore: camel_case_types
 class itemCard extends StatelessWidget {

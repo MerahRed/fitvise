@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:FitVise/profile_Service.dart';
 import 'dart:math';
 
+// ignore: must_be_immutable
 class CreateClassPopup extends StatelessWidget {
   CreateClassPopup({super.key});
 

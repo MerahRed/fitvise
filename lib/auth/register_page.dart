@@ -1,4 +1,3 @@
-import 'package:FitVise/Global.dart';
 import 'package:FitVise/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -27,14 +26,15 @@ class _RegisterPageState extends State<RegisterPage> {
     final confirmPassword = _confirmPaswordController.text.trim();
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Passwords don't match")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Passwords don't match")));
       return;
     }
 
     try {
       await authService.signUpWithEmailPassword(email, password, username);
+      // ignore: use_build_context_synchronously
       Navigator.pop(context); // back to login
     } catch (e) {
       if (mounted) {
@@ -59,10 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Welcome to ",
-                    style: TextStyle(fontSize: 30),
-                  ),
+                  Text("Welcome to ", style: TextStyle(fontSize: 30)),
                   Text(
                     "FitVise",
                     style: TextStyle(
@@ -118,7 +115,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 14.0, horizontal: 32),
+                    vertical: 14.0,
+                    horizontal: 32,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [

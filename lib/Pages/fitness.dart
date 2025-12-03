@@ -1,6 +1,5 @@
-import 'package:FitVise/Pages/SEGAK/segakPage.dart';
+import 'package:FitVise/Pages/SEGAK/segak_page.dart';
 import 'package:FitVise/Pages/bmi.dart';
-import 'package:FitVise/utilities/fun_card.dart';
 import 'package:FitVise/utilities/text_card.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';

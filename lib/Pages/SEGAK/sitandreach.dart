@@ -1,8 +1,5 @@
-import 'package:FitVise/Pages/SEGAK/pushup.dart';
-import 'package:FitVise/Pages/SEGAK/resultPage.dart';
 import 'package:FitVise/Pages/SEGAK/step_test.dart';
 import 'package:FitVise/auth/auth_gate.dart';
-import 'package:FitVise/main.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
 
@@ -13,6 +10,7 @@ class Sitandreach extends StatefulWidget {
   State<Sitandreach> createState() => _sitandreachState();
 }
 
+// ignore: camel_case_types
 class _sitandreachState extends State<Sitandreach> {
   String overall = "Well Done";
   final _controller = TextEditingController();
