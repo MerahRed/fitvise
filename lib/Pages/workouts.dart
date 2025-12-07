@@ -1,3 +1,4 @@
+import 'package:FitVise/Global.dart';
 import 'package:FitVise/utilities/MLs/jump_challange_logic.dart';
 import 'package:FitVise/utilities/MLs/pushup_logic.dart';
 import 'package:FitVise/utilities/MLs/squat_logic.dart';
@@ -7,17 +8,21 @@ final List<Map<String, dynamic>> workoutList = [
   {
     'name': 'Push Ups',
     'description': 'A basic upper body exercise.',
+    'icon': 'assets/icons/pushup.png',
     'widget': PushupLogic(),
   },
   {
     'name': 'Squats',
     'description': 'A fundamental lower body movement.',
+    'icon': 'assets/icons/squat.png',
     'widget': Squatlogic(),
   },
   {
-    'name': 'Jump Challange',
-    'description': 'Improve your leg strength and build up your stamina',
-    'widget': JumpChallagelogic(),
+    'name': 'Body Movement Challange',
+    'description':
+        'Improve your body movement by moving the love to the blue box',
+    'icon': 'assets/icons/dance.png',
+    'widget': BodyChallagelogic(),
   },
 ];
 
@@ -36,7 +41,16 @@ class Workouts extends StatelessWidget {
       body: ListView(
         children: workoutList.map((workout) {
           return ListTile(
-            leading: const Icon(Icons.fitness_center),
+            leading: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.green,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Image.asset(workout['icon'], color: Colors.white),
+              ),
+            ),
             title: Text(workout['name'] ?? 'Unnamed Workout'),
             subtitle: Text(
               workout['description'] ?? 'No description available',

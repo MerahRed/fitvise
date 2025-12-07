@@ -155,7 +155,7 @@ class _HomepageState extends State<Homepage> {
           ),
 
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.blueGrey.shade900,
@@ -197,7 +197,7 @@ class _HomepageState extends State<Homepage> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  pageIndex = 2; // Go to "Health" page
+                  pageIndex = 1; // Go to "Health" page
                 });
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -264,7 +264,7 @@ class _HomepageState extends State<Homepage> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  pageIndex = 1; // Go to "Health" page
+                  pageIndex = 3; // Go to "Exercise" page
                 });
                 Navigator.pushAndRemoveUntil(
                   context,

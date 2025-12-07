@@ -18,11 +18,11 @@ class AuthGate extends StatefulWidget {
 
 class _AuthGateState extends State<AuthGate> {
   List<Widget> pages = [
+    Workouts(),
+    Healthpage(),
     Homepage(),
     Fitpage(),
-    Healthpage(),
     Profilepage(),
-    Workouts(),
   ];
 
   void changePage(int index) {
@@ -66,23 +66,30 @@ class _AuthGateState extends State<AuthGate> {
             selectedItemColor: Colors.green.shade700,
             unselectedItemColor: Colors.grey.shade500,
             type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.fitness_center),
-                label: 'Fitness',
+                icon: Icon(Icons.accessibility_new_rounded),
+                label: 'Workouts',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite),
                 label: 'Health',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
+                icon: CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.green.shade800,
+                  child: Icon(Icons.home),
+                ),
+                label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.accessibility_new_rounded),
-                label: 'Exercise',
+                icon: Icon(Icons.fitness_center),
+                label: 'Fitness',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
               ),
             ],
           ),

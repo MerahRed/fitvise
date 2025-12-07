@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:FitVise/Global.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -5,34 +7,38 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:FitVise/utilities/pose_camera.dart';
 
-class JumpChallagelogic extends StatefulWidget {
-  const JumpChallagelogic({super.key});
+class BodyChallagelogic extends StatefulWidget {
+  const BodyChallagelogic({super.key});
 
   @override
-  State<JumpChallagelogic> createState() => _JumpChallagelogicState();
+  State<BodyChallagelogic> createState() => _BodyChallagelogicState();
 }
 
-class _JumpChallagelogicState extends State<JumpChallagelogic> {
+class _BodyChallagelogicState extends State<BodyChallagelogic> {
   late CameraController _cameraController;
 
   final poseDetector = PoseDetector(
     options: PoseDetectorOptions(
       mode: PoseDetectionMode.stream,
-      model: PoseDetectionModel.base, // SPEED BOOST
+      model: PoseDetectionModel.base,
     ),
   );
 
-  // Use ValueNotifier for performance
+  // ValueNotifier for performance
   final pointsValue = ValueNotifier<int>(0);
   final goText = ValueNotifier<String>("Jump!");
+  final boxX = ValueNotifier<double>(100);
   final boxY = ValueNotifier<double>(100);
+  final noseScreenX = ValueNotifier<double>(0);
+  final noseScreenY = ValueNotifier<double>(0);
 
   double totalBurned = 0;
   bool goingDown = false;
   bool _isBusy = false;
   Pose? lastPose;
   // ignore: non_constant_identifier_names
-  double MET = 8;
+  double MET = 2.5;
+  final Random random = Random();
 
   @override
   void initState() {
@@ -46,7 +52,7 @@ class _JumpChallagelogicState extends State<JumpChallagelogic> {
 
     _cameraController = CameraController(
       camera,
-      ResolutionPreset.low, // huge boost
+      ResolutionPreset.low,
       enableAudio: false,
     );
 
@@ -73,16 +79,35 @@ class _JumpChallagelogicState extends State<JumpChallagelogic> {
       if (nose != null) {
         if (leftKnee!.y > 300 && leftKnee.y < 800) {
           final y = nose.y;
+          var x = nose.x;
+          double length = 50;
 
-          if (y < 150) {
-            goText.value = "Go Down";
+          final imageWidth = image.width.toDouble();
+          // convert ML Kit nose.x → screen coordinate
+          double screenWidth = MediaQuery.of(context).size.width;
+          noseScreenX.value = nose.x * (screenWidth / imageWidth);
+          noseScreenY.value = (nose.y * (screenWidth / imageWidth) + 100);
+
+          x = x * 0.5;
+
+          noseScreenX.value = 1000 - noseScreenX.value;
+
+          length = sqrt(
+            pow(noseScreenX.value - boxX.value, 2) +
+                pow(noseScreenY.value - boxY.value, 2),
+          );
+
+          goText.value = "Distance: ${length.toStringAsFixed(0)}";
+
+          if (length < 150) {
+            //              goText.value = "Go Down";
             goingDown = true;
-            boxY.value = 500;
-          }
-
-          if (y > 300) {
-            goText.value = "Go Up";
-            boxY.value = 100;
+            boxX.value = (100 + random.nextInt((800 + 1) - 100)).toDouble();
+            boxY.value = (100 + random.nextInt((500 + 1) - 100)).toDouble();
+            pointsValue.value++;
+          } else {
+            // goText.value = "Go Up";
+            // goingDown = true;
           }
 
           if (goingDown == true && y > 300) {
@@ -160,7 +185,7 @@ class _JumpChallagelogicState extends State<JumpChallagelogic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Squat"),
+        title: Text("Body Movement Challenge"),
         actions: [
           IconButton(
             onPressed: () {
@@ -251,26 +276,51 @@ class _JumpChallagelogicState extends State<JumpChallagelogic> {
 
           // MOVE HERE BOX
           ValueListenableBuilder(
-            valueListenable: boxY,
-            builder: (_, y, __) {
-              return Positioned(
-                top: y,
-                right: 450,
-                child: Container(
-                  padding: EdgeInsets.all(30),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    "Move Here",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+            valueListenable: boxX,
+            builder: (_, x, __) {
+              return ValueListenableBuilder(
+                valueListenable: boxY,
+                builder: (_, y, _) {
+                  return Positioned(
+                    top: y,
+                    right: x,
+                    child: Container(
+                      padding: EdgeInsets.all(40),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        "Move Here",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
+              );
+            },
+          ),
+          // MOVE HERE BOX
+          ValueListenableBuilder(
+            valueListenable: noseScreenX,
+            builder: (_, x, __) {
+              return ValueListenableBuilder(
+                valueListenable: noseScreenY,
+                builder: (_, y, _) {
+                  return Positioned(
+                    top: y - 00,
+                    right: x,
+                    child: Icon(
+                      Icons.favorite_rounded,
+                      color: Colors.red,
+                      size: 100,
+                    ),
+                  );
+                },
               );
             },
           ),
