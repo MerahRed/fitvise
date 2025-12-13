@@ -27,8 +27,11 @@ Future<void> loadUserInfo() async {
   final user = supabase.auth.currentUser;
   if (user == null) return;
 
-  final response =
-      await supabase.from('profiles').select().eq('id', user.id).maybeSingle();
+  final response = await supabase
+      .from('profiles')
+      .select()
+      .eq('id', user.id)
+      .maybeSingle();
 
   if (response != null) {
     currentEmail = response['email'] ?? "";
@@ -60,8 +63,11 @@ Future<void> loadClassData(String code) async {
   final user = supabase.auth.currentUser;
   if (user == null) return;
 
-  final response =
-      await supabase.from('classrooms').select().eq('code', code).maybeSingle();
+  final response = await supabase
+      .from('classrooms')
+      .select()
+      .eq('code', code)
+      .maybeSingle();
 
   if (response == null) throw Exception("Class not found");
 
@@ -113,19 +119,23 @@ Future<void> loadStudentsData(String code) async {
   final user = supabase.auth.currentUser;
   if (user == null) return;
 
-  final response =
-      await supabase.from('profiles').select().eq('class_code', code);
+  final response = await supabase
+      .from('profiles')
+      .select()
+      .eq('class_code', code);
 
   // Filter response to get only specific student data, e.g., by student_id
   studentsData = response
-      .map((student) => {
-            'username': student['username'],
-            'height': student['height'],
-            'weight': student['weight'],
-            'status': student['status'],
-            'email': student['email'],
-            'segak': student['segak'],
-          })
+      .map(
+        (student) => {
+          'username': student['username'],
+          'height': student['height'],
+          'weight': student['weight'],
+          'status': student['status'],
+          'email': student['email'],
+          'segak': student['segak'],
+        },
+      )
       .toList();
 }
 
@@ -133,9 +143,10 @@ Future<void> loadStudentsData(String code) async {
 Future<void> saveTasks(String code, List<Map<String, dynamic>> tasks) async {
   final safeTasks = tasks.map((t) => t.cast<String, Object?>()).toList();
 
-  await supabase.from('classrooms').update({
-    'tasks': safeTasks,
-  }).eq('code', code);
+  await supabase
+      .from('classrooms')
+      .update({'tasks': safeTasks})
+      .eq('code', code);
 }
 
 /// 🔸 Update classroom announcement
@@ -149,8 +160,11 @@ Future<void> deleteClass(String code) async {
   final user = supabase.auth.currentUser;
   if (user == null) throw Exception("No logged-in user");
 
-  final response =
-      await supabase.from('classrooms').select().eq('code', code).maybeSingle();
+  final response = await supabase
+      .from('classrooms')
+      .select()
+      .eq('code', code)
+      .maybeSingle();
 
   if (response != null && response['teacher_id'] == user.id) {
     await supabase.from('classrooms').delete().eq('code', code);
@@ -177,8 +191,9 @@ Future<List<String>> getStudentsWithSameCode(String code) async {
         .select()
         .eq('class_code', code);
 
-    final List<String> usernames =
-        response.map((row) => row['name'] as String).toList();
+    final List<String> usernames = response
+        .map((row) => row['name'] as String)
+        .toList();
 
     return usernames;
   } catch (error) {
@@ -192,12 +207,13 @@ Future<void> saveStudentsSegak() async {
   final user = supabase.auth.currentUser;
 
   if (user == null) return;
-  final memberResponse =
-      await supabase.from('profiles').select().eq('id', user.id).maybeSingle();
+  final memberResponse = await supabase
+      .from('profiles')
+      .select()
+      .eq('id', user.id)
+      .maybeSingle();
 
   if (memberResponse != null) {
-    await supabase.from('profiles').update({
-      'segak': segak,
-    }).eq('id', user.id);
+    await supabase.from('profiles').update({'segak': segak}).eq('id', user.id);
   }
 }

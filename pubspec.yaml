@@ -24,6 +24,7 @@ dependencies:
   animated_splash_screen: ^1.3.0
   google_mlkit_pose_detection: 
   camera: ^0.11.0
+  flutter_local_notifications: ^19.5.0
 
 
 
@@ -40,7 +41,8 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "lib/assets/Logo.JPG"
+  image_path: "lib/assets/LOGO.png"
+
 
 flutter:
   uses-material-design: true

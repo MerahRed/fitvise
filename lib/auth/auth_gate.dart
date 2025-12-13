@@ -63,7 +63,7 @@ class _AuthGateState extends State<AuthGate> {
                 pageIndex = i;
               });
             },
-            selectedItemColor: Colors.green.shade700,
+            selectedItemColor: Colors.blue.shade700,
             unselectedItemColor: Colors.grey.shade500,
             type: BottomNavigationBarType.fixed,
             items: [
@@ -78,7 +78,7 @@ class _AuthGateState extends State<AuthGate> {
               BottomNavigationBarItem(
                 icon: CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.green.shade800,
+                  backgroundColor: Colors.blue.shade800,
                   child: Icon(Icons.home),
                 ),
                 label: 'Home',

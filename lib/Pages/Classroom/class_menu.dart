@@ -58,8 +58,10 @@ class Classmenu extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text('Join Class',
-                        style: TextStyle(fontSize: isTablet ? 22 : 16)),
+                    child: Text(
+                      'Join Class',
+                      style: TextStyle(fontSize: isTablet ? 22 : 16),
+                    ),
                   ),
                 ),
               ],

@@ -2,7 +2,7 @@
     package="com.FitVise.app">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="FitVise"
+        android:label="FitVise+"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -6,7 +6,9 @@ class AuthService {
 
   // Sign in
   Future<AuthResponse> signInWithEmailPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       return await _supabase.auth.signInWithPassword(
         email: email,
@@ -21,14 +23,14 @@ class AuthService {
 
   // Sign up
   Future<AuthResponse> signUpWithEmailPassword(
-      String email, String password, String username) async {
+    String email,
+    String password,
+    String username,
+  ) async {
     try {
       currentEmail = email;
       currentUsername = username;
-      return await _supabase.auth.signUp(
-        email: email,
-        password: password,
-      );
+      return await _supabase.auth.signUp(email: email, password: password);
     } on AuthException catch (e) {
       throw Exception(e.message);
     } catch (e) {

@@ -84,18 +84,21 @@ class _InfoPageState extends State<InfoPage> {
                         Text(
                           widget.exerciseName,
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
                     Divider(),
                     SizedBox(height: 20),
-                    Text(widget.exerciseDescription,
-                        style: TextStyle(
-                          fontSize: 15,
-                        )),
+                    Text(
+                      widget.exerciseDescription,
+                      style: TextStyle(fontSize: 15),
+                    ),
                     SizedBox(height: 20),
-                    widget.isDiet == true // check if it's diet page
+                    widget.isDiet ==
+                            true // check if it's diet page
                         ? Column(
                             children: [
                               SizedBox(height: 20),
@@ -103,9 +106,7 @@ class _InfoPageState extends State<InfoPage> {
                                 children: [
                                   Text(
                                     '${widget.exerciseName} Suggestion',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
@@ -129,8 +130,9 @@ class _InfoPageState extends State<InfoPage> {
                                     Text(
                                       '$target',
                                       style: TextStyle(
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -146,15 +148,17 @@ class _InfoPageState extends State<InfoPage> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    Navigator.pop(
-                                      context,
-                                    );
+                                    Navigator.pop(context);
                                   },
-                                  child: Text('Close',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white)),
+                                  child: Text(
+                                    'Close',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           )
                         : Padding(
@@ -168,13 +172,15 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pop(
-                                  context,
-                                );
+                                Navigator.pop(context);
                               },
-                              child: Text('Close',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white)),
+                              child: Text(
+                                'Close',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                     SizedBox(height: 20),

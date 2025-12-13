@@ -61,7 +61,7 @@ class PremiumPopup extends StatelessWidget {
                       end: Alignment.bottomRight,
                     ).createShader(bounds),
                     child: const Text(
-                      " FitVise+ ",
+                      " Premium ",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,

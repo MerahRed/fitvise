@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>FitVise</string>
+	<string>FitVise+</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -49,6 +49,16 @@
 	<string>This app uses speech to guide exercises</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses camera for tracking exercises.</string>
+	<key>UIBackgroundModes</key>
+<array>
+  <string>audio</string>
+  <string>location</string>
+  <string>fetch</string>
+  <string>processing</string>
+</array>
+<key>NSUserNotificationUsageDescription</key>
+<string>This app uses notifications.</string>
+
 </dict>
 </plist>
 <key>NSAppTransportSecurity</key>

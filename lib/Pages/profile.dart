@@ -43,7 +43,7 @@ class _ProfilepageState extends State<Profilepage> {
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.green.shade900, Colors.greenAccent],
+                      colors: [Colors.blue.shade900, Colors.blueAccent],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -57,11 +57,7 @@ class _ProfilepageState extends State<Profilepage> {
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          size: 60,
-                          color: Colors.green,
-                        ),
+                        child: Icon(Icons.person, size: 60, color: Colors.blue),
                       ),
                       const SizedBox(height: 12),
                       Row(
@@ -95,7 +91,7 @@ class _ProfilepageState extends State<Profilepage> {
                         ),
                         decoration: BoxDecoration(
                           color: userStatus == "Normal"
-                              ? Colors.green.shade700
+                              ? Colors.blue.shade700
                               : userStatus == "Obesity"
                               ? Colors.red.shade700
                               : Colors.grey.shade600,
@@ -355,7 +351,7 @@ class _ProfilepageState extends State<Profilepage> {
       margin: const EdgeInsets.symmetric(vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: Icon(icon, color: color ?? Colors.green),
+        leading: Icon(icon, color: color ?? Colors.blue),
         title: Text(
           title,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),

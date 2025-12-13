@@ -53,9 +53,9 @@ class _LoginpageState extends State<Loginpage> {
                   children: [
                     Text("Welcome back to ", style: TextStyle(fontSize: 30)),
                     Text(
-                      "FitVise",
+                      "FitVise+",
                       style: TextStyle(
-                        color: Colors.green.shade400,
+                        color: Colors.blue.shade400,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
@@ -91,7 +91,7 @@ class _LoginpageState extends State<Loginpage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     gradient: LinearGradient(
-                      colors: [Colors.green.shade400, Colors.green.shade700],
+                      colors: [Colors.blue.shade400, Colors.blue.shade700],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -132,7 +132,7 @@ class _LoginpageState extends State<Loginpage> {
                       Text(
                         "Sign Up",
                         style: TextStyle(
-                          color: Colors.greenAccent,
+                          color: Colors.blueAccent,
                           decoration: TextDecoration.underline,
                         ),
                       ),

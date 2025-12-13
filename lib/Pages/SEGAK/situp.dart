@@ -36,10 +36,9 @@ class _SitupPageState extends State<SitupPage> {
   Future<void> _setupTts() async {
     await flutterTts.setSpeechRate(0.4); // slower
     await flutterTts.setPitch(1.0);
-    flutterTts.setIosAudioCategory(
-      IosTextToSpeechAudioCategory.ambient,
-      [IosTextToSpeechAudioCategoryOptions.mixWithOthers],
-    );
+    flutterTts.setIosAudioCategory(IosTextToSpeechAudioCategory.ambient, [
+      IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+    ]);
     flutterTts.setVolume(15);
   }
 
@@ -91,9 +90,7 @@ class _SitupPageState extends State<SitupPage> {
             color: Colors.white,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => AuthGate(),
-                ),
+                MaterialPageRoute(builder: (context) => AuthGate()),
                 (_) => false,
               );
             },
@@ -186,10 +183,10 @@ class _SitupPageState extends State<SitupPage> {
                                       });
                                     },
                                     child: const Text("Confirm"),
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       );

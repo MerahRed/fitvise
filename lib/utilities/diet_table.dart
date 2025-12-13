@@ -20,8 +20,10 @@ class _DietTableState extends State<DietTable> {
     super.initState();
     foods = dietData[widget.mealType] ?? [];
     target = getTargetCalories(userStatus, widget.mealType);
-    selected =
-        List<bool>.filled(foods.length, false); // none selected initially
+    selected = List<bool>.filled(
+      foods.length,
+      false,
+    ); // none selected initially
   }
 
   int get totalCalories {
@@ -35,9 +37,7 @@ class _DietTableState extends State<DietTable> {
   @override
   Widget build(BuildContext context) {
     if (foods.isEmpty) {
-      return Center(
-        child: Text("No data available for ${widget.mealType}"),
-      );
+      return Center(child: Text("No data available for ${widget.mealType}"));
     }
 
     return Column(
@@ -59,27 +59,31 @@ class _DietTableState extends State<DietTable> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Food",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+                  child: Text(
+                    "Food",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Serving",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+                  child: Text(
+                    "Serving",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Calories",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 9)),
+                  child: Text(
+                    "Calories",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 9),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Select",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 10)),
+                  child: Text(
+                    "Select",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+                  ),
                 ),
               ],
             ),
@@ -97,13 +101,17 @@ class _DietTableState extends State<DietTable> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(foods[i]["serving"],
-                        style: TextStyle(fontSize: 10)),
+                    child: Text(
+                      foods[i]["serving"],
+                      style: TextStyle(fontSize: 10),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("${foods[i]["calories"]} kcal",
-                        style: TextStyle(fontSize: 10)),
+                    child: Text(
+                      "${foods[i]["calories"]} kcal",
+                      style: TextStyle(fontSize: 10),
+                    ),
                   ),
                   Center(
                     child: Checkbox(
@@ -129,27 +137,27 @@ class _DietTableState extends State<DietTable> {
               children: [
                 const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Total",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  child: Text(
+                    "Total",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("—"),
-                ),
+                const Padding(padding: EdgeInsets.all(8.0), child: Text("—")),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "$totalCalories kcal",
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 10),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
                 const SizedBox(),
               ],
             ),
           ],
-        )
+        ),
       ],
     );
   }

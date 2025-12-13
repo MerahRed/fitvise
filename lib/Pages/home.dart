@@ -2,8 +2,10 @@
 
 import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/profile_Service.dart';
+import 'package:FitVise/utilities/notificaion_services.dart';
 import 'package:flutter/material.dart';
 import 'package:FitVise/Global.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 
 class Homepage extends StatefulWidget {
@@ -73,7 +75,7 @@ class _HomepageState extends State<Homepage> {
         title: Text(
           "FitVise",
           style: TextStyle(
-            color: Colors.greenAccent,
+            color: Colors.blueAccent,
             fontSize: 40,
             fontWeight: FontWeight.bold,
           ),
@@ -95,7 +97,7 @@ class _HomepageState extends State<Homepage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   gradient: LinearGradient(
-                    colors: [Colors.blue.shade700, Colors.green],
+                    colors: [Colors.blue.shade700, Colors.blue],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

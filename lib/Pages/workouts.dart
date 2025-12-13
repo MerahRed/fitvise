@@ -1,4 +1,3 @@
-import 'package:FitVise/Global.dart';
 import 'package:FitVise/utilities/MLs/jump_challange_logic.dart';
 import 'package:FitVise/utilities/MLs/pushup_logic.dart';
 import 'package:FitVise/utilities/MLs/squat_logic.dart';
@@ -20,10 +19,16 @@ final List<Map<String, dynamic>> workoutList = [
   {
     'name': 'Body Movement Challange',
     'description':
-        'Improve your body movement by moving the love to the blue box',
+        'Improve your body movement by moving the heart icon to the blue box',
     'icon': 'assets/icons/dance.png',
     'widget': BodyChallagelogic(),
   },
+  // {
+  //   'name': 'Plank',
+  //   'description': 'Hold a plank position to strengthen your core muscles.',
+  //   'icon': 'assets/icons/plank.png',
+  //   'widget': null,
+  // },
 ];
 
 class Workouts extends StatelessWidget {
@@ -44,7 +49,7 @@ class Workouts extends StatelessWidget {
             leading: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.green,
+                color: Colors.blue.shade700,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12),

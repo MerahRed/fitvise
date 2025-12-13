@@ -18,7 +18,7 @@ class PdfBatchGenerator {
     final pdf = pw.Document();
 
     final Uint8List imageData = await _loadImageFromAssets(
-      'lib/assets/Logo.JPG',
+      'lib/assets/LOGO.png',
     );
     final pw.MemoryImage image = pw.MemoryImage(imageData);
 

@@ -79,12 +79,12 @@ class _resultPageState extends State<Resultpage> {
                       ),
                       child: Column(
                         children: [
-                          Image.asset("lib/assets/Logo.JPG", scale: 2.5),
+                          Image.asset("lib/assets/LOGO.png", scale: 2.5),
                           const SizedBox(height: 18),
                           const Text(
                             "Congratulations!",
                             style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.blue,
                               fontWeight: FontWeight.w900,
                               fontSize: 32,
                               letterSpacing: 1.2,
@@ -93,7 +93,7 @@ class _resultPageState extends State<Resultpage> {
                           const Divider(
                             height: 32,
                             thickness: 2,
-                            color: Colors.green,
+                            color: Colors.blue,
                             indent: 30,
                             endIndent: 30,
                           ),
@@ -200,8 +200,8 @@ class _resultPageState extends State<Resultpage> {
                           borderRadius: BorderRadius.circular(16),
                           gradient: LinearGradient(
                             colors: [
-                              Colors.green.shade400,
-                              Colors.green.shade700,
+                              Colors.blue.shade400,
+                              Colors.blue.shade700,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,

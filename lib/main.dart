@@ -1,6 +1,8 @@
 import 'package:FitVise/auth/auth_gate.dart';
 import 'package:FitVise/profile_service.dart';
+import 'package:FitVise/utilities/notificaion_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -9,8 +11,21 @@ Future<void> clearSession() async {
   // This will clear the stored session from local storage
 }
 
+Future<void> requestPermissionsIOS() async {
+  final plugin = FlutterLocalNotificationsPlugin();
+
+  final ios = plugin
+      .resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin
+      >();
+
+  await ios?.requestPermissions(alert: true, badge: true, sound: true);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.init();
+  requestPermissionsIOS();
 
   await Supabase.initialize(
     url: 'https://jvhwabzhfplqpwuxapbl.supabase.co',
@@ -59,9 +74,9 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: AnimatedSplashScreen(
-        splash: "assets/GIF FitVise/Splash screen.gif",
+        splash: "assets/GIF FitVise/splashscreen.gif",
         nextScreen: AuthGate(),
-        duration: 4000,
+        duration: 6000,
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Colors.white,
       ),

@@ -48,7 +48,11 @@ class CreateClassPopup extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 40, bottom: 40, left: 80, right: 80),
+                  top: 40,
+                  bottom: 40,
+                  left: 80,
+                  right: 80,
+                ),
                 child: Column(
                   children: [
                     TextField(
@@ -59,9 +63,7 @@ class CreateClassPopup extends StatelessWidget {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    Text(
-                      'Everyone will know your class with this name',
-                    ),
+                    Text('Everyone will know your class with this name'),
                   ],
                 ),
               ),
@@ -75,16 +77,19 @@ class CreateClassPopup extends StatelessWidget {
                   // ));
                   classCode = code;
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return ClassroomPage(code: code);
-                    },
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ClassroomPage(code: code);
+                      },
+                    ),
+                  );
                 },
                 child: Text('Create Class'),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
