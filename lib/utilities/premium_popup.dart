@@ -168,6 +168,13 @@ Widget _subscribeButton(BuildContext context) {
   return GestureDetector(
     onTap: () {
       // TODO: Handle subscription
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Payment coming soon.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     },
     child: Container(
       width: double.infinity,

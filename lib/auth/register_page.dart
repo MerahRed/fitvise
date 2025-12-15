@@ -1,4 +1,5 @@
 import 'package:FitVise/auth/auth_service.dart';
+import 'package:FitVise/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -48,95 +49,131 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.blue,
       body: Padding(
         padding: const EdgeInsets.all(40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Welcome to ", style: TextStyle(fontSize: 30)),
-                  Text(
-                    "FitVise",
-                    style: TextStyle(
-                      color: Colors.blue.shade400,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade900,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.white30, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Welcome to ", style: TextStyle(fontSize: 30)),
+                    Text(
+                      "FitVise+",
+                      style: TextStyle(
+                        color: Colors.blue.shade400,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 70),
+              Text(
+                "Sign Up",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              SizedBox(height: 30),
+              TextField(
+                decoration: InputDecoration(labelText: "Username"),
+                controller: _usernameController,
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: "Email"),
+                controller: _emailController,
+              ),
+              //password
+              TextField(
+                decoration: InputDecoration(labelText: "Password"),
+                controller: _passwordController,
+                obscureText: true,
+              ),
+              TextField(
+                controller: _confirmPaswordController,
+                decoration: InputDecoration(labelText: "Confirm Password"),
+                obscureText: true,
+              ),
+
+              //SignUp
+              SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  signUp();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      colors: [Colors.blue.shade400, Colors.blue.shade700],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
                   ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 70),
-            Text(
-              "Sign Up",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-            ),
-            SizedBox(height: 30),
-            TextField(
-              decoration: InputDecoration(labelText: "Username"),
-              controller: _usernameController,
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: "Email"),
-              controller: _emailController,
-            ),
-            //password
-            TextField(
-              decoration: InputDecoration(labelText: "Password"),
-              controller: _passwordController,
-              obscureText: true,
-            ),
-            TextField(
-              controller: _confirmPaswordController,
-              decoration: InputDecoration(labelText: "Confirm Password"),
-              obscureText: true,
-            ),
-
-            //SignUp
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () {
-                signUp();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  gradient: LinearGradient(
-                    colors: [Colors.blue.shade400, Colors.blue.shade700],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 14.0,
+                      horizontal: 32,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            letterSpacing: 1.1,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 14.0,
-                    horizontal: 32,
-                  ),
+              ),
+              SizedBox(height: 10),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Loginpage()),
+                ),
+                child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
+                      Text("Already have an account? "),
                       Text(
-                        "Sign Up",
+                        "Log In",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                          letterSpacing: 1.1,
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
-package com.FitVise.app
+package com.fitvise.app
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterActivity() {
+}

@@ -302,7 +302,7 @@ class _ProfilepageState extends State<Profilepage> {
                       ),
                       const SizedBox(height: 12),
                       const Text(
-                        "Developed by MerahRed\nVersion 1.8.0",
+                        "Developed by MerahRed\nVersion 2.0.0",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey),
                       ),
