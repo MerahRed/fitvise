@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:FitVise/utilities/pose_camera.dart';
 
-class BodyChallagelogic extends StatefulWidget {
-  const BodyChallagelogic({super.key});
+class FitGameLogic extends StatefulWidget {
+  const FitGameLogic({super.key});
 
   @override
-  State<BodyChallagelogic> createState() => _BodyChallagelogicState();
+  State<FitGameLogic> createState() => _FitGameLogicState();
 }
 
-class _BodyChallagelogicState extends State<BodyChallagelogic> {
+class _FitGameLogicState extends State<FitGameLogic> {
   late CameraController _cameraController;
 
   final poseDetector = PoseDetector(

@@ -1,4 +1,4 @@
-import 'package:FitVise/utilities/MLs/jump_challange_logic.dart';
+import 'package:FitVise/utilities/MLs/fit_game_logic.dart';
 import 'package:FitVise/utilities/MLs/pushup_logic.dart';
 import 'package:FitVise/utilities/MLs/squat_logic.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +17,11 @@ final List<Map<String, dynamic>> workoutList = [
     'widget': Squatlogic(),
   },
   {
-    'name': 'Body Movement Challange',
+    'name': 'Fit Game',
     'description':
         'Improve your body movement by moving the heart icon to the blue box',
     'icon': 'assets/icons/dance.png',
-    'widget': BodyChallagelogic(),
+    'widget': FitGameLogic(),
   },
   // {
   //   'name': 'Plank',
